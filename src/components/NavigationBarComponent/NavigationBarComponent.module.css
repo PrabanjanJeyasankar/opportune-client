@@ -14,9 +14,6 @@
     align-items: center;
     gap: 0.3rem;
     text-decoration: none;
-    /* position: absolute; */
-    /* left: 50%; */
-    /* transform: translateX(-50%); */
 }
 
 .logo_image {
@@ -58,13 +55,9 @@
 
 .authentication_links {
     display: flex;
-
     justify-content: center;
     align-items: center;
-    gap: 1.5rem;
-}
-
-.login_button {
+    gap: 3rem;
 }
 
 .signup_button {

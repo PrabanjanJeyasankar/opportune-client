@@ -2,12 +2,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
 import FormInputComponent from '../../elements/FormInputComponent/FormInputComponent'
 import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
-import loginStyles from './LoginPageComponent.module.css'
+import loginStyles from './LoginPage.module.css'
 import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 import { validateLoginInputs } from '../../utils/authenticationFieldsValidation'
 import SpinnerLoaderComponent from '../../loaders/SpinnerLoaderComponent/SpinnerLoaderComponent'
 
-function LoginComponent() {
+function LoginPage() {
     // const { setIsLoggedIn, setUserProfile } = useContext(UserContext)
     const [formData, setFormData] = useState({
         email: '',
@@ -238,4 +238,4 @@ function LoginComponent() {
     )
 }
 
-export default LoginComponent
+export default LoginPage

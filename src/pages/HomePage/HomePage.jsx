@@ -1,7 +1,7 @@
 import NavigationBarComponent from '../../components/NavigationBarComponent/NavigationBarComponent'
-import homePageStyles from './HomePageComponent.module.css'
+import homePageStyles from './HomePage.module.css'
 
-function HomePageComponent() {
+function HomePage() {
   return (
     <div>
       <NavigationBarComponent/>
@@ -9,4 +9,4 @@ function HomePageComponent() {
   )
 }
 
-export default HomePageComponent
+export default HomePage

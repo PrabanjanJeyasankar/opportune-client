@@ -1,18 +1,15 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-
-// import { usePasswordResetContext } from '../../context/PasswordResetContext/passwordResetContext'
-
-// import handleResetPasswordRequestOtpService from '../../services/authenticationServices/handleResetPasswordRequestOtpService'
-
 import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
 import FormInputComponent from '../../elements/FormInputComponent/FormInputComponent'
 import { validateEmail } from '../../utils/authenticationFieldsValidation'
-import requestOtpStyles from './RequestOtpPageComponent.module.css'
+import requestOtpStyles from './RequestOtpPage.module.css'
 import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 import SpinnerLoaderComponent from '../../loaders/SpinnerLoaderComponent/SpinnerLoaderComponent'
+// import { usePasswordResetContext } from '../../context/PasswordResetContext/passwordResetContext'
+// import handleResetPasswordRequestOtpService from '../../services/authenticationServices/handleResetPasswordRequestOtpService'
 
-function RequestOtpPageComponent() {
+function RequestOtpPage() {
     const [errors, setErrors] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const [email, setEmail] = useState("")
@@ -141,4 +138,4 @@ function RequestOtpPageComponent() {
     )
 }
 
-export default RequestOtpPageComponent
+export default RequestOtpPage

@@ -4,12 +4,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import FormInputComponent from '../../elements/FormInputComponent/FormInputComponent'
 import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 
-import signupStyles from './SignupPageComponent.module.css'
+import signupStyles from './SignupPage.module.css'
 import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
 import { validateSignupInputs } from '../../utils/authenticationFieldsValidation'
 import PasswordStrengthBar from 'react-password-strength-bar'
 
-function SignupPageComponent() {
+function SignupPage() {
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -285,4 +285,4 @@ function SignupPageComponent() {
     )
 }
 
-export default SignupPageComponent
+export default SignupPage

@@ -1,23 +1,21 @@
 import React, { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
-import LoginComponent from '../pages/LoginPageComponent/LoginPageComponent'
-import SignupComponent from '../pages/SignupPageComponent/SignupPageComponent'
-import RequestOtpPageComponent from '../pages/RequestOTPPageComponent/RequestOTPPageComponent'
-import HomePageComponent from '../pages/HomePage/HomePageComponent'
+import LoginPage from '../pages/LoginPage/LoginPage'
+import SignupPage from '../pages/SignupPage/SignupPage'
+import RequestOtpPage from '../pages/RequestOTPPage/RequestOTPPage'
+import HomePage from '../pages/HomePage/HomePage'
 
 const AppRoutes = () => {
   return (
-    <div className=''>
-      <Suspense fallback={<div>Loading...</div>}  >
+    <Suspense fallback={<div>Loading...</div>}  >
       <Routes>
-        <Route exact path='/' element={<HomePageComponent/>} />
-        <Route path='/login' element={<LoginComponent/>}/>
-        <Route path='/signup' element={<SignupComponent/>}/>
-        <Route path='/request-otp' element={<RequestOtpPageComponent/>}/>
+        <Route exact path='/' element={<HomePage/>}/>
+        <Route path='/login' element={<LoginPage/>}/>
+        <Route path='/signup' element={<SignupPage/>}/>
+        <Route path='/request-otp' element={<RequestOtpPage/>}/>
         <Route path='/*' element={<div>Error Page</div>}/>
       </Routes>
     </Suspense>
-    </div>
   )
 }
 
