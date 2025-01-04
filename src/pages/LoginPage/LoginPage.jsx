@@ -1,11 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useContext, useState } from 'react'
 import FormInputComponent from '../../elements/FormInputComponent/FormInputComponent'
-import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
+import PrimaryButtonComponent from '../../elements/PrimaryButtonComponent/PrimaryButtonComponent'
 import loginStyles from './LoginPage.module.css'
 import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 import { validateLoginInputs } from '../../utils/authenticationFieldsValidation'
 import SpinnerLoaderComponent from '../../loaders/SpinnerLoaderComponent/SpinnerLoaderComponent'
+import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
 
 function LoginPage() {
     // const { setIsLoggedIn, setUserProfile } = useContext(UserContext)
@@ -126,7 +127,7 @@ function LoginPage() {
                         labelClass={loginStyles.label}
                         errorClass={loginStyles.error}
                     />
-                    <span
+                    <ButtonComponent
                         onClick={togglePasswordVisibility}
                         className={loginStyles.eyeIcon}>
                         {showPassword ? (
@@ -162,14 +163,14 @@ function LoginPage() {
                                 <path d='m2 2 20 20' />
                             </svg>
                         )}
-                    </span>
+                    </ButtonComponent>
                 </div>
                 <Link to='/request-otp' className={loginStyles.forgot_password}>
                     Forgot password?
                 </Link>
-                <ButtonComponent
+                <PrimaryButtonComponent
                     type='submit'
-                    className={loginStyles.loginButton}>
+                    >
                     <div>
                         {
                             isLoading ? (
@@ -182,7 +183,7 @@ function LoginPage() {
                     <span className={loginStyles.login_button_state_text}>
                         {isLoading ? 'Logging in...' : 'Login'}{' '}
                     </span>
-                </ButtonComponent>
+                </PrimaryButtonComponent>
                 <div className={loginStyles.socialButtonsContainer}>
                     <ButtonComponent
                         type='button'

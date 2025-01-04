@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
+import PrimaryButtonComponent from '../../elements/PrimaryButtonComponent/PrimaryButtonComponent'
 import FormInputComponent from '../../elements/FormInputComponent/FormInputComponent'
 import { validateEmail } from '../../utils/authenticationFieldsValidation'
 import requestOtpStyles from './RequestOtpPage.module.css'
 import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 import SpinnerLoaderComponent from '../../loaders/SpinnerLoaderComponent/SpinnerLoaderComponent'
+import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
 // import { usePasswordResetContext } from '../../context/PasswordResetContext/passwordResetContext'
 // import handleResetPasswordRequestOtpService from '../../services/authenticationServices/handleResetPasswordRequestOtpService'
 
@@ -101,9 +102,8 @@ function RequestOtpPage() {
                         errorClass={requestOtpStyles.error}
                     />
                 </div>
-                <ButtonComponent
+                <PrimaryButtonComponent
                     type='submit'
-                    className={requestOtpStyles.submit_button}
                     disabled={isLoading}>
                     {
                         isLoading ? (
@@ -113,7 +113,7 @@ function RequestOtpPage() {
                         ) : null
                     }
                     {isLoading ? 'Sending...' : 'Send OTP'}
-                </ButtonComponent>
+                </PrimaryButtonComponent>
                 
                 <ButtonComponent
                     className={requestOtpStyles.back_button}

@@ -3,8 +3,9 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 
 import otpVerificationStyles from './VerifyOTPPage.module.css'
 import OTPInputComponent from '../../components/OTPInputComponent/OTPInputComponent'
-import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
+import PrimaryButtonComponent from '../../elements/PrimaryButtonComponent/PrimaryButtonComponent'
 import AppLogo from '../../assets/images/opportune_logo_svg.svg'
+import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
 
 function VerifyOTPPage() {
     // const { setIsLoggedIn, setUserProfile } = useContext(UserContext)
@@ -169,9 +170,8 @@ function VerifyOTPPage() {
                 {errors.otp && (
                     <p className={otpVerificationStyles.error}>{errors.otp}</p>
                 )}
-                <ButtonComponent
+                <PrimaryButtonComponent
                     type='submit'
-                    className={otpVerificationStyles.submitButton}
                     disabled={isLoading}>
                     {isLoading ? <SpinnerLoaderComponent /> : null}
                     <span
@@ -180,7 +180,7 @@ function VerifyOTPPage() {
                         }>
                         {isLoading ? 'Verifying...' : 'Verify OTP'}
                     </span>
-                </ButtonComponent>
+                </PrimaryButtonComponent>
 
                 <div className={otpVerificationStyles.resend_otp_container}>
                     <p>Didn't receive the code? </p>

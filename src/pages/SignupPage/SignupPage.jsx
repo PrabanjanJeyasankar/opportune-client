@@ -5,9 +5,10 @@ import FormInputComponent from '../../elements/FormInputComponent/FormInputCompo
 import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 
 import signupStyles from './SignupPage.module.css'
-import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
+import PrimaryButtonComponent from '../../elements/PrimaryButtonComponent/PrimaryButtonComponent'
 import { validateSignupInputs } from '../../utils/authenticationFieldsValidation'
 import PasswordStrengthBar from 'react-password-strength-bar'
+import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
 
 function SignupPage() {
     const [formData, setFormData] = useState({
@@ -186,7 +187,7 @@ function SignupPage() {
                         labelClass={signupStyles.label}
                         errorClass={signupStyles.error}
                     />
-                    <span
+                    <ButtonComponent
                         onClick={togglePasswordVisibility}
                         className={signupStyles.eye_icon}>
                         {showPassword ? (
@@ -222,7 +223,7 @@ function SignupPage() {
                                 <path d='m2 2 20 20' />
                             </svg>
                         )}
-                    </span>
+                    </ButtonComponent>
                 </div>
                 {formData.password && (
                     <PasswordStrengthBar
@@ -231,9 +232,8 @@ function SignupPage() {
                     />
                 )}
 
-                <ButtonComponent
+                <PrimaryButtonComponent
                     type='submit'
-                    className={signupStyles.signin_button}
                     disabled={isLoading}>
                     <div>
                         {
@@ -247,7 +247,7 @@ function SignupPage() {
                     <span className={signupStyles.signin_button_state_text}>
                         {isLoading ? ' Sending OTP...' : 'Sign in'}
                     </span>
-                </ButtonComponent>
+                </PrimaryButtonComponent>
                 <div className={signupStyles.social_buttons_container}>
                     <ButtonComponent
                         type='button'

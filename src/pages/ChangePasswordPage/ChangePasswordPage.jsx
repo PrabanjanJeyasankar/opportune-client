@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom'
 
 import changePasswordStyles from './ChangePasswordPage.module.css'
 import FormInputComponent from '../../elements/FormInputComponent/FormInputComponent'
-import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
+import PrimaryButtonComponent from '../../elements/PrimaryButtonComponent/PrimaryButtonComponent'
 import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 import PasswordStrengthBar from 'react-password-strength-bar'
+import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
 
 function ChangePasswordPage() {
     const [newPassword, setNewPassword] = useState('')
@@ -109,7 +110,7 @@ function ChangePasswordPage() {
                         labelClass={changePasswordStyles.label}
                         errorClass={changePasswordStyles.error}
                     />
-                    <span
+                    <ButtonComponent
                         onClick={togglePasswordVisibility}
                         className={changePasswordStyles.eyeIcon}>
                         {showPassword ? (
@@ -145,7 +146,7 @@ function ChangePasswordPage() {
                                 <path d='m2 2 20 20' />
                             </svg>
                         )}
-                    </span>
+                    </ButtonComponent>
                 </div>
                 <div className={changePasswordStyles.password_container}>
                     <FormInputComponent
@@ -207,12 +208,11 @@ function ChangePasswordPage() {
                         className={changePasswordStyles.strengthBar}
                     />
                 )}
-                <ButtonComponent
+                <PrimaryButtonComponent
                     type='submit'
-                    className={changePasswordStyles.submitButton}
                     disabled={isLoading}>
                     {isLoading ? 'Updating...' : 'Update Password'}
-                </ButtonComponent>
+                </PrimaryButtonComponent>
                 <ButtonComponent
                     className={changePasswordStyles.back_button}
                     onClick={handleBack}>

@@ -90,30 +90,6 @@
     background-color: black;
 }
 
-.submit_button {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    width: 100%;
-    padding: 0.75rem;
-    background-color: white;
-    color: black;
-    border: 1px solid var(--gray-100);
-    border-radius: 0.8rem;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    margin: 0.5rem 0 1rem 0;
-    position: relative;
-}
-
-.submit_button:hover {
-   opacity: 0.6;
-}
-
 .spinning_loader {
     position: absolute;
     left: 27%;
