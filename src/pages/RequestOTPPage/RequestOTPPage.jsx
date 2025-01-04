@@ -87,7 +87,7 @@ function RequestOtpPage() {
                     (OTP).
                 </p>
 
-                <div className={requestOtpStyles.input_group}>
+                <div className=''>
                     <FormInputComponent
                         type='email'
                         id='email'
@@ -96,10 +96,6 @@ function RequestOtpPage() {
                         label='Email'
                         onChange={handleInputChange}
                         error={errors.email}
-                        containerClass={requestOtpStyles.input_group}
-                        inputClass={requestOtpStyles.input}
-                        labelClass={requestOtpStyles.label}
-                        errorClass={requestOtpStyles.error}
                     />
                 </div>
                 <PrimaryButtonComponent

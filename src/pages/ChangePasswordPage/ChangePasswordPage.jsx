@@ -13,16 +13,12 @@ function ChangePasswordPage() {
     const [confirmPassword, setConfirmPassword] = useState('')
     const [errors, setErrors] = useState({})
     const [isLoading, setIsLoading] = useState(false)
-    const [showPassword, setShowPassword] = useState(false)
 
     // const { email } = usePasswordResetContext()
 
     
     const navigate = useNavigate()
     
-    const togglePasswordVisibility = () => {
-        setShowPassword((prev) => !prev)
-    }
 
     const handleInputChange = (event) => {
         const { name, value } = event.target
@@ -94,113 +90,31 @@ function ChangePasswordPage() {
                 <p className={changePasswordStyles.subtitle}>
                     Make sure your password is memorable and secure.
                 </p>
-                <div className={changePasswordStyles.password_container}>
+                <div className=''>
                     <FormInputComponent
                         id='newPassword'
                         name='newPassword'
-                        type={showPassword ? 'text' : 'password'}
+                        type='password'
                         value={newPassword}
                         placeholder=' '
                         label='New Password'
                         autoComplete='newPassword'
                         onChange={handleInputChange}
                         error={errors.password}
-                        containerClass={changePasswordStyles.input_group}
-                        inputClass={changePasswordStyles.input}
-                        labelClass={changePasswordStyles.label}
-                        errorClass={changePasswordStyles.error}
                     />
-                    <ButtonComponent
-                        onClick={togglePasswordVisibility}
-                        className={changePasswordStyles.eyeIcon}>
-                        {showPassword ? (
-                            <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                width='24'
-                                height='24'
-                                viewBox='0 0 24 24'
-                                fill='none'
-                                stroke='currentColor'
-                                strokeWidth='2'
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                className='lucide lucide-eye'>
-                                <path d='M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0' />
-                                <circle cx='12' cy='12' r='3' />
-                            </svg>
-                        ) : (
-                            <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                width='24'
-                                height='24'
-                                viewBox='0 0 24 24'
-                                fill='none'
-                                stroke='currentColor'
-                                strokeWidth='2'
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                className='lucide lucide-eye-off'>
-                                <path d='M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49' />
-                                <path d='M14.084 14.158a3 3 0 0 1-4.242-4.242' />
-                                <path d='M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143' />
-                                <path d='m2 2 20 20' />
-                            </svg>
-                        )}
-                    </ButtonComponent>
                 </div>
                 <div className={changePasswordStyles.password_container}>
                     <FormInputComponent
                         id='confirmPassword'
                         name='confirmPassword'
-                        type={showPassword ? 'text' : 'password'}
+                        type='password'
                         value={confirmPassword}
                         placeholder=' '
                         label='Confirm Password'
                         autoComplete='confirmPassword'
                         onChange={handleInputChange}
                         error={errors.password}
-                        containerClass={changePasswordStyles.input_group}
-                        inputClass={changePasswordStyles.input}
-                        labelClass={changePasswordStyles.label}
-                        errorClass={changePasswordStyles.error}
                     />
-                    <span
-                        onClick={togglePasswordVisibility}
-                        className={changePasswordStyles.eyeIcon}>
-                        {showPassword ? (
-                            <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                width='24'
-                                height='24'
-                                viewBox='0 0 24 24'
-                                fill='none'
-                                stroke='currentColor'
-                                strokeWidth='2'
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                className='lucide lucide-eye'>
-                                <path d='M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0' />
-                                <circle cx='12' cy='12' r='3' />
-                            </svg>
-                        ) : (
-                            <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                width='24'
-                                height='24'
-                                viewBox='0 0 24 24'
-                                fill='none'
-                                stroke='currentColor'
-                                strokeWidth='2'
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                className='lucide lucide-eye-off'>
-                                <path d='M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49' />
-                                <path d='M14.084 14.158a3 3 0 0 1-4.242-4.242' />
-                                <path d='M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143' />
-                                <path d='m2 2 20 20' />
-                            </svg>
-                        )}
-                    </span>
                 </div>
                 {(newPassword || confirmPassword) && (
                     <PasswordStrengthBar

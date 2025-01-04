@@ -1,4 +1,8 @@
-import React from 'react'
+import React, { useState } from 'react'
+import ButtonComponent from '../ButtonComponent/ButtonComponent'
+import EyeShowSVG from '../../svg/EyeShowSVG/EyeShowSVG'
+import EyeHideSVG from '../../svg/EyeHideSVG/EyeHideSVG'
+import formInputStyles from './FormInputComponent.module.css'
 
 const FormInputComponent = ({
     id,
@@ -15,22 +19,48 @@ const FormInputComponent = ({
     errorClass,
     ...props
 }) => {
+
+    const [showPassword, setShowPassword] = useState(false)
+    
+    const togglePasswordVisibility = (event) => {
+        event.preventDefault()
+        setShowPassword((prev) => !prev)
+    }
+
     return (
-        <div className={containerClass}>
-            <input
-                type={type}
-                id={id}
-                name={name}
-                className={inputClass}
-                value={value}
-                placeholder={placeholder}
-                onChange={onChange}
-                {...props}
-            />
-            <label htmlFor={id} className={labelClass}>
-                {label}
-            </label>
-            {error && <p className={errorClass}>{error}</p>}
+        <div className={formInputStyles.form_input_container}>
+            <div className={formInputStyles.input_group}>
+                <div className='w-full h-full'>
+                    <input
+                        type={type === 'password' ? showPassword ? 'text' : 'password' : type}
+                        id={id}
+                        name={name}
+                        className={formInputStyles.input}
+                        value={value}
+                        placeholder={placeholder}
+                        onChange={onChange}
+                        {...props}
+                    />
+                    <label htmlFor={id} className={formInputStyles.label}>
+                        {label}
+                    </label>
+                </div>
+                {
+                    type === 'password' 
+                    &&
+                    <ButtonComponent
+                        onClick={togglePasswordVisibility}
+                        className={formInputStyles.eye_icon}>
+                        {showPassword ? 
+                            <EyeShowSVG/>
+                            : 
+                            <EyeHideSVG/>
+                        }
+                    </ButtonComponent>
+                }
+                                
+            </div>
+            {error && <p className={formInputStyles.error}>{error}</p>}
         </div>
     )
 }

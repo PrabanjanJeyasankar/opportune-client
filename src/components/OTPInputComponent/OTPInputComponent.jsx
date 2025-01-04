@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import otpInputStyles from './OTPInputComponent.module.css';
-import FormInputComponent from '../../elements/FormInputComponent/FormInputComponent';
+import OTPInputFieldComponent from '../../elements/OTPInputFieldComponent/OTPInputFieldComponent';
 
 function OTPInputComponent({ value, onChange }) {
     if (!Array.isArray(value)) {
@@ -62,7 +62,7 @@ function OTPInputComponent({ value, onChange }) {
     return (
         <div className={otpInputStyles.otpInputContainer}>
             {value.map((digit, index) => (
-                <FormInputComponent
+                <OTPInputFieldComponent
                     key={index}
                     id={`otp-${index}`}
                     name={`otp-${index}`}

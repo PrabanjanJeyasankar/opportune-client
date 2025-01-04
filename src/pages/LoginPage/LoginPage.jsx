@@ -16,12 +16,8 @@ function LoginPage() {
     })
     const [errors, setErrors] = useState({})
     const [isLoading, setIsLoading] = useState(false)
-    const [showPassword, setShowPassword] = useState(false)
     const navigate = useNavigate()
 
-    const togglePasswordVisibility = () => {
-        setShowPassword((prev) => !prev)
-    }
 
     const handleInputChange = (event) => {
         const { name, value } = event.target
@@ -115,55 +111,14 @@ function LoginPage() {
                     <FormInputComponent
                         id='password'
                         name='password'
-                        type={showPassword ? 'text' : 'password'}
+                        type='password'
                         value={formData.password}
                         placeholder=' '
                         label='Password'
                         autoComplete='password'
                         onChange={handleInputChange}
                         error={errors.password}
-                        containerClass={loginStyles.inputGroup}
-                        inputClass={loginStyles.input}
-                        labelClass={loginStyles.label}
-                        errorClass={loginStyles.error}
                     />
-                    <ButtonComponent
-                        onClick={togglePasswordVisibility}
-                        className={loginStyles.eyeIcon}>
-                        {showPassword ? (
-                            <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                width='24'
-                                height='24'
-                                viewBox='0 0 24 24'
-                                fill='none'
-                                stroke='currentColor'
-                                strokeWidth='2'
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                className='lucide lucide-eye'>
-                                <path d='M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0' />
-                                <circle cx='12' cy='12' r='3' />
-                            </svg>
-                        ) : (
-                            <svg
-                                xmlns='http://www.w3.org/2000/svg'
-                                width='24'
-                                height='24'
-                                viewBox='0 0 24 24'
-                                fill='none'
-                                stroke='currentColor'
-                                strokeWidth='2'
-                                strokeLinecap='round'
-                                strokeLinejoin='round'
-                                className='lucide lucide-eye-off'>
-                                <path d='M10.733 5.076a10.744 10.744 0 0 1 11.205 6.575 1 1 0 0 1 0 .696 10.747 10.747 0 0 1-1.444 2.49' />
-                                <path d='M14.084 14.158a3 3 0 0 1-4.242-4.242' />
-                                <path d='M17.479 17.499a10.75 10.75 0 0 1-15.417-5.151 1 1 0 0 1 0-.696 10.75 10.75 0 0 1 4.446-5.143' />
-                                <path d='m2 2 20 20' />
-                            </svg>
-                        )}
-                    </ButtonComponent>
                 </div>
                 <Link to='/request-otp' className={loginStyles.forgot_password}>
                     Forgot password?

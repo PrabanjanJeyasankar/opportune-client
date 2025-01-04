@@ -50,60 +50,8 @@
     margin-left: 0.3rem;
 }
 
-.inputGroup {
-    position: relative;
-    margin-bottom: 1rem;
-    background-color: black;
-}
-
-.label {
-    position: absolute;
-    left: 10px;
-    top: 14px;
-    transition: 0.2s ease all;
-    color: var(--gray-800);
-    pointer-events: none;
-    font-size: 0.9rem;
-    background-color: white;
-    padding: 0 0.3rem;
-    background-color: black;
-}
-
-.input {
-    width: -webkit-fill-available;
-    padding: 0.8rem 0.75rem;
-    border: 1px solid var(--primary-gray);
-    border-radius: 0.6rem;
-    font-size: 1rem;
-    outline: none;
-    transition: border-color 0.3s;
-    background-color: black;
-}
-
-.input:focus + .label,
-.input:not(:placeholder-shown) + .label {
-    top: -6px;
-    left: 12px;
-    font-size: 12px;
-    color: var(--gray-100);
-    background-color: black;
-}
-
 .password_container {
     position: relative;
-}
-
-.eyeIcon {
-    position: absolute;
-    right: 1rem;
-    top: 40%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: var(--gray-800);
-}
-
-.eyeIcon:hover {
-    color: var(--gray-500);
 }
 
 .spinning_loader {
@@ -143,12 +91,6 @@
     height: 1.3rem;
 }
 
-.error {
-    font-size: 0.8rem;
-    color: red;
-    margin-top: 0.2rem;
-}
-
 .forgot_password {
     text-align: right;
     font-size: 0.9rem;
@@ -183,15 +125,11 @@
         margin-bottom: 2.5rem;
     }
 
-    .input,
     .createButton,
-    .googleButton {
+    .socialButton {
         font-size: 0.9rem;
     }
 
-    .label {
-        font-size: 0.8rem;
-    }
 }
 
 @media (min-width: 425px) and (max-width: 860px) {
@@ -213,13 +151,6 @@
         margin-bottom: 0.5rem;
     }
 
-    .input {
-        padding: 0.75rem 0.5rem;
-    }
-
-    .label {
-        font-size: 0.8rem;
-    }
 }
 
 @media (min-width: 860px) and (max-width: 1024px) {
@@ -234,9 +165,8 @@
         margin-bottom: 2.5rem;
     }
 
-    .input,
     .createButton,
-    .googleButton {
+    .socialButton {
         font-size: 0.9rem;
     }
 }
