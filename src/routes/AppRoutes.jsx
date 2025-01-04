@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import LoginPage from '../pages/LoginPage/LoginPage'
 import SignupPage from '../pages/SignupPage/SignupPage'
 import RequestOtpPage from '../pages/RequestOTPPage/RequestOTPPage'
+import VerifyOTPPage from '../pages/VerifyOTPPage/VerifyOTPPage'
 
 const AppRoutes = () => {
   return (
@@ -12,6 +13,7 @@ const AppRoutes = () => {
         <Route path='/login' element={<LoginPage/>}/>
         <Route path='/signup' element={<SignupPage/>}/>
         <Route path='/request-otp' element={<RequestOtpPage/>}/>
+        <Route path='/verify-otp' element={<VerifyOTPPage/>}/>
         <Route path='/*' element={<div>Error Page</div>}/>
       </Routes>
     </Suspense>
