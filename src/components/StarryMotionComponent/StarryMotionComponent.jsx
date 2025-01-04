@@ -18,7 +18,7 @@ function StarryMotionComponent() {
         const speed = 0.7
         // Creating an array of stars
         const stars = []
-        const numStars = 400
+        const numStars = 250
         const centerX = canvas.width / 2
         const centerY = canvas.height / 2
 
@@ -44,7 +44,7 @@ function StarryMotionComponent() {
                 // Drawing the star
                 ctx.beginPath()
                 ctx.arc(x, y, size, 0, Math.PI * 2)
-                ctx.fillStyle = 'white'
+                ctx.fillStyle = 'gray'
                 ctx.fill()
 
                 // Moving the star closer to the viewer
