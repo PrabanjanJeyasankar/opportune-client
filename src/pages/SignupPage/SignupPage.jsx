@@ -12,6 +12,7 @@ import PasswordStrengthBar from 'react-password-strength-bar'
 function SignupPage() {
     const [formData, setFormData] = useState({
         name: '',
+        userName: '',
         email: '',
         password: '',
     })
@@ -37,6 +38,7 @@ function SignupPage() {
 
         const { isValid, errors: validationErrors } = validateSignupInputs(
             formData.name,
+            formData. userName,
             formData.email,
             formData.password
         )
@@ -131,6 +133,22 @@ function SignupPage() {
                     autoComplete='name'
                     onChange={handleInputChange}
                     error={errors.name}
+                    containerClass={signupStyles.input_group}
+                    inputClass={signupStyles.input}
+                    labelClass={signupStyles.label}
+                    errorClass={signupStyles.error}
+                />
+
+                <FormInputComponent
+                    id='userName'
+                    name='userName'
+                    type='text'
+                    value={formData.userName}
+                    placeholder=' '
+                    label='User Name'
+                    autoComplete='userName'
+                    onChange={handleInputChange}
+                    error={errors.userName}
                     containerClass={signupStyles.input_group}
                     inputClass={signupStyles.input}
                     labelClass={signupStyles.label}

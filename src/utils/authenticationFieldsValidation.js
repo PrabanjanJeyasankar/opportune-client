@@ -66,10 +66,11 @@ const validateInputs = (inputs, validations) => {
     return { isValid, errors }
 }
 
-const validateSignupInputs = (name, email, password) => {
-    const inputs = { name, email, password }
+const validateSignupInputs = (name, userName, email, password) => {
+    const inputs = { name, userName, email, password }
     const validations = {
         name: { required: true },
+        userName: {required: true},
         email: { required: true },
         password: { required: true, minimumLength: 6, maximumLength: 128 },
     }
