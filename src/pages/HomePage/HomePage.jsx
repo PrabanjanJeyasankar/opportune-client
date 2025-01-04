@@ -1,12 +1,11 @@
-import NavigationBarComponent from '../../components/NavigationBarComponent/NavigationBarComponent'
-import homePageStyles from './HomePage.module.css'
+import HeroComponent from '../../components/HeroComponent/HeroComponent'
 
 function HomePage() {
-  return (
-    <div>
-      <NavigationBarComponent/>
-    </div>
-  )
+    return (
+        <div>
+            <HeroComponent />
+        </div>
+    )
 }
 
 export default HomePage

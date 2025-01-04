@@ -4,16 +4,22 @@ import LoginPage from '../pages/LoginPage/LoginPage'
 import SignupPage from '../pages/SignupPage/SignupPage'
 import RequestOtpPage from '../pages/RequestOTPPage/RequestOTPPage'
 import HomePage from '../pages/HomePage/HomePage'
+import MainLayout from '../layouts/MainLayout/MainLayout'
 
 const AppRoutes = () => {
     return (
         <>
             <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
-                    <Route exact path='/' element={<HomePage />} />
-                    <Route path='/login' element={<LoginPage />} />
-                    <Route path='/signup' element={<SignupPage />} />
-                    <Route path='/request-otp' element={<RequestOtpPage />} />
+                    <Route element={<MainLayout />}>
+                        <Route exact path='/' element={<HomePage />} />
+                        <Route path='/login' element={<LoginPage />} />
+                        <Route path='/signup' element={<SignupPage />} />
+                        <Route
+                            path='/request-otp'
+                            element={<RequestOtpPage />}
+                        />
+                    </Route>
                     <Route path='/*' element={<div>Error Page</div>} />
                 </Routes>
             </Suspense>
