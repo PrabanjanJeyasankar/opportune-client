@@ -4,6 +4,7 @@ import { Link, useNavigate, useLocation } from 'react-router-dom'
 import otpVerificationStyles from './VerifyOTPPage.module.css'
 import OTPInputComponent from '../../components/OTPInputComponent/OTPInputComponent'
 import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
+import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 
 function VerifyOTPPage() {
     // const { setIsLoggedIn, setUserProfile } = useContext(UserContext)
@@ -136,6 +137,11 @@ function VerifyOTPPage() {
                 className={otpVerificationStyles.form}
                 onSubmit={handleSubmit}
                 noValidate>
+                <img
+                    src={AppLogo}
+                    className={otpVerificationStyles.app_logo}
+                    alt='App Logo'
+                />
                 <h1 className={otpVerificationStyles.title}>Verify OTP</h1>
                 <p className={otpVerificationStyles.subtitle}>
                     Enter the OTP sent to

@@ -5,6 +5,7 @@ import SignupPage from '../pages/SignupPage/SignupPage'
 import RequestOtpPage from '../pages/RequestOTPPage/RequestOTPPage'
 import HomePage from '../pages/HomePage/HomePage'
 import MainLayout from '../layouts/MainLayout/MainLayout'
+import VerifyOTPPage from '../pages/VerifyOTPPage/VerifyOTPPage'
 
 const AppRoutes = () => {
     return (
@@ -19,6 +20,7 @@ const AppRoutes = () => {
                             path='/request-otp'
                             element={<RequestOtpPage />}
                         />
+                        <Route path='/verify-otp' element={<VerifyOTPPage/>}/>
                     </Route>
                     <Route path='/*' element={<div>Error Page</div>} />
                 </Routes>
