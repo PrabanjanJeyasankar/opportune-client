@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
 :root {
     font-synthesis: none;
     text-rendering: optimizeLegibility;
@@ -10,13 +15,21 @@
     font-family: 'Inter';
     background-color: black;
     color: white;
+    box-sizing: border-box;
+    margin: 0 auto;
+    max-width: 1400px;
+    /* min-width: 320px; */
+
+    --primary-gray: #ffffff50;
+    --secondary-gray: #ffffff80;
     --gray-100: #a1a1a1;
     --gray-300: #333;
     --gray-500: #555;
     --gray-600: #666;
-    --gray-800: #888;
+    --gray-800: #757575;
     --gray-ccc: #ccc;
-    --green-500: #017e28;
+    --green-500: #7dff40;
+    --red-primary: #ff0000;
 }
 
 @font-face {

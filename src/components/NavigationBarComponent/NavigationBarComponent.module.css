@@ -1,0 +1,195 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    position: sticky;
+    top: 10px;
+    z-index: 1000;
+    margin: 1rem 1.5rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    text-decoration: none;
+}
+
+.logo_image {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    object-fit: cover;
+    transition: width 0.3s ease, height 0.3s ease;
+}
+
+.app_name {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: white;
+}
+
+.navigation_bar {
+    display: flex;
+    align-items: center;
+    gap: 3rem;
+    color: white;
+}
+
+.link {
+    text-decoration: none;
+    opacity: 0.8;
+    color: rgb(173, 173, 173);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.link:hover {
+    transform: scale(1.05);
+    color: white;
+}
+
+.activeLink {
+    color: white;
+}
+
+.authentication_links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3rem;
+}
+
+.signup_button {
+    color: black;
+    background-color: white;
+    padding: 0.3rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    position: relative;
+    z-index: 20;
+    background: transparent;
+    transition: all 250ms ease-in-out;
+}
+
+.line {
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background-color: white;
+    transition: all 250ms ease-out;
+}
+
+.line:nth-child(1) {
+    transform: translateY(-4px);
+}
+
+.line:nth-child(2) {
+    transform: translateY(4px);
+}
+
+.hamburger.active .line:nth-child(1) {
+    transform: translateY(0) rotate(45deg);
+}
+
+.hamburger.active .line:nth-child(2) {
+    transform: translateY(0) rotate(-45deg);
+}
+
+@media (max-width: 820px) {
+    .header {
+        padding: 0.5rem 0.6rem;
+        border-radius: 14px;
+    }
+
+    .navigation_bar {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        position: absolute;
+        background: rgba(0, 0, 0, 0.945);
+        top: 0%;
+        right: 100%;
+        z-index: 10;
+        padding: 4rem 2rem 2rem 2rem;
+        gap: 12px;
+        justify-content: center;
+        width: 100%;
+        opacity: 0;
+        transition: right 0.4s ease, opacity 0.4s ease;
+    }
+
+    .authentication_links {
+        margin-top: 1.5rem;
+        align-items: flex-end;
+        flex-direction: column;
+        /* gap: 1.5rem; */
+    }
+
+    .navigation_bar.show {
+        left: 0;
+        opacity: 1;
+    }
+
+    .hamburger {
+        display: flex;
+        margin-right: 0.5rem;
+    }
+
+    .signup_button {
+        font-size: 1.4rem;
+        font-weight: 600;
+        padding: 0.4rem 1rem;
+        /* padding: 0.6rem; */
+    }
+
+    .link {
+        font-size: 1.4rem;
+        font-weight: 400;
+        color: rgb(255, 255, 255);
+        padding: 0.6rem;
+    }
+}
+
+@media (max-width: 426px) {
+    .navigation_bar {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        background: rgba(0, 0, 0, 0.945);
+        top: 12%;
+        right: -100%;
+        z-index: 10;
+        padding: 2rem;
+        align-items: flex-end;
+        gap: 12px;
+        justify-content: center;
+        width: 100%;
+        opacity: 0;
+        transition: right 0.4s ease, opacity 0.4s ease;
+    }
+
+    .navigation_bar.show {
+        left: 0;
+        opacity: 1;
+    }
+
+    .signup_button {
+        padding: 0.3rem 1rem;
+        border-radius: 0.5rem;
+        font-size: 1rem;
+        font-weight: 500;
+    }
+}
