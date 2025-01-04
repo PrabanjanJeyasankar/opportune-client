@@ -1,6 +1,8 @@
 .hero_section {
     padding: 80px 20px;
     text-align: center;
+    position: relative;
+    /* overflow-x: hidden; */
 }
 
 .hero_title {
@@ -11,6 +13,8 @@
     margin: 0;
     max-width: 1200px;
     margin: 0 auto;
+    position: relative;
+    z-index: 10;
 }
 
 .hero_subtitle {
@@ -19,6 +23,7 @@
     margin: 2rem auto;
     width: clamp(280px, 50%, 600px);
     font-weight: normal;
+    position: relative;
 }
 
 .search_container {
@@ -54,7 +59,6 @@
     transform: translateY(-50%);
     cursor: pointer;
     stroke: var(--secondary-gray);
-
 }
 
 .search_input:focus {
@@ -63,7 +67,7 @@
 }
 
 .search_input::placeholder {
-    color:var(--secondary-gray);
+    color: var(--secondary-gray);
 }
 
 .sort_button {
@@ -89,6 +93,87 @@
     height: 16px;
 }
 
+.floating_rock {
+    position: absolute;
+    pointer-events: none;
+}
+
+.rock1 {
+    width: 3%;
+    top: -5%;
+    left: 40%;
+}
+
+.rock2 {
+    width: 12%;
+    bottom: 0%;
+    right: 22%;
+}
+
+.rock3 {
+    width: 3%;
+    top: 40%;
+    right: 3%;
+}
+
+.rock4 {
+    width: 20%;
+    bottom: -60%;
+    left: 16%;
+    z-index: -1;
+}
+
+.rock5 {
+    width: 6%;
+    top:-50%;
+    right: 0%;
+    /* z-index: -1; */
+}
+
+.rock6 {
+    width: 10%;
+    top: 10%;
+    left: -10%;
+}
+
+.rock7 {
+    width: 35%;
+    bottom: -30%;
+    left: 80%;
+    z-index: -1;
+}
+
+.rock8 {
+    width: 35%;
+    bottom: -100%;
+    left: -15%;
+    z-index: -1;
+}
+
+/* .rock1 {
+    width: clamp(2%, 3vw, 5%);
+    top: clamp(-10%, -5%, 0%);
+    left: clamp(30%, 40%, 50%);
+}
+
+.rock2 {
+    width: clamp(10%, 12vw, 15%);
+    bottom: clamp(-10%, 0%, 10%);
+    right: clamp(15%, 20vw, 25%);
+}
+
+.rock3 {
+    width: clamp(2%, 2.5vw, 3%);
+    top: clamp(0%, 2%, 5%);
+    right: clamp(2%, 3vw, 5%);
+}
+
+.rock4 {
+    bottom: clamp(-70%, -40%, -60%);
+    left: clamp(15%, 13vw, 20%);
+    z-index: -1;
+} */
+
 @media (min-width: 320px) {
     .search_icon {
         right: 5%;
@@ -107,7 +192,7 @@
     }
 }
 
-@media (min-width: 610px) and  (max-width: 767px){
+@media (min-width: 610px) and (max-width: 767px) {
     .search_icon {
         right: 16%;
     }
@@ -115,6 +200,6 @@
 
 @media (min-width: 768px) {
     .search_icon {
-        right: 18%;
+        right: 20%;
     }
 }

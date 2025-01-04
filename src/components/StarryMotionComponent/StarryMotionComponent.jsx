@@ -18,7 +18,7 @@ function StarryMotionComponent() {
         const speed = 0.7
         // Creating an array of stars
         const stars = []
-        const numStars = 250
+        const numStars = 500
         const centerX = canvas.width / 2
         const centerY = canvas.height / 2
 
@@ -32,7 +32,7 @@ function StarryMotionComponent() {
 
         const drawWarpSpeed = () => {
             // Clearing the canvas with a slight fade
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.2)'
+            ctx.fillStyle = 'rgba(0, 0, 0, 1)'
             ctx.fillRect(0, 0, canvas.width, canvas.height)
 
             stars.forEach((star) => {
