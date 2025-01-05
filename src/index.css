@@ -21,6 +21,19 @@
     overflow-x: hidden;
     /* min-width: 320px; */
 
+    --background-light: rgba(255, 255, 255, 0.055);
+    --background-medium: rgba(255, 255, 255, 0.07);
+    --white-opacity-low: rgba(255, 255, 255, 0.16);
+    --white-opacity-medium: rgba(255, 255, 255, 0.5);
+    --white-opacity-none: rgba(255, 255, 255, 0);
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(0, 0, 0, 0.2);
+    --gray-secondary: var(--secondary-gray);
+    --text-primary: #fff;
+    --text-secondary: #d1d1d1;
+    --button-hover: #007bff;
+
+
     --primary-gray: #ffffff50;
     --secondary-gray: #ffffff80;
     --gray-100: #a1a1a1;
