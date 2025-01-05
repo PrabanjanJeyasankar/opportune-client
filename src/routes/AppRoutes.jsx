@@ -6,6 +6,7 @@ import HomePage from '../pages/HomePage/HomePage'
 import MainLayout from '../layouts/MainLayout/MainLayout'
 import VerifyOTPPage from '../pages/VerifyOTPPage/VerifyOTPPage'
 import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
+import RequestOtpPage from '../pages/RequestOtpPage/RequestOtpPage'
 
 const AppRoutes = () => {
     return (
@@ -18,7 +19,7 @@ const AppRoutes = () => {
                         <Route path='/signup' element={<SignupPage />} />
                         <Route
                             path='/request-otp'
-                            element={<SignupPage/>}
+                            element={<RequestOtpPage/>}
                         />
                         <Route path='/verify-otp' element={<VerifyOTPPage/>}/>
                         <Route path='/change-password' element={<ChangePasswordPage/>}/>
