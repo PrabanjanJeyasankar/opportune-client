@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react'
 import styles from './HeroComponent.module.css'
-import InputComponent from '../../elements/InputComponent/InputComponent'
 import ImageComponent from '../../elements/ImageComponent/ImageComponent'
 import Rock1 from '../../assets/images/rocks/rock_1.webp'
 import Rock2 from '../../assets/images/rocks/rock_2.webp'
 import Rock3 from '../../assets/images/rocks/rock_3.webp'
 import Rock4 from '../../assets/images/rocks/rock_4.webp'
 import Rock5 from '../../assets/images/rocks/rock_5.webp'
-import Rock6 from '../../assets/images/rocks/rock_6.webp'
+import Rock6 from '../../assets/images/rocks/rock_6.webp' 
 import Rock7 from '../../assets/images/rocks/rock_7.webp'
 import Rock8 from '../../assets/images/rocks/rock_8.webp'
+import InitialProjectsComponent from '../InitialProjectsComponent/InitialProjectsComponent'
 
 function HeroComponent() {
     useEffect(() => {
@@ -102,39 +102,9 @@ function HeroComponent() {
                     />
                 </p>
 
-                <div className={styles.search_container}>
-                    <ImageComponent
-                        src={Rock6}
-                        alt='Rock 6'
-                        className={`${styles.floating_rock} ${styles.rock6}`}
-                    />
-                    <InputComponent
-                        type='text'
-                        className={styles.search_input}
-                        placeholder='Search projects...'
-                    />
-                    <svg
-                        className={styles.search_icon}
-                        width='24'
-                        height='24'
-                        viewBox='0 0 26 26'
-                        fill='none'
-                        xmlns='http://www.w3.org/2000/svg'>
-                        <path
-                            d='M12.4883 21.4883C17.735 21.4883 21.9883 17.235 21.9883 11.9883C21.9883 6.74158 17.735 2.48828 12.4883 2.48828C7.24158 2.48828 2.98828 6.74158 2.98828 11.9883C2.98828 17.235 7.24158 21.4883 12.4883 21.4883Z'
-                            strokeWidth='1.8'
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
-                        />
-                        <path
-                            d='M25.0117 24.5117L20.9883 20.4883'
-                            strokeWidth='1.8'
-                            strokeLinecap='round'
-                            strokeLinejoin='round'
-                        />
-                    </svg>
-                </div>
-                <ImageComponent
+                {/* Here goes the search container */}
+                <InitialProjectsComponent/>
+                {/* <ImageComponent
                     src={Rock7}
                     alt='Rock 7'
                     className={`${styles.floating_rock} ${styles.rock7}`}
@@ -143,7 +113,7 @@ function HeroComponent() {
                     src={Rock8}
                     alt='Rock 8'
                     className={`${styles.floating_rock} ${styles.rock8}`}
-                />
+                /> */}
             </section>
         </>
     )
