@@ -1,0 +1,57 @@
+.tags_filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    padding: 1rem;
+    margin-top: 1.4rem;
+}
+
+.tags_container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.tag {
+    padding: 0.5rem 1rem;
+    border-radius: 100px;
+    border: none;
+    background: var(--white-opacity-low);
+    color: var(--gray-ccc);
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.tag:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.tag_selected {
+    background: white;
+    color: black;
+}
+
+.tag_selected:hover {
+    background: white;
+    color: black;
+}
+
+@media (max-width: 768px) {
+    .tag {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+    }
+
+    .tags_container {
+        gap: 0.4rem;
+    }
+}
