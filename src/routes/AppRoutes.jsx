@@ -2,7 +2,6 @@ import React, { lazy, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import LoginPage from '../pages/LoginPage/LoginPage'
 import SignupPage from '../pages/SignupPage/SignupPage'
-import RequestOtpPage from '../pages/RequestOTPPage/RequestOTPPage'
 import HomePage from '../pages/HomePage/HomePage'
 import MainLayout from '../layouts/MainLayout/MainLayout'
 import VerifyOTPPage from '../pages/VerifyOTPPage/VerifyOTPPage'
@@ -19,7 +18,7 @@ const AppRoutes = () => {
                         <Route path='/signup' element={<SignupPage />} />
                         <Route
                             path='/request-otp'
-                            element={<RequestOtpPage />}
+                            element={<SignupPage/>}
                         />
                         <Route path='/verify-otp' element={<VerifyOTPPage/>}/>
                         <Route path='/change-password' element={<ChangePasswordPage/>}/>
