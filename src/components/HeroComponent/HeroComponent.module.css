@@ -23,12 +23,12 @@
     font-size: clamp(0.9rem, 3vw, 1.1rem);
     color: var(--secondary-gray);
     margin: 2rem auto;
-    width: clamp(280px, 50%, 600px);
+    width: clamp(280px, 60%, 650px);
     font-weight: normal;
     position: relative;
 }
 
-.search_and_filters{
+.search_and_filters {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -80,6 +80,7 @@
 .search_input::placeholder {
     color: var(--secondary-gray);
 }
+
 .sort_button {
     background: rgba(255, 255, 255, 0.1);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -103,6 +104,10 @@
     height: 16px;
 }
 
+.tag_filters {
+    position: relative;
+}
+
 .floating_rock {
     position: absolute;
     pointer-events: none;
@@ -122,8 +127,9 @@
 
 .rock3 {
     width: 3%;
-    top: 40%;
-    right: 3%;
+    top: -90%;
+    right: -10%;
+    z-index: 1200;
 }
 
 .rock4 {
@@ -142,12 +148,12 @@
 }
 
 .rock6 {
-    width: 10%;
-    top: 10%;
-    left: -10%;
+    width: 12%;
+    bottom: 50%;
+    left: -20%;
 }
 
-.rock7 {
+/* .rock7 {
     width: 35%;
     bottom: -30%;
     left: 80%;
@@ -158,6 +164,19 @@
     width: 35%;
     bottom: -100%;
     left: -15%;
+    z-index: -1;
+} */
+.rock7 {
+    width: 40%;
+    bottom: 45%;
+    right: -20%;
+    z-index: 1000;
+}
+
+.rock8 {
+    width: 50%;
+    top: 23%;
+    left: -35%;
     z-index: -1;
 }
 

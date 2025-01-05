@@ -23,6 +23,7 @@
 
     --background-light: rgba(255, 255, 255, 0.055);
     --background-medium: rgba(255, 255, 255, 0.07);
+    --background-low: rgba(255, 255, 255, 0.07);
     --white-opacity-low: rgba(255, 255, 255, 0.1);
     --white-opacity-medium: rgba(255, 255, 255, 0.5);
     --white-opacity-none: rgba(255, 255, 255, 0);

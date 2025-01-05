@@ -36,11 +36,6 @@ function HeroComponent() {
     return (
         <>
             <section className={styles.hero_section}>
-                <ImageComponent
-                    src={Rock3}
-                    alt='Rock 3'
-                    className={`${styles.floating_rock} ${styles.rock3}`}
-                />
                 <div className='title_section_one'>
                     <h1 className={styles.hero_title}>
                         <ImageComponent
@@ -76,6 +71,11 @@ function HeroComponent() {
 
                 <div className={styles.search_and_filters}>
                     <div className={styles.search_container}>
+                        {/* <ImageComponent
+                            src={Rock6}
+                            alt='Rock 6'
+                            className={`${styles.floating_rock} ${styles.rock6}`}
+                        /> */}
                         <InputComponent
                             type='text'
                             className={styles.search_input}
@@ -104,26 +104,34 @@ function HeroComponent() {
                             />
                         </svg>
                     </div>
-                    <TagFilterComponent
+                    <div className={styles.tag_filters}>
+                        <TagFilterComponent
+                            selectedTag={selectedTag}
+                            setSelectedTag={setSelectedTag}
+                        />
+                        <ImageComponent
+                            src={Rock7}
+                            alt='Rock 7'
+                            className={`${styles.floating_rock} ${styles.rock7}`}
+                        />
+                        <ImageComponent
+                            src={Rock3}
+                            alt='Rock 3'
+                            className={`${styles.floating_rock} ${styles.rock3}`}
+                        />
+                        <ImageComponent
+                            src={Rock8}
+                            alt='Rock 8'
+                            className={`${styles.floating_rock} ${styles.rock8}`}
+                        />
+                    </div>
+                </div>
+                <div className={styles.project_display}>
+                    <ProjectDisplayComponent
+                        searchTerm={searchTerm}
                         selectedTag={selectedTag}
-                        setSelectedTag={setSelectedTag}
                     />
                 </div>
-                <ProjectDisplayComponent
-                    searchTerm={searchTerm}
-                    selectedTag={selectedTag}
-                />
-
-                {/* <ImageComponent
-                    src={Rock7}
-                    alt='Rock 7'
-                    className={`${styles.floating_rock} ${styles.rock7}`}
-                />  
-                <ImageComponent
-                    src={Rock8}
-                    alt='Rock 8'
-                    className={`${styles.floating_rock} ${styles.rock8}`}
-                /> */}
             </section>
         </>
     )

@@ -1,28 +1,28 @@
 .tags_filter {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 0.8rem;
     justify-content: center;
     align-items: center;
-    width: 70%;
+    width: 85%;
     padding: 1rem;
-    margin-top: 1.4rem;
+    margin-top: 1.5rem;
 }
 
 .tags_container {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    gap: 01rem;
     justify-content: center;
     align-items: center;
     width: 100%;
 }
 
 .tag {
-    padding: 0.5rem 1rem;
-    border-radius: 100px;
+    padding: 0.35rem 1.2rem;
+    border-radius: 10rem;
     border: none;
-    background: var(--white-opacity-low);
+    background: var(--background-low);
     color: var(--gray-ccc);
     cursor: pointer;
     font-size: 0.875rem;
@@ -43,6 +43,12 @@
 .tag_selected:hover {
     background: white;
     color: black;
+}
+
+@media (max-width: 320px) {
+    .tags_filter {
+        width: 100%;
+    }
 }
 
 @media (max-width: 768px) {
