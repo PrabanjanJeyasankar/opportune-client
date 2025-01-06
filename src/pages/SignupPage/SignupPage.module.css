@@ -3,8 +3,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 100%;
+    height: 100vh;
     width: 100%;
+    padding-top: 10rem;
 }
 
 .form {
@@ -102,7 +103,7 @@
 @media (min-width: 220px) and (max-width: 426px) {
     .container {
         justify-content: flex-start;
-        padding: 2rem 1rem;
+        padding: 5rem 1rem;
         min-height: 100vh;
     }
 
@@ -123,7 +124,7 @@
     }
 
     .title {
-        display: none;
+        font-size: 2rem;
     }
 
     .subtitle {
@@ -137,11 +138,15 @@
     }
 }
 
-@media (min-width: 425px) and (max-width: 860px) {
+@media (min-width: 426px) and (max-width: 860px) {
     .container {
         justify-content: flex-start;
-        padding: 1rem 2rem;
+        padding: 5rem 1rem;
         width: 100%;
+    }
+
+    .title {
+        font-size: 2.6rem;
     }
 
     .app_logo {
@@ -160,7 +165,7 @@
 
 @media (min-width: 860px) and (max-width: 1024px) {
     .title {
-        font-size: 2.1rem;
+        font-size: 2.6rem;
     }
 
     .subtitle {
