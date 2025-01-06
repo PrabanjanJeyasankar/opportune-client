@@ -1,14 +1,14 @@
 .hero_section {
     display: flex;
     flex-direction: column;
-    padding: 10rem 0.5rem;
+    padding: 8rem 0.5rem;
     text-align: center;
     position: relative;
-    /* overflow-x: hidden; */
+    overflow-x: visible;
 }
 
 .hero_title {
-    font-size: clamp(1.8rem, 6vw, 4rem);
+    font-size: clamp(2rem, 6vw, 4rem);
     font-weight: 600;
     color: white;
     line-height: 1.2;
@@ -65,7 +65,6 @@
 .search_icon {
     position: absolute;
     right: 21%;
-    /* right: clamp(5%, 10%, 40%); */
     top: 62%;
     transform: translateY(-50%);
     cursor: pointer;
@@ -122,21 +121,20 @@
 .rock2 {
     width: 12%;
     bottom: 0%;
-    right: 22%;
+    right: 20%;
 }
 
 .rock3 {
     width: 3%;
     top: -90%;
     right: -10%;
-    z-index: 1200;
+    z-index: 1000;
 }
 
 .rock4 {
-    /* display: none; */
     width: 20%;
     bottom: -60%;
-    left: 16%;
+    left: 13%;
     z-index: -1;
 }
 
@@ -144,7 +142,6 @@
     width: 6%;
     top: -50%;
     right: 0%;
-    /* z-index: -1; */
 }
 
 .rock6 {
@@ -153,60 +150,26 @@
     left: -20%;
 }
 
-/* .rock7 {
-    width: 35%;
-    bottom: -30%;
+.rock7 {
+    width: 30%;
+    top: 15%;
     left: 80%;
     z-index: -1;
 }
 
 .rock8 {
-    width: 35%;
-    bottom: -100%;
-    left: -15%;
-    z-index: -1;
-} */
-.rock7 {
-    width: 40%;
-    bottom: 45%;
-    right: -20%;
-    z-index: 1000;
-}
-
-.rock8 {
     width: 50%;
     top: 23%;
-    left: -35%;
+    left: -46%;
     z-index: -1;
 }
-
-/* .rock1 {
-    width: clamp(2%, 3vw, 5%);
-    top: clamp(-10%, -5%, 0%);
-    left: clamp(30%, 40%, 50%);
-}
-
-.rock2 {
-    width: clamp(10%, 12vw, 15%);
-    bottom: clamp(-10%, 0%, 10%);
-    right: clamp(15%, 20vw, 25%);
-}
-
-.rock3 {
-    width: clamp(2%, 2.5vw, 3%);
-    top: clamp(0%, 2%, 5%);
-    right: clamp(2%, 3vw, 5%);
-}
-
-.rock4 {
-    bottom: clamp(-70%, -40%, -60%);
-    left: clamp(15%, 13vw, 20%);
-    z-index: -1;
-} */
 
 @media (min-width: 320px) {
     .search_icon {
         right: 5%;
+    }
+    .hero_section {
+        padding: 8rem 0.5rem;
     }
 }
 
@@ -214,11 +177,19 @@
     .search_icon {
         right: 5%;
     }
+
+    .hero_section {
+        padding: 8rem 0.5rem;
+    }
 }
 
 @media (min-width: 425px) {
     .search_icon {
         right: 5%;
+    }
+
+    .hero_section {
+        padding: 8rem 0.5rem;
     }
 }
 
@@ -233,3 +204,125 @@
         right: 21%;
     }
 }
+
+/* ----Responisvness for Rock images------- */
+
+@media (max-width: 320px) {
+    .rock1 {
+        width: 10%;
+        top: -120px;
+        left: 95px;
+    }
+
+    .rock2 {
+        width: 20%;
+        bottom: 0%;
+        right: 10%;
+    }
+
+    .rock3 {
+        width: 3%;
+        top: -90%;
+        right: -10%;
+        z-index: 1000;
+    }
+
+    .rock4 {
+        width: 25%;
+        bottom: -10%;
+        left: -2%;
+        z-index: -1;
+    }
+    .rock7 {
+        width: 10%;
+        top: 5%;
+        left: 70%;
+    }
+    .rock7 {
+        width: 100%;
+        top: 5%;
+        left: 70%;
+    }
+    .rock8 {
+        width: 50%;
+        top: 53%;
+        left: -30%;
+    }
+}
+@media (max-width: 375px) {
+    .rock1 {
+        width: 10%;
+        top: -120px;
+        left: 95px;
+    }
+    .rock7 {
+        width: 100%;
+        top: 5%;
+        left: 70%;
+    }
+    .rock8 {
+        width: 50%;
+        top: 53%;
+        left: -30%;
+    }
+}
+@media (max-width: 425px) {
+    .rock1 {
+        width: 5%;
+        top: -80px;
+        left: 120px;
+    }
+    .rock2 {
+        width: 20%;
+        bottom: 0%;
+        right: 10%;
+    }
+    .rock4 {
+        width: 30%;
+        bottom: -90%;
+        left: 1%;
+        z-index: -1;
+    }
+    .rock5 {
+        width: 12%;
+        top: 40%;
+        right: -5%;
+        /* z-index: -1; */
+    }
+
+    .rock7 {
+        width: 100%;
+        top: 30%;
+        left: 70%;
+    }
+    .rock8 {
+        width: 50%;
+        top: 50%;
+        left: -30%;
+    }
+}
+
+@media (max-width: 1024px) {
+    .hero_section {
+        overflow-x: hidden;
+    }
+    .rock7 {
+        width: 60%;
+        top: 45%;
+        left: 80%;
+        z-index: -1;
+    }
+}
+
+@media (max-width: 1280px) {
+    .rock7 {
+        top: 25%;
+    }
+}
+
+@media (max-width: 2560px) {
+    .rock7 {
+        top: 25%;
+    }
+}
+

@@ -43,11 +43,13 @@
 
 .project_display_container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, 300px);
+    /* grid-template-columns: repeat(auto-fill, 310px); */
+    /* grid-template-columns: 1fr 1fr 1fr; */
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
     gap: 2rem;
     width: 100%;
     max-width: 100%;
-    margin: 3rem 0 0 0;
+    padding: 3rem 0 0 0;
     justify-items: stretch;
     align-items: start;
     overflow-x: hidden;
@@ -85,27 +87,28 @@
     background: rgba(0, 0, 0, 0.37);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(1px);
+    transition: transform 0.3s ease;
 }
 
 .project_card_container:hover {
-    transform: translateY(-5px);
-    box-shadow: 0px 4px 30px 0px var(--shadow-medium);
+    transform: translateY(-8px);
 }
 
 .project_card_image img {
     width: 100%;
-    height: 90%;
-    object-fit: cover;
+    height: 100%;
+    aspect-ratio: 6/3;
+    object-fit: fit;
     border-radius: 0.6rem;
 }
 
 .project_card_content {
-    padding: 1rem 0;
+    padding: 1rem 0.3rem;
 }
 
 .project_card_title {
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
+    font-size: clamp(1rem, 2vw + 1rem, 1.2rem);
+    margin:0 0 0.5rem 0;
     color: var(--text-primary);
     text-align: left;
     font-weight: 500;
@@ -115,7 +118,7 @@
     font-size: 0.9rem;
     color: var(--text-secondary);
     text-align: left;
-    padding-top: 9px;
+    padding-top: 1rem;
     min-height: 4.5rem;
     /* overflow: hidden; */
     text-overflow: ellipsis;
@@ -124,9 +127,11 @@
 
 .project_card_tags {
     display: flex;
+    flex-wrap: wrap;
     gap: 0.5rem;
-    margin: 0.3rem 0 0.4rem, 0;
+    margin: 0.3rem 0 0.4rem 0;
     overflow: hidden;
+    white-space: nowrap;
     text-overflow: ellipsis;
 }
 
@@ -142,8 +147,16 @@
 .project_card_buttons {
     margin-top: 10px;
     display: flex;
-    gap: 15px;
+    gap: 1.1rem;
     align-items: center;
+}
+
+.upvotes {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
 }
 
 .upvote_icon,
@@ -154,10 +167,8 @@
     stroke: var(--gray-secondary);
 }
 
-.upvote_icon:hover,
-.share_icon:hover {
+.upvote_icon:hover {
     transform: scale(1.2);
-    stroke: var(--button-hover);
 }
 
 @media (max-width: 1024px) {
@@ -170,5 +181,11 @@
     .project_display_container {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         gap: 1rem;
+    }
+}
+
+@media (max-width: 425px) {
+    .project_display_container {
+        gap: 3rem;
     }
 }

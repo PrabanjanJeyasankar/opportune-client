@@ -18,8 +18,8 @@
     box-sizing: border-box;
     margin: 0 auto;
     max-width: 1024px;
-    overflow-x: hidden;
-    /* min-width: 320px; */
+    /* overflow-x: hidden; */
+    min-width: 320px;
 
     --background-light: rgba(255, 255, 255, 0.055);
     --background-medium: rgba(255, 255, 255, 0.07);
@@ -63,6 +63,21 @@
     select::spelling-error,
     textarea::spelling-error {
         color: white !important;
+    }
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0 auto;
+    /* overflow-x: hidden; */
+    /* overflow-y: scroll; */
+}
+
+@media (max-width: 1024px) {
+    html,
+    body {
+        overflow-x: hidden;
     }
 }
 
