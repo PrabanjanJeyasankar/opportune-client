@@ -1,45 +1,43 @@
-
 .error_message {
-    color: #ff5a5f;
+    color: var(--red-primary);
     font-size: 0.875rem;
-  }
+}
 
-
-  .tags_section {
+.tags_section {
     display: flex;
     flex-direction: column;
     gap: 1rem;
-  }
-  
-  .tags_label {
+}
+
+.tags_label {
     font-size: 1rem;
     /* font-weight: bold; */
     color: white;
-  }
-  
-  .tags_container {
+}
+
+.tags_container {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-  }
-  
-  .tag_button {
-    padding: 0.5rem 1rem; 
-    border-radius: 9999px; 
-    font-size: 0.875rem; 
-    font-weight: 500; 
-    margin: 0.25rem; 
+}
+
+.tag_button {
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin: 0.25rem;
     border: 1px solid rgba(255, 255, 255, 0.176);
-    background-color: transparent; 
+    background-color: transparent;
     color: white;
     cursor: pointer;
-  }
-  
-  .selected {
+}
+
+.selected {
     background-color: #25252b;
-    color: white; 
-  }
-  
-  .user_instruction{
+    color: white;
+}
+
+.user_instruction {
     font-size: smaller;
-  }
+}

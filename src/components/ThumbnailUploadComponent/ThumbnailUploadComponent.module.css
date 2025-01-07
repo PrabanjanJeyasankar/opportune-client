@@ -1,6 +1,6 @@
 
 .error_message {
-    color: #ff5a5f;
+  color: var(--red-primary);
     font-size: 0.875rem;
   }
 
