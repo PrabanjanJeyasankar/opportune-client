@@ -6,10 +6,15 @@ import OTPInputComponent from '../../components/OTPInputComponent/OTPInputCompon
 import PrimaryButtonComponent from '../../elements/PrimaryButtonComponent/PrimaryButtonComponent'
 import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
+import authService from '../../services/authService'
+import { UserContext } from '../../context/userContext'
+import useUserContext from '../../hooks/useUserContext'
+import SpinnerLoaderComponent from '../../loaders/SpinnerLoaderComponent/SpinnerLoaderComponent'
 
 function VerifyOTPPage() {
-    // const { setIsLoggedIn, setUserProfile } = useContext(UserContext)
-    const [otp, setOtp] = useState(Array(6).fill(''))
+    const { setIsUserLoggedIn, setUserProfile } = useUserContext();
+
+    const [otpString, setOtpString] = useState(Array(6).fill(''))
     const [errors, setErrors] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const [countdown, setCountdown] = useState(20)
@@ -21,7 +26,7 @@ function VerifyOTPPage() {
     const countdownIntervalRef = useRef(null)
 
     const handleOtpChange = (newOtp) => {
-        setOtp(newOtp)
+        setOtpString(newOtp)
         setErrors({})
     }
 
@@ -29,73 +34,108 @@ function VerifyOTPPage() {
         event.preventDefault()
         setIsLoading(true)
 
-        if (otp.some((digit) => digit === '')) {
-            setErrors({ otp: '* Please fill all fields.' })
+        if (otpString.some((digit) => digit === '')) {
+            setErrors({ otpString: '* Please fill all fields.' })
             setIsLoading(false)
             return
         }
 
-        const otpString = otp.join('')
+        const otp = otpString.join('')
 
-        try {
-            console.log(otpString)
-            // let response
+        if(isSignup){
+            console.log(email)
+            console.log(otp)
+            try{
+                const response = await authService.verfiyOtp({email, otp})
+                if(response.status === 200){
+                    console.log("Verification sucessfull")
+                    console.log("Singup complete")
+                    setUserProfile(response.data)
+                    navigate("/")
+                }
+            }
+            catch (error) {
+                console.error('OTP verification error:', error)
+                console.log(error?.response?.status)
+                console.log(error?.response?.data?.message)
 
-            // if (isSignup) {
-            //     response = await handleSignupOtpVerificationService(
-            //         email,
-            //         otpString
-            //     )
-            // } else {
-            //     response = await handleResetPasswordOtpVerificationService(
-            //         email,
-            //         otpString
-            //     )
-            // }
-
-            // if (response.status === 201 && isSignup) {
-            //     const userProfile = response.data.userProfile
-            //     setIsLoggedIn(true)
-            //     setUserProfile(userProfile)
-            //     localStorage.setItem('userProfile', JSON.stringify(userProfile))
-            //     localStorage.setItem('isLoggedIn', 'true')
-
-            //     toast.success('OTP verified successfully!')
-            //     navigate(isSignup ? '/' : '/set-new-password')
-            // } else if (response.status === 200 && !isSignup) {
-            //     toast.success('OTP verified successfully!')
-            //     navigate(isSignup ? '/' : '/set-new-password')
-            // } else if (response.status === 400) {
-            //     toast.error('Invalid OTP')
-            // } else if (response.status === 410) {
-            //     toast.error('OTP has expired.')
-            // }
-        } catch (error) {
-            // toast.error('An error occurred. Please try again later.')
-            console.error('OTP verification error:', error)
-        } finally {
-            setIsLoading(false)
+                if (error.response) {
+                    const status = error.response.status
+                    const message = error.response.data?.message || "An error occurred"
+          
+                    if (status === 401) {
+                        console.log("Incorrect otp")
+                        // toast.error("The OTP you entered is incorrect. Please try again.")
+                    } else if (status === 410) {
+                        console.log("The OTP has expired. Please request a new one." + error)
+                        // toast.error("The OTP has expired. Please request a new one.")
+                    }else if (status === 500) {
+                        console.log("Server error try again" + message)
+                        // toast.error("Server error, please try again later")
+                    } else {
+                        // toast.error(`Error ${status}: ${message}`);
+                    }
+                } else if (error.request) {
+                    // toast.error("Network error. Please check your connection and try again.");
+                } else {
+                    // toast.error("Unexpected error occurred. Please try again later.");
+                }
+            } finally {
+                setIsLoading(false)
+            }
         }
+        
     }
 
     const handleResendOtp = async () => {
         try {
             setIsResendDisabled(true)
-            const response = await handleResetPasswordRequestOtpService(email)
-            if (response.status === 200) {
-                toast.success(
-                    'OTP sent again to your email. Please check your inbox.'
-                )
-                resetCountdown()
-            } else if (response.status === 404) {
-                toast.error('Email not found. Please check your email address.')
-            } else if (response.status === 500) {
-                toast.error('Internal server error. Please try again later.')
-            } else {
-                toast.error('An unexpected error occurred. Please try again.')
-            }
+            setOtpString([])
+            const response = await authService.resendOtp(email)
+            console.log(response)
+            // if (response.status === 200) {
+            //     toast.success(
+            //         'OTP sent again to your email. Please check your inbox.'
+            //     )
+            //     resetCountdown()
+            // } else if (response.status === 404) {
+            //     toast.error('Email not found. Please check your email address.')
+            // } else if (response.status === 500) {
+            //     toast.error('Internal server error. Please try again later.')
+            // } else {
+            //     toast.error('An unexpected error occurred. Please try again.')
+            // }
         } catch (error) {
-            toast.error('Failed to resend OTP. Please try again.')
+            console.error('OTP verification error:', error)
+            console.log(error?.response?.status)
+            console.log(error?.response?.data?.message)
+
+            if (error.response) {
+                const status = error.response.status
+                const message = error.response.data?.message || "An error occurred"
+      
+                if (status === 401) {
+                    console.log("session expires signup again")
+                    // toast.error("Session expired. Signup again")
+                    navigate("/signup")
+                } else if (status === 409) {
+                    console.log("conflict user already exist" + error)
+                    // toast.error("User already Registered")
+                    navigate("/")
+                } else if (status === 429) {
+                    console.log("too many attempts signup again" + message)
+                    // toast.error("Too many attempts. Signup again.")
+                } else if (status === 500) {
+                    console.log("Server Error try again" + message)
+                    // toast.error("Server Error try again")
+                } else {
+                    // toast.error(`Error ${status}: ${message}`);
+                }
+            } else if (error.request) {
+                // toast.error("Network error. Please check your connection and try again.");
+            } else {
+                // toast.error("Unexpected error occurred. Please try again later.");
+            }
         }
     }
 
@@ -117,11 +157,6 @@ function VerifyOTPPage() {
         }, 1000)
     }
 
-    useEffect(() => {
-        resetCountdown()
-        return () => clearInterval(countdownIntervalRef.current)
-    }, [])
-
     const formatCountdown = () => {
         const minutes = Math.floor(countdown / 60)
         const seconds = countdown % 60
@@ -131,6 +166,11 @@ function VerifyOTPPage() {
     const handleBack = () => {
         navigate(isSignup ? '/signup' : '/request-otp')
     }
+
+    useEffect(() => {
+        resetCountdown()
+        return () => clearInterval(countdownIntervalRef.current)
+    }, [])
 
     return (
         <div className={otpVerificationStyles.container}>
@@ -162,7 +202,7 @@ function VerifyOTPPage() {
                 </p>
                 <div className={otpVerificationStyles.inputGroup}>
                     <OTPInputComponent
-                        value={otp}
+                        value={otpString}
                         onChange={handleOtpChange}
                         errorClass={otpVerificationStyles.error}
                     />

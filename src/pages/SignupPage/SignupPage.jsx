@@ -9,17 +9,20 @@ import PrimaryButtonComponent from '../../elements/PrimaryButtonComponent/Primar
 import { validateSignupInputs } from '../../utils/authenticationFieldsValidation'
 import PasswordStrengthBar from 'react-password-strength-bar'
 import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
+import authService from '../../services/authService'
+import SpinnerLoaderComponent from '../../loaders/SpinnerLoaderComponent/SpinnerLoaderComponent'
 
 function SignupPage() {
     const [formData, setFormData] = useState({
         name: '',
-        userName: '',
+        username: '',
         email: '',
         password: '',
     })
 
     const [errors, setErrors] = useState({})
     const [isLoading, setIsLoading] = useState(false)
+    const [isUsernameAvailable, setIsUsernameAvailable] = useState(false)
     const navigate = useNavigate()
 
     const handleInputChange = (event) => {
@@ -34,45 +37,61 @@ function SignupPage() {
 
         const { isValid, errors: validationErrors } = validateSignupInputs(
             formData.name,
-            formData. userName,
+            formData. username,
             formData.email,
             formData.password
         )
         if (isValid) {
             try {
                 console.log(formData)
-                // const response = await handleSignupRequestOtpService(formData)
-                // if (response.status === 200 && response.data) {
-                //     setFormData({ name: '', email: '', password: '' })
-                //     setErrors({})
-                //     navigate('/verify-otp', {
-                //         state: {
-                //             isSignup: true,
-                //             email: formData.email,
-                //         },
-                //     })
-                //     toast.success(
-                //         'OTP sent to your email. Please check your inbox.'
-                //     )
-                // } else if (response.status === 403) {
-                //     setErrors({ email: 'User already exists' })
-                //     toast.success(
-                //         'User already exists but is not verified. Please verify your email to continue...',
-                //         {
-                //             duration: 8000,
-                //         }
-                //     )
-                //     navigate('/verify-otp', {
-                //         state: {
-                //             isSignup: true,
-                //             email: formData.email,
-                //         },
-                //     })
-                // }
+                const response = await authService.signup(formData)
+                console.log(response)
+                if (response.status === 201 && response.data) {
+                    setFormData({ name: '', email: '', password: '' })
+                    setErrors({})
+                    navigate('/verify-otp', {
+                        state: {
+                            isSignup: true,
+                            email: formData.email,
+                        },
+                    })
+                    // toast.success(
+                    //     'OTP sent to your email. Please check your inbox.'
+                    // )
+                }
             } catch (error) {
                 console.error('Signup error:', error)
+                console.log(error?.response?.status)
                 console.log(error?.response?.data?.message)
-                toast.error('Something went wrong. Please try again.')
+
+                if (error.response) {
+                    const status = error.response.status
+                    const message = error.response.data?.message || "An error occurred"
+          
+                    if (status === 409) {
+                        setErrors({ email: 'User already exists' })
+                        console.log("User already Exists")
+                        // toast.error("User already exists. Login to continue")
+                    } else if (status === 403) {
+                        console.log("Otp already sent" + message)
+                        navigate('/verify-otp', {
+                            state: {
+                                isSignup: true,
+                                email: formData.email,
+                            },
+                        })
+                        // toast.error("OTP already sent.")
+                    } else if (status === 500) {
+                        console.log("Server error try again" + message)
+                        // toast.error("Server error, please try again later")
+                    } else {
+                        // toast.error(`Error ${status}: ${message}`);
+                    }
+                } else if (error.request) {
+                    // toast.error("Network error. Please check your connection and try again.");
+                } else {
+                    // toast.error("Unexpected error occurred. Please try again later.");
+                }
             } finally {
                 setIsLoading(false)
             }
@@ -91,7 +110,7 @@ function SignupPage() {
         }
     }
 
-    const handleGithubSignUpAuth = async () => {
+    const handleGithubSignUpAuth = async() => {
         try {
             
         } catch (error) {
@@ -99,6 +118,49 @@ function SignupPage() {
             console.log(error?.response?.data)
         }
     }
+
+    const handleUsernameInputChange = async (event) => {
+        const newUsername = event.target.value; // Use the event value directly
+        setFormData((prev) => ({
+            ...prev,
+            username: newUsername,
+        }));
+    
+        if (newUsername !== null) { // Check the new value
+            try {
+                const response = await authService.checkUserName(newUsername);
+                console.log(response);
+                if (response.status === 200 && response.data) {
+                    console.log("success")
+                    setErrors((prev) => ({username: "" })); // Clear username error
+                    setIsUsernameAvailable(true); // Indicate username is available
+                }
+            } catch (error) {
+                if (error.response) {
+                    const status = error.response.status;
+                    const message = error.response.data?.message || "An error occurred";
+    
+                    if (status === 409) {
+                        setErrors({username: "User Name already taken. Try different one"})
+                        setIsUsernameAvailable(false);
+                        console.log("Username already exists");
+                    } else if (status === 400) {
+                        setErrors({username: message})
+                        console.log("error: " + message);
+                    } else if (status === 500) {
+                        console.log("Server error: " + message);
+                    } else {
+                        console.log(`Error ${status}: ${message}`);
+                    }
+                } else if (error.request) {
+                    console.log("Network error. Please check your connection.");
+                } else {
+                    console.log("Unexpected error occurred. Please try again later.");
+                }
+            }
+        }
+    };
+    
 
     return (
         <div className={signupStyles.container}>
@@ -132,16 +194,29 @@ function SignupPage() {
                 />
 
                 <FormInputComponent
-                    id='userName'
-                    name='userName'
+                    id='username'
+                    name='username'
                     type='text'
-                    value={formData.userName}
+                    value={formData.username}
                     placeholder=' '
                     label='User Name'
-                    autoComplete='userName'
-                    onChange={handleInputChange}
-                    error={errors.userName}
+                    autoComplete='username'
+                    onChange={handleUsernameInputChange}
+                    error={errors.username}
                 />
+
+                {
+                    formData.username &&
+                    <div>
+                        {/* {
+                            isUsernameAvailable 
+                            ?
+                            <p className={signupStyles.success}>User Name Available</p>
+                            :
+                            <p className={signupStyles.error}>User Name is not availabe</p>
+                        } */}
+                    </div>
+                }
 
                 <FormInputComponent
                     id='email'

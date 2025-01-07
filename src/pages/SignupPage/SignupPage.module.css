@@ -100,6 +100,14 @@
     color: var(--gray-600);
 }
 
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
+}
+
 @media (min-width: 220px) and (max-width: 426px) {
     .container {
         justify-content: flex-start;
