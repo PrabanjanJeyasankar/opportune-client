@@ -5,7 +5,7 @@ import InputComponent from "../../elements/InputComponent/InputComponent";
 import ProjectDetailsValidationFrom from "../../utils/ProjectDetailsValidationFrom";
 import ThumbnailUploadComponent from '../ThumbnailUploadComponent/ThumbnailUploadComponent';
 import TagSelectComponent from "../TagSelectComponent/TagSelectComponent";
-
+import authService from "../../services/authService";
 const ProjectDetailsInputFormComponent = () => {
   const [formData, setFormData] = useState({
     title: "",
@@ -18,7 +18,7 @@ const ProjectDetailsInputFormComponent = () => {
   });
 
   const [errors, setErrors] = useState({});
-
+  const [submitStatus, setSubmitStatus] = useState(null);
   const handleInputChange = (event) => {
     const { name, type, files } = event.target;
 
@@ -55,23 +55,46 @@ const ProjectDetailsInputFormComponent = () => {
     });
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const validationErrors = ProjectDetailsValidationFrom(formData);
     setErrors(validationErrors);
+  
     if (Object.keys(validationErrors).length === 0) {
-      console.log("Form Submitted", formData);
-      setFormData({
-        title: "",
-        description: "",
-        thumbnail: null,
-        tags: [],
-        githubLink: "",
-        hostedLink: "",
-        documentation: "",
-      });
+      try {
+        const formDataObj = new FormData();
+        console.log("GitHub Link:", formData.githubLink);
+        formDataObj.append("title", formData.title);
+        formDataObj.append("description", formData.description);
+        formDataObj.append("thumbnail", formData.thumbnail);
+        formDataObj.append("githubLink", formData.githubLink.trim());
+        formDataObj.append("hostedLink", formData.hostedLink);
+        formDataObj.append("documentation", formData.documentation);
+  
+        formData.tags.forEach(tag => {
+          formDataObj.append("tags[]", tag);
+        });
+  
+        const response = await authService.postProjectData(formDataObj);
+        console.log("Project submitted successfully", response);
+        setSubmitStatus({ type: "success", message: "Project submitted successfully!" });
+  
+        setFormData({
+          title: "",
+          description: "",
+          thumbnail: null,
+          tags: [],
+          githubLink: "",
+          hostedLink: "",
+          documentation: "",
+        });
+      } catch (error) {
+        console.error("Error submitting project", error);
+        setSubmitStatus({ type: "error", message: "Failed to submit the project." });
+      }
     }
   };
+  
 
   return (
     <div>
@@ -165,6 +188,11 @@ const ProjectDetailsInputFormComponent = () => {
               Submit Project
             </ButtonComponent>
           </form>
+          {submitStatus && (
+            <p className={submitStatus.type === "success" ? styles.success_message : styles.error_message}>
+              {submitStatus.message}
+            </p>
+          )}
         </div>
       </div>
     </div>
