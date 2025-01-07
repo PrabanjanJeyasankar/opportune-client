@@ -13,7 +13,6 @@
     border-radius: 0.5rem;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
     padding: 2rem;
-    /* background-color: #1c1c24; */
 }
 
 .form_title {
@@ -75,7 +74,6 @@
 
 .label {
     font-size: 1rem;
-    /* font-weight: bold; */
     color: white;
     padding-top: 15px;
 }

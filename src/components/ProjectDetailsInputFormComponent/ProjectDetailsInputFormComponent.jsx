@@ -80,8 +80,6 @@ const ProjectDetailsInputFormComponent = () => {
         });
   
         const response = await postProjectService.postProjectData(formDataObj);
-        // console.log("Project submitted successfully", response);
-        // setSubmitStatus({ type: "success", message: "Project submitted successfully!" });
   
         setFormData({
           title: "",
@@ -100,7 +98,6 @@ const ProjectDetailsInputFormComponent = () => {
         setIsModalOpen(true);
       } catch (error) {
         console.error("Error submitting project", error);
-        // setSubmitStatus({ type: "error", message: "Failed to submit the project." });
   
         setModalContent({
           message: "Failed to submit the project. Please try again!",

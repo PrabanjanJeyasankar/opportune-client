@@ -25,7 +25,6 @@ const TagSelectComponent = ({ handleTagClick, selectedTags, error }) => {
     setLoading(true);
     try {
       const response = await postProjectService.tagSelectionGetMethod(term);
-      console.log("API response:", response);
       const tags = response.data.data.map((item) => item.tag); 
       setSuggestedTags(tags);
     } catch (error) {

@@ -11,7 +11,6 @@
 
 .tags_label {
     font-size: 1rem;
-    /* font-weight: bold; */
     color: white;
 }
 
@@ -28,7 +27,6 @@
     border-radius: 90px;
     font-size: 0.875rem;
     font-weight: 500;
-    /* margin: 0.25rem; */
     border: 1px solid rgba(255, 255, 255, 0.176);
     background-color: transparent;
     color: white;
@@ -72,14 +70,10 @@
     background-color: #25252b;
     border: 1px solid rgba(255, 255, 255, 0.176);
     border-radius: 4px;
-    /* max-height: 150px; */
-    /* overflow-y: auto; */
     width: 100%;
     z-index: 1000;
     color: white;
     margin-top: 10px;
-    /* padding-top: 20px;
-    padding-bottom: 20px; */
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
 }
 
@@ -92,7 +86,6 @@
 
 .suggestion_item:hover {
     background-color: rgba(255, 255, 255, 0.1);
-    /* color: var(--gray-300); */
 }
 
 .loading_message {
