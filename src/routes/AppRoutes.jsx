@@ -1,5 +1,5 @@
 import React, { lazy, Suspense } from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 import LoginPage from '../pages/LoginPage/LoginPage'
 import SignupPage from '../pages/SignupPage/SignupPage'
 import HomePage from '../pages/HomePage/HomePage'
@@ -7,6 +7,7 @@ import MainLayout from '../layouts/MainLayout/MainLayout'
 import VerifyOTPPage from '../pages/VerifyOTPPage/VerifyOTPPage'
 import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
 import RequestOtpPage from '../pages/RequestOtpPage/RequestOtpPage'
+import AccountLayout from '../layouts/AccountLayout/AccountLayout'
 
 const AppRoutes = () => {
     return (
@@ -23,7 +24,13 @@ const AppRoutes = () => {
                         />
                         <Route path='/verify-otp' element={<VerifyOTPPage/>}/>
                         <Route path='/change-password' element={<ChangePasswordPage/>}/>
+                        <Route path='/account' element={<AccountLayout/>}>
+                            <Route index path='' element={<Navigate to={"my-profile"} replace/>} />
+                            <Route path='my-profile' element={<div>My Profile</div>} />
+                            <Route path='my-projects' element={<div>My Projects</div>} />
+                        </Route>
                     </Route>
+                    
                     <Route path='/*' element={<div>Error Page</div>} />
                 </Routes>
             </Suspense>
