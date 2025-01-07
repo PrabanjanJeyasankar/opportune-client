@@ -30,6 +30,16 @@ const authService = {
         const response = await axiosInstance.post("/auth/logout")
         return response
     },
+
+    postProjectData: async (formData) => {
+        const response = await axiosInstance.post("/project", formData);
+        return response;
+    },
+
+    tagSelectionGetMethod: async (term) => {
+        const response = await axiosInstance.get("/project/tag",{params: { keyword: term }})
+        return response
+    }
     
 } 
 
