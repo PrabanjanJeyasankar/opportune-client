@@ -8,6 +8,7 @@ import VerifyOTPPage from '../pages/VerifyOTPPage/VerifyOTPPage'
 import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
 import RequestOtpPage from '../pages/RequestOtpPage/RequestOtpPage'
 import AccountLayout from '../layouts/AccountLayout/AccountLayout'
+import ProjectDetailsInputFormComponent from '../components/ProjectDetailsInputFormComponent/ProjectDetailsInputFormComponent'
 
 const AppRoutes = () => {
     return (
@@ -29,6 +30,7 @@ const AppRoutes = () => {
                             <Route path='my-profile' element={<div>My Profile</div>} />
                             <Route path='my-projects' element={<div>My Projects</div>} />
                         </Route>
+                        <Route path='/project-input-form' element={<ProjectDetailsInputFormComponent/>}/>
                     </Route>
                     
                     <Route path='/*' element={<div>Error Page</div>} />
