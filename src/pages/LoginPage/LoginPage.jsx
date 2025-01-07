@@ -7,9 +7,11 @@ import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 import { validateLoginInputs } from '../../utils/authenticationFieldsValidation'
 import SpinnerLoaderComponent from '../../loaders/SpinnerLoaderComponent/SpinnerLoaderComponent'
 import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
+import useUserContext from '../../hooks/useUserContext'
+import authService from '../../services/authService'
 
 function LoginPage() {
-    // const { setIsLoggedIn, setUserProfile } = useContext(UserContext)
+    const { setIsUserLoggedIn, setUserProfile } = useUserContext()
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -36,30 +38,43 @@ function LoginPage() {
         if (isValid) {
             try {
                 console.log(formData)
-                // const response = await handleLoginService(formData)
-      
-                // if (response.status === 200 && response.data) {
-                //     const userProfile = response.data.userProfile
-                //     localStorage.setItem(
-                //         'userProfile',
-                //         JSON.stringify(userProfile)
-                //     )
-                //     localStorage.setItem('isLoggedIn', 'true')
-                //     toast.success('Login successful')
-                //     navigate('/')
-                // } else if (response.status === 400) {
-                //     toast.error(
-                //         'You have signed up using Google. Please log in using Google.'
-                //     )
-                // } else if (response.status === 401) {
-                //     toast.error('Incorrect Password.')
-                // } else if (response.status === 404) {
-                //     toast.error('User not found, please sign up.')
-                // }
+                const response = await authService.login(formData)
+                console.log(response)
+                if(response.status === 200){
+                    console.log("Verification sucessfull")
+                    console.log("Singup complete")
+                    setIsUserLoggedIn(true)
+                    setUserProfile(response.data)
+                    navigate("/")
+                }
             } catch (error) {
+                console.error('Login error:', error)
+                console.log(error?.response?.status)
+                console.log(error?.response?.data?.message)
 
+                if (error.response) {
+                    const status = error.response.status
+                    const message = error.response.data?.message || "An error occurred"
+          
+                    if (status === 401 && message === "Invalid password") {
+                        console.log("Incorrect password")
+                        // toast.error("Incorrect password")
+                    } else if (status === 401 && message === "Invalid email address") {
+                        console.log("User is not registered" + error)
+                        // toast.error("User is not registered")
+                    }else if (status === 500) {
+                        console.log("Server error try again" + message)
+                        // toast.error("Server error, please try again later")
+                    } else {
+                        // toast.error(`Error ${status}: ${message}`);
+                    }
+                } else if (error.request) {
+                    // toast.error("Network error. Please check your connection and try again.");
+                } else {
+                    // toast.error("Unexpected error occurred. Please try again later.");
+                }
             } finally {
-                // setIsLoading(false)
+                setIsLoading(false)
             }
         } else {
             setErrors(validationErrors)
