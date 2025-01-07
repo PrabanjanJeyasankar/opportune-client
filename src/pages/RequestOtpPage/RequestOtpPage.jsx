@@ -7,6 +7,7 @@ import requestOtpStyles from './RequestOtpPage.module.css'
 import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 import SpinnerLoaderComponent from '../../loaders/SpinnerLoaderComponent/SpinnerLoaderComponent'
 import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
+import authService from '../../services/authService'
 // import { usePasswordResetContext } from '../../context/PasswordResetContext/passwordResetContext'
 // import handleResetPasswordRequestOtpService from '../../services/authenticationServices/handleResetPasswordRequestOtpService'
 
@@ -29,34 +30,47 @@ function RequestOtpPage() {
         if (!validationError) {
             try {
                 console.log(email)
-                // const response = await handleResetPasswordRequestOtpService(
-                //     email
-                // )
-                // if (response.status === 200) {
-                //     toast.success(
-                //         'OTP sent to your email. Please check your inbox.'
-                //     )
-                //     navigate('/verify-otp', {
-                //         state: {
-                //             email: email,
-                //         },
-                //     })
-                // } else if (response.status === 404) {
-                //     toast.error(
-                //         'Email not found. Please check your email address.'
-                //     )
-                // } else if (response.status === 500) {
-                //     toast.error(
-                //         'Internal server error. Please try again later.'
-                //     )
-                // } else {
-                //     toast.error(
-                //         'An unexpected error occurred. Please try again.'
-                //     )
-                // }
+                const response = await authService.forgotPassword(email)
+                console.log(response)
+                if (response.status === 201) {
+                    // toast.success('OTP sent to your email. Please check your inbox.')
+                    navigate('/verify-otp', {
+                        state: {
+                            email: email,
+                        },
+                    })
+                }
             } catch (error) {
-                toast.error('Error sending OTP. Please try again.')
-                setErrors({ email: 'Error occurred, please try again.' })
+                console.error('Request otp error:', error)
+                console.log(error?.response?.status)
+                console.log(error?.response?.data?.message)
+
+                if (error.response) {
+                    const status = error.response.status
+                    const message = error.response.data?.message || "An error occurred"
+          
+                    if (status === 400) {
+                        setErrors({ email: 'Email address not registered' })
+                        console.log("Email address not registered")
+                        // toast.error("Email address not registered")
+                    } else if (status === 401) {
+                        console.log("session expires try again")
+                        // toast.error("Session expired. Try again")
+                        navigate("/signup")
+                    } else if (status === 429) {
+                        console.log("too many attempts try again" + message)
+                        // toast.error("Too many attempts. Wait for a while and try the recent otp sent to you.")
+                    } else if (status === 500) {
+                        console.log("Server Error try again" + message)
+                        // toast.error("Server Error try again")
+                    } else {
+                        // toast.error(`Error ${status}: ${message}`);
+                    }
+                } else if (error.request) {
+                    // toast.error("Network error. Please check your connection and try again.");
+                } else {
+                    // toast.error("Unexpected error occurred. Please try again later.");
+                }
             } finally {
                 setIsLoading(false)
             }

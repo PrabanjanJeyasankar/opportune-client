@@ -98,7 +98,62 @@ const validateSignupInputs = (name, username, email, password) => {
     return validateInputs(inputs, validations)
 }
 
-
+const validateNewPassword = (newPassword, confirmPassword) => {
+    const validations = {
+      password: {
+        required: true,
+        minimumLength: 6,
+        maximumLength: 128,
+        rules: [
+          {
+            regex: /[A-Z]/,
+            errorMessage: "Password must contain at least one uppercase letter."
+          },
+          {
+            regex: /[a-z]/,
+            errorMessage: "Password must contain at least one lowercase letter."
+          },
+          {
+            regex: /[!@#$%^&*(),.?":{}|<>]/,
+            errorMessage: "Password must contain at least one special character."
+          }
+        ]
+      }
+    }
+  
+    const errors = {
+      newPassword: "",
+      confirmPassword: ""
+    }
+  
+    if (validations.password.required && !newPassword) {
+      errors.newPassword = "Password is required."
+    }
+  
+    if (newPassword.length < validations.password.minimumLength) {
+      errors.newPassword = `Password must be at least ${validations.password.minimumLength} characters long.`
+    }
+    if (newPassword.length > validations.password.maximumLength) {
+      errors.newPassword = `Password must be no longer than ${validations.password.maximumLength} characters.`
+    }
+  
+    validations.password.rules.forEach(rule => {
+      if (!rule.regex.test(newPassword)) {
+        errors.newPassword = rule.errorMessage
+      }
+    })
+  
+    if (newPassword !== confirmPassword) {
+      errors.confirmPassword = "Passwords do not match."
+    }
+  
+    if (errors.newPassword || errors.confirmPassword) {
+      return { isValid: false, errors }
+    }
+  
+    return { isValid: true }
+  }
+  
 
 const validateLoginInputs = (email, password) => {
     const inputs = { email, password }
@@ -114,4 +169,5 @@ export {
     validateSignupInputs,
     validateLoginInputs,
     validateEmail,
+    validateNewPassword
 }

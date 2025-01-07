@@ -50,8 +50,56 @@ function VerifyOTPPage() {
                 if(response.status === 200){
                     console.log("Verification sucessfull")
                     console.log("Singup complete")
+                    setIsUserLoggedIn(true)
                     setUserProfile(response.data)
                     navigate("/")
+                }
+            }
+            catch (error) {
+                console.error('OTP verification error:', error)
+                console.log(error?.response?.status)
+                console.log(error?.response?.data?.message)
+
+                if (error.response) {
+                    const status = error.response.status
+                    const message = error.response.data?.message || "An error occurred"
+          
+                    if (status === 401) {
+                        console.log("Incorrect otp")
+                        // toast.error("The OTP you entered is incorrect. Please try again.")
+                    } else if (status === 410) {
+                        console.log("The OTP has expired. Please request a new one." + error)
+                        // toast.error("The OTP has expired. Please request a new one.")
+                    }else if (status === 500) {
+                        console.log("Server error try again" + message)
+                        // toast.error("Server error, please try again later")
+                    } else {
+                        // toast.error(`Error ${status}: ${message}`);
+                    }
+                } else if (error.request) {
+                    // toast.error("Network error. Please check your connection and try again.");
+                } else {
+                    // toast.error("Unexpected error occurred. Please try again later.");
+                }
+            } finally {
+                setIsLoading(false)
+            }
+        }
+        else {
+            console.log(email)
+            console.log(otp)
+            try{
+                const response = await authService.verfiyOtp({email, otp})
+                if(response.status === 200){
+                    console.log("Verification sucessfull")
+                    console.log("redirecting to change password")
+                    setUserProfile(response.data)
+                    setIsUserLoggedIn(true)
+                    navigate("/change-password", {
+                        state: {
+                            email : email
+                        }
+                    })
                 }
             }
             catch (error) {
@@ -93,18 +141,6 @@ function VerifyOTPPage() {
             setOtpString([])
             const response = await authService.resendOtp(email)
             console.log(response)
-            // if (response.status === 200) {
-            //     toast.success(
-            //         'OTP sent again to your email. Please check your inbox.'
-            //     )
-            //     resetCountdown()
-            // } else if (response.status === 404) {
-            //     toast.error('Email not found. Please check your email address.')
-            // } else if (response.status === 500) {
-            //     toast.error('Internal server error. Please try again later.')
-            // } else {
-            //     toast.error('An unexpected error occurred. Please try again.')
-            // }
         } catch (error) {
             console.error('OTP verification error:', error)
             console.log(error?.response?.status)
