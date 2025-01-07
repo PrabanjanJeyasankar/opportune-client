@@ -20,6 +20,10 @@
     cursor: grabbing;
 }
 
+.tag_all {
+    padding: 0.35rem 0.8rem;
+}
+
 .tags_filter > :nth-child(3n + 1) {
     transform: translateX(2rem);
 }
@@ -33,16 +37,18 @@
 }
 
 .tag {
-    padding: 0.35rem 1.2rem;
-    border-radius: 10rem;
+    padding: 0.35rem 1rem;
+    border-radius: 2rem;
     border: none;
     background: var(--background-low);
     color: var(--gray-ccc);
     cursor: pointer;
     font-size: 0.875rem;
     transition: all 0.2s ease;
+    backdrop-filter: blur(10px);
     white-space: nowrap;
     user-select: none;
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .arrow {
@@ -77,30 +83,17 @@
     opacity: 1;
 }
 
-.tag {
-    padding: 0.35rem 1rem;
-    border-radius: 2rem;
-    border: none;
-    background: var(--background-low);
-    color: var(--gray-ccc);
-    cursor: pointer;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-}
-
 .tag:hover {
     background: rgba(255, 255, 255, 0.2);
 }
 
 .tag_selected {
-    background: white;
+    background: rgb(255, 255, 255);
     color: black;
 }
 
 .tag_selected:hover {
-    background: white;
+    background: rgb(255, 255, 255);
     color: black;
 }
 

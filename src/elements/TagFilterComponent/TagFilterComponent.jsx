@@ -4,63 +4,26 @@ import React, { useState, useRef, useEffect } from 'react'
 import styles from './TagFilterComponent.module.css'
 import ChevronRight from '../../svg/ChervronRight/ChevronRight'
 import ChevronLeft from '../../svg/ChevronLeft/ChevronLeft'
-
-const tags = [
-    { tag: 'All' },
-    { tag: 'HTML' },
-    { tag: 'JavaScript' },
-    { tag: 'MERN' },
-    { tag: 'UI/UX' },
-    { tag: 'Blockchain' },
-    { tag: 'Automation' },
-    { tag: 'Libraries' },
-    { tag: 'E-commerce' },
-    { tag: 'Portfolios' },
-    { tag: 'Full stack' },
-    { tag: 'AWS' },
-    { tag: 'Security' },
-    { tag: 'Crypto' },
-    { tag: 'Mobile' },
-    { tag: 'ML' },
-    { tag: 'Open source' },
-    { tag: 'Web' },
-    { tag: 'Cloud' },
-    { tag: 'Gaming' },
-    { tag: 'ThreeJs' },
-    { tag: 'AR/VR' },
-    { tag: 'AI' },
-    // Repeat tags for the example
-    { tag: 'HTML' },
-    { tag: 'JavaScript' },
-    { tag: 'MERN' },
-    { tag: 'UI/UX' },
-    { tag: 'Blockchain' },
-    { tag: 'Automation' },
-    { tag: 'Libraries' },
-    { tag: 'E-commerce' },
-    { tag: 'Portfolios' },
-    { tag: 'Full stack' },
-    { tag: 'AWS' },
-    { tag: 'Security' },
-    { tag: 'Crypto' },
-    { tag: 'Mobile' },
-    { tag: 'ML' },
-    { tag: 'Open source' },
-    { tag: 'Web' },
-    { tag: 'Cloud' },
-    { tag: 'Gaming' },
-    { tag: 'ThreeJs' },
-    { tag: 'AR/VR' },
-    { tag: 'AI' },
-]
+import fetchProjectTags from '../../services/fetchProjectTags'
 
 function TagFilterComponent({ selectedTag, setSelectedTag }) {
+    const [tags, setTags] = useState([{ tag: 'All' }])
     const [scrollPosition, setScrollPosition] = useState(0)
     const tagsContainerRef = useRef(null)
     const scrollAmount = 200
     const [isDragging, setIsDragging] = useState(false)
     const [startX, setStartX] = useState(0)
     const [scrollLeft, setScrollLeft] = useState(0)
+
+    useEffect(() => {
+        fetchProjectTags()
+            .then((fetchedTags) => {
+                setTags([{ tag: 'All' }, ...fetchedTags])
+            })
+            .catch((error) => {
+                console.error('Error fetching tags:', error)
+            })
+    }, [])
 
     const scroll = (direction) => {
         if (tagsContainerRef.current) {
@@ -140,26 +103,22 @@ function TagFilterComponent({ selectedTag, setSelectedTag }) {
     const isAtStart = scrollPosition === 0
     const isAtEnd = tagsContainerRef.current
         ? Math.abs(
-              tagsContainerRef.current.scrollWidth - 
-                  (tagsContainerRef.current.scrollLeft + tagsContainerRef.current.clientWidth)
+              tagsContainerRef.current.scrollWidth -
+                  (tagsContainerRef.current.scrollLeft +
+                      tagsContainerRef.current.clientWidth)
           ) < 1
         : false
 
-    // Don't show arrows if there are no tags or no scrollable content
-    const showArrows = tags.length > 0 && (scrollPosition > 0 || !isAtEnd)
-
     return (
         <div className={styles.tags_container}>
-            {showArrows && (
-                <button
-                    className={`${styles.arrow} ${styles['arrow-left']} ${
-                        !isAtStart ? styles['arrow-show'] : ''
-                    }`}
-                    onClick={() => scroll(-1)}
-                    aria-label='Scroll left'>
-                    <ChevronLeft />
-                </button>
-            )}
+            <button
+                className={`${styles.arrow} ${styles['arrow-left']} ${
+                    !isAtStart ? styles['arrow-show'] : ''
+                }`}
+                onClick={() => scroll(-1)}
+                aria-label='Scroll left'>
+                <ChevronLeft />
+            </button>
             <div
                 className={styles.tags_filter}
                 ref={tagsContainerRef}
@@ -172,22 +131,22 @@ function TagFilterComponent({ selectedTag, setSelectedTag }) {
                         key={index}
                         onClick={() => setSelectedTag(tagObj.tag)}
                         className={`${styles.tag} ${
-                            selectedTag === tagObj.tag ? styles.tag_selected : ''
-                        }`}>
+                            selectedTag === tagObj.tag
+                                ? styles.tag_selected
+                                : ''
+                        } ${tagObj.tag === 'All' ? styles.tag_all : ''}`}>
                         {tagObj.tag}
                     </button>
                 ))}
             </div>
-            {showArrows && (
-                <button
-                    className={`${styles.arrow} ${styles['arrow-right']} ${
-                        !isAtEnd ? styles['arrow-show'] : ''
-                    }`}
-                    onClick={() => scroll(1)}
-                    aria-label='Scroll right'>
-                    <ChevronRight />
-                </button>
-            )}
+            <button
+                className={`${styles.arrow} ${styles['arrow-right']} ${
+                    !isAtEnd ? styles['arrow-show'] : ''
+                }`}
+                onClick={() => scroll(1)}
+                aria-label='Scroll right'>
+                <ChevronRight />
+            </button>
         </div>
     )
 }

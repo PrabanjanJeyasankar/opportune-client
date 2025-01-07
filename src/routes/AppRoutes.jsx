@@ -9,6 +9,8 @@ import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
 import RequestOtpPage from '../pages/RequestOtpPage/RequestOtpPage'
 import AccountLayout from '../layouts/AccountLayout/AccountLayout'
 import ProjectDetailsInputFormComponent from '../components/ProjectDetailsInputFormComponent/ProjectDetailsInputFormComponent'
+import ProjectDetailsValidationFrom from '../utils/ProjectDetailsValidationFrom'
+import ProjectDetailsPage from '../pages/ProjectDetailsPage/ProjectDetailsPage'
 
 const AppRoutes = () => {
     return (
@@ -21,18 +23,38 @@ const AppRoutes = () => {
                         <Route path='/signup' element={<SignupPage />} />
                         <Route
                             path='/request-otp'
-                            element={<RequestOtpPage/>}
+                            element={<RequestOtpPage />}
                         />
-                        <Route path='/verify-otp' element={<VerifyOTPPage/>}/>
-                        <Route path='/change-password' element={<ChangePasswordPage/>}/>
-                        <Route path='/account' element={<AccountLayout/>}>
-                            <Route index path='' element={<Navigate to={"my-profile"} replace/>} />
-                            <Route path='my-profile' element={<div>My Profile</div>} />
-                            <Route path='my-projects' element={<div>My Projects</div>} />
+                        <Route path='/verify-otp' element={<VerifyOTPPage />} />
+                        <Route
+                            path='/change-password'
+                            element={<ChangePasswordPage />}
+                        />
+                        <Route path='/account' element={<AccountLayout />}>
+                            <Route
+                                index
+                                path=''
+                                element={<Navigate to={'my-profile'} replace />}
+                            />
+                            <Route
+                                path='my-profile'
+                                element={<div>My Profile</div>}
+                            />
+                            <Route
+                                path='my-projects'
+                                element={<div>My Projects</div>}
+                            />
                         </Route>
-                        <Route path='/project-input-form' element={<ProjectDetailsInputFormComponent/>}/>
+                        <Route
+                            path='/project-input-form'
+                            element={<ProjectDetailsInputFormComponent />}
+                        />
+                        <Route
+                            path='/project-details'
+                            element={<ProjectDetailsPage />}
+                        />
                     </Route>
-                    
+
                     <Route path='/*' element={<div>Error Page</div>} />
                 </Routes>
             </Suspense>
