@@ -1,0 +1,78 @@
+.container {
+    background-color: #28282A;
+    border-radius: 6px;
+    width: 100%;
+    height: 88vh;
+    padding: 0px 10px;
+    padding-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.profile_container {
+    padding: 24px 6px;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.profile_svg {
+    height: 48px;
+    width: 48px;
+}
+
+.profile_name{
+    font-size: 16px;
+}
+
+.profile_email {
+    font-size: 12px;
+    color: var(--gray-100);
+}
+
+.nav_links_container {
+    width: full;
+    padding: 10px 2px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.nav_icon {
+    height: 12px;
+    width: 12px;
+}
+
+.nav_link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 6px 4px;
+    border-radius: 5px;
+    transition: ease-in 0.3s;
+    cursor: pointer;
+}
+
+.nav_link > a {
+    width: 100%;
+}
+
+.nav_link.active{
+    background-color: var(--primary-gray);
+}
+
+.nav_link:hover {
+    background-color: var(--primary-gray);
+}
+
+.logout_button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 16px;
+    border-top: solid var(--primary-gray) 1px;
+    align-self: baseline;
+}
