@@ -1,5 +1,5 @@
 import React from 'react'
-import defaultProfileSvgStyles from './DefaultProfileSVG.module.css'
+import defaultProfileSvgStyles from './DefaultProfileSvg.module.css'
 
 const DefaultProfileSVG = () => {
   return (
@@ -11,7 +11,7 @@ const DefaultProfileSVG = () => {
       height="100"
       fill="none"
       stroke="gray"
-      stroke-width="1"
+      strokeWidth="1"
     >
       <circle cx="16" cy="16" r="15" stroke="gray" fill="none" />
       
@@ -28,5 +28,3 @@ const DefaultProfileSVG = () => {
 }
 
 export default DefaultProfileSVG
-
-

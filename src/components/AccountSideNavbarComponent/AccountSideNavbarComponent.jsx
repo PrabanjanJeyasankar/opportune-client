@@ -1,12 +1,12 @@
 import React from 'react'
 import accountSideNavbarStyles from './AccountSideNavbarComponent.module.css'
 import ImageComponent from '../../elements/ImageComponent/ImageComponent'
-import DefaultProfileSVG from '../../svg/DefaultProfileSvg/DefaultProfileSvg'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import ProfileSvg from '../../svg/ProfileSvg/ProfileSvg'
 import ProjectSvg from '../../svg/ProjectSvg/ProjectSvg'
 import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
 import LogoutSvg from '../../svg/LogoutSvg/LogoutSvg'
+import DefaultProfileSVG from '../../svg/DefaultProfileSvg/DefaultProfileSvg'
 
 const AccountSideNavbarComponent = () => {
 
@@ -17,7 +17,7 @@ const AccountSideNavbarComponent = () => {
       <div>
         <div className={accountSideNavbarStyles.profile_container}>
             <div className={accountSideNavbarStyles.profile_svg}>
-                <DefaultProfileSVG/>
+              <DefaultProfileSVG/>
             </div>
             <div>
                 <p className={accountSideNavbarStyles.profile_name}>Yugendar M</p>

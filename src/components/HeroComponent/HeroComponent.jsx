@@ -109,16 +109,12 @@ function HeroComponent() {
                             selectedTag={selectedTag}
                             setSelectedTag={setSelectedTag}
                         />
-                        <ImageComponent
-                            src={Rock7}
-                            alt='Rock 7'
-                            className={`${styles.floating_rock} ${styles.rock7}`}
-                        />
-                        <ImageComponent
+
+                        {/* <ImageComponent
                             src={Rock3}
                             alt='Rock 3'
                             className={`${styles.floating_rock} ${styles.rock3}`}
-                        />
+                        /> */}
                         <ImageComponent
                             src={Rock8}
                             alt='Rock 8'
@@ -127,6 +123,11 @@ function HeroComponent() {
                     </div>
                 </div>
                 <div className={styles.project_display}>
+                    <ImageComponent
+                        src={Rock7}
+                        alt='Rock 7'
+                        className={`${styles.floating_rock} ${styles.rock7}`}
+                    />
                     <ProjectDisplayComponent
                         searchTerm={searchTerm}
                         selectedTag={selectedTag}
