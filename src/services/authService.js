@@ -6,6 +6,18 @@ const authService = {
         return response
     },
 
+    forgotPassword : async (email) => {
+        const response = await axiosInstance.post("/auth/forgetPassword", {email})
+        return response
+    },
+    
+    changePassword: async(email, password) => {
+        console.log("email" + email)
+        console.log("password" + password)
+        const response = await axiosInstance.post("/user/resetPassword", {email, password})
+        return response
+    },
+
     signup: async (userData) => {
         const response = await axiosInstance.post("/auth/signup", userData)
         return response
