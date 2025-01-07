@@ -26,8 +26,8 @@ function handleMouseMove(e, rockSelector, threshold = 300) {
         // If the mouse is within the threshold, move the rock
         if (distance < threshold) {
             // To move the rock repelling agains the mouse movement
-            const repelX = ((rockCenterX - x) / windowWidth) * 150
-            const repelY = ((rockCenterY - y) / windowHeight) * 150
+            const repelX = ((rockCenterX - x) / windowWidth) * 120
+            const repelY = ((rockCenterY - y) / windowHeight) * 120
 
             rock.style.transition = 'transform 0.5s ease-out'
             rock.style.transform = `translate(${repelX}px, ${repelY}px)`
