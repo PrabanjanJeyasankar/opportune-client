@@ -26,9 +26,10 @@ const ProjectDisplayComponent = ({ searchTerm, selectedTag }) => {
             try {
                 const fetchedProjects = await fetchHomeFeedProjectsService()
                 setProjects(fetchedProjects)
+                // console.log(fetchedProjects)
             } catch (error) {
                 setError('Failed to fetch projects. Please try again.')
-                console.error(error)
+                // console.error(error)
             } finally {
                 setLoading(false)
             }
@@ -43,12 +44,15 @@ const ProjectDisplayComponent = ({ searchTerm, selectedTag }) => {
             const matchesSearchTerm = project.title
                 ?.toLowerCase()
                 .includes(lowercasedSearchTerm)
+            // console.log('Selected Tag: ', selectedTag)
+            // console.log('Project Tags: ', project.tags)
             const matchesSelectedTag =
                 selectedTag === 'All' ||
                 (project.tags &&
                     project.tags.some(
                         (tag) => tag.toLowerCase() === selectedTag.toLowerCase()
                     ))
+            // console.log(matchesSelectedTag)
             return matchesSearchTerm && matchesSelectedTag
         })
     }, [debouncedSearchTerm, selectedTag, projects])

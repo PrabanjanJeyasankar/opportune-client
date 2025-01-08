@@ -7,6 +7,7 @@ import { UserProvider } from './context/userContext'
 function App() {
     return (
         <Router>
+            
             <UserProvider>
                 <AppRoutes />
             </UserProvider>
