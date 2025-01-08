@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom' // Import useNavigate
+import { useNavigate } from 'react-router-dom'
 import styles from './ProjectCardComponent.module.css'
 import ImageComponent from '../../elements/ImageComponent/ImageComponent'
 import ShareIconSvg from '../../svg/ShareIconSvg/ShareIconSvg'
@@ -23,20 +23,19 @@ const ProjectCardComponent = ({ filteredProjects }) => {
 
 const ProjectCard = ({ project }) => {
     const [isUpvoted, setIsUpvoted] = useState(false)
-    const navigate = useNavigate() // Initialize navigate
-
+    const navigate = useNavigate()
     const handleUpvoteClick = () => {
         setIsUpvoted(!isUpvoted)
     }
 
     const handleCardClick = () => {
-        navigate(`/project-details`, { state: { project } }) // Navigate to ProjectDetailsPage with state
+        navigate(`/project-details`, { state: { project } }) 
     }
 
     return (
         <div
             className={styles.project_card_container}
-            onClick={handleCardClick} // Redirect on card click
+            onClick={handleCardClick} 
         >
             <div className={styles.project_card_image}>
                 <ImageComponent
@@ -65,7 +64,7 @@ const ProjectCard = ({ project }) => {
                             isUpvoted ? styles.upvoted : ''
                         }`}
                         onClick={(e) => {
-                            e.stopPropagation() // Prevent triggering card click
+                            e.stopPropagation() 
                             handleUpvoteClick()
                         }}>
                         <UpvoteIconSvg

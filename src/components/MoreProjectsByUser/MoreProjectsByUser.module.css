@@ -70,9 +70,3 @@
         font-size: 1rem;
     }
 }
-
-@media (min-width: 768px) {
-    .image_gallery {
-        grid-template-columns: 1fr 1fr 1fr;
-    }
-}

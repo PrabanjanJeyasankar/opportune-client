@@ -1,10 +1,10 @@
-'use client'
-
 import React, { useState, useRef, useEffect } from 'react'
 import styles from './TagFilterComponent.module.css'
 import ChevronRight from '../../svg/ChervronRight/ChevronRight'
 import ChevronLeft from '../../svg/ChevronLeft/ChevronLeft'
 import fetchProjectTags from '../../services/fetchProjectTags'
+import { Skeleton } from '@/components/ui/skeleton'
+import ButtonComponent from '../ButtonComponent/ButtonComponent'
 
 function TagFilterComponent({ selectedTag, setSelectedTag }) {
     const [tags, setTags] = useState([{ tag: 'All' }])
@@ -14,14 +14,17 @@ function TagFilterComponent({ selectedTag, setSelectedTag }) {
     const [isDragging, setIsDragging] = useState(false)
     const [startX, setStartX] = useState(0)
     const [scrollLeft, setScrollLeft] = useState(0)
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         fetchProjectTags()
             .then((fetchedTags) => {
                 setTags([{ tag: 'All' }, ...fetchedTags])
+                setLoading(false)
             })
             .catch((error) => {
                 console.error('Error fetching tags:', error)
+                setLoading(false)
             })
     }, [])
 
@@ -29,7 +32,7 @@ function TagFilterComponent({ selectedTag, setSelectedTag }) {
         if (tagsContainerRef.current) {
             const container = tagsContainerRef.current
             const targetScroll = container.scrollLeft + direction * scrollAmount
-            smoothScroll(container, targetScroll, 300) // 300ms duration for smooth scrolling
+            smoothScroll(container, targetScroll, 300)
         }
     }
 
@@ -96,7 +99,7 @@ function TagFilterComponent({ selectedTag, setSelectedTag }) {
         if (!isDragging) return
         e.preventDefault()
         const x = e.pageX - tagsContainerRef.current.offsetLeft
-        const walk = (x - startX) * 0.5 // Adjust the speed of drag scrolling
+        const walk = (x - startX) * 0.5
         tagsContainerRef.current.scrollLeft = scrollLeft - walk
     }
 
@@ -111,42 +114,52 @@ function TagFilterComponent({ selectedTag, setSelectedTag }) {
 
     return (
         <div className={styles.tags_container}>
-            <button
+            <ButtonComponent
                 className={`${styles.arrow} ${styles['arrow-left']} ${
                     !isAtStart ? styles['arrow-show'] : ''
                 }`}
                 onClick={() => scroll(-1)}
                 aria-label='Scroll left'>
                 <ChevronLeft />
-            </button>
+            </ButtonComponent>
             <div
-                className={styles.tags_filter}
+                className={`${styles.tags_filter} ${
+                    !loading ? styles.loaded : ''
+                }`}
                 ref={tagsContainerRef}
                 onMouseDown={handleMouseDown}
                 onMouseUp={handleMouseUp}
                 onMouseLeave={handleMouseUp}
                 onMouseMove={handleMouseMove}>
-                {tags.map((tagObj, index) => (
-                    <button
-                        key={index}
-                        onClick={() => setSelectedTag(tagObj.tag)}
-                        className={`${styles.tag} ${
-                            selectedTag === tagObj.tag
-                                ? styles.tag_selected
-                                : ''
-                        } ${tagObj.tag === 'All' ? styles.tag_all : ''}`}>
-                        {tagObj.tag}
-                    </button>
-                ))}
+                {loading
+                    ? Array.from({ length: 40 }).map((_, index) => (
+                          <Skeleton
+                              key={index}
+                              className={`${styles.skeleton_tag}`}
+                          />
+                      ))
+                    : tags.map((tagObj, index) => (
+                          <ButtonComponent
+                              key={index}
+                              onClick={() => setSelectedTag(tagObj.tag)}
+                              className={`${styles.tag} ${
+                                  selectedTag === tagObj.tag
+                                      ? styles.tag_selected
+                                      : ''
+                              }`}>
+                              {tagObj.tag}
+                          </ButtonComponent>
+                      ))}
             </div>
-            <button
+
+            <ButtonComponent
                 className={`${styles.arrow} ${styles['arrow-right']} ${
                     !isAtEnd ? styles['arrow-show'] : ''
                 }`}
                 onClick={() => scroll(1)}
                 aria-label='Scroll right'>
                 <ChevronRight />
-            </button>
+            </ButtonComponent>
         </div>
     )
 }
