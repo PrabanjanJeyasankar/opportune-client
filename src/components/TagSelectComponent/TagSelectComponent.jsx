@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styles from "../TagSelectComponent/TagSelectComponent.module.css";
-import authService from '../../services/authService';
+import postProjectService from "../../services/postProjectService";
 import InputComponent from '../../elements/InputComponent/InputComponent'
 
 const TagSelectComponent = ({ handleTagClick, selectedTags, error }) => {
@@ -24,8 +24,7 @@ const TagSelectComponent = ({ handleTagClick, selectedTags, error }) => {
   const fetchSuggestedTags = async (term) => {
     setLoading(true);
     try {
-      const response = await authService.tagSelectionGetMethod(term);
-      console.log("API response:", response);
+      const response = await postProjectService.tagSelectionGetMethod(term);
       const tags = response.data.data.map((item) => item.tag); 
       setSuggestedTags(tags);
     } catch (error) {

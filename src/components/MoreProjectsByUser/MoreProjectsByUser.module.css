@@ -1,0 +1,69 @@
+.more_projects_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.image_gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1rem;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.image_wrapper {
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.view_profile_link {
+    display: flex;
+    align-items: center;
+    gap: 0.1rem;
+    line-height: 1.4rem;
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.view_profile_link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background-color: white;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.view_profile_link:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+@media (min-width: 320px) {
+    .more_projects_title {
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+    .view_profile_link {
+        font-size: 0.9rem;
+    }
+}
+
+@media (min-width: 425px) {
+    .more_projects_title {
+        font-weight: 600;
+        font-size: 1rem;
+    }
+    .view_profile_link {
+        font-size: 1rem;
+    }
+}
