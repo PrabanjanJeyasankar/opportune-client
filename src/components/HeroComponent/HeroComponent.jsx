@@ -10,9 +10,9 @@ import Rock6 from '../../assets/images/rocks/rock_6.webp'
 import Rock7 from '../../assets/images/rocks/rock_7.webp'
 import Rock8 from '../../assets/images/rocks/rock_8.webp'
 import InputComponent from '../../elements/InputComponent/InputComponent'
-import ProjectDisplayComponent from '../ProjectDisplayComponent/ProjectDisplayComponent'
 import handleMouseMove from '../../utils/handleMouseMove'
 import TagFilterComponent from '../../elements/TagFilterComponent/TagFilterComponent'
+import HomeFeedProjectsComponent from '../HomeFeedProjectsComponent/HomeFeedProjectsComponent'
 
 function HeroComponent() {
     const [searchTerm, setSearchTerm] = useState('')
@@ -128,7 +128,7 @@ function HeroComponent() {
                         alt='Rock 7'
                         className={`${styles.floating_rock} ${styles.rock7}`}
                     />
-                    <ProjectDisplayComponent
+                    <HomeFeedProjectsComponent
                         searchTerm={searchTerm}
                         selectedTag={selectedTag}
                     />

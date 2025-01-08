@@ -15,10 +15,8 @@ function ProjectDetailsPage() {
     console.log(project)
     const galleryRef = useRef(null)
 
-    // const username = project?.authorDetails?.name || 'thiruthanikaiarasu2'
-    // const slug = project?.slug || 'betatype'
-    const username = 'thiruthanikaiarasu2'
-    const slug = 'betatype'
+    const username = project?.authorDetails?.name
+    const slug = project?.slug
 
     const handleClick = () => {
         navigator.clipboard
