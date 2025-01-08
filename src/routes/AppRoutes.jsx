@@ -11,10 +11,12 @@ import AccountLayout from '../layouts/AccountLayout/AccountLayout'
 import ProjectDetailsInputFormComponent from '../components/ProjectDetailsInputFormComponent/ProjectDetailsInputFormComponent'
 import ProjectDetailsValidationFrom from '../utils/ProjectDetailsValidationFrom'
 import ProjectDetailsPage from '../pages/ProjectDetailsPage/ProjectDetailsPage'
+import ScrollToTop from '../utils/scrollToTop'
 
 const AppRoutes = () => {
     return (
         <>
+            <ScrollToTop />
             <Suspense fallback={<div>Loading...</div>}>
                 <Routes>
                     <Route element={<MainLayout />}>

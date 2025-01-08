@@ -5,6 +5,7 @@
     max-width: 800px;
     margin: 0 auto;
     position: relative;
+    color: white;
 }
 
 .search_input {
@@ -88,6 +89,7 @@
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(1px);
     transition: transform 0.3s ease;
+    color: white;
 }
 
 .project_card_container:hover {

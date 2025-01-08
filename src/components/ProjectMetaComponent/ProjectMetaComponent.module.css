@@ -1,0 +1,193 @@
+.project_meta_header {
+    display: flex;
+    justify-content: space-between;
+    margin: 3rem 0 0 0;
+}
+
+.thumbnail {
+    display: flex;
+    justify-content: center;
+}
+
+.thumbnail img {
+    width: 100%;
+    border-radius: 0.6rem;
+}
+
+.title_and_docs {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+}
+
+.project_title {
+    font-size: 2rem;
+    font-weight: 600;
+    flex-wrap: wrap;
+}
+
+.project_documentation_link {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 0.1rem;
+    opacity: 0.7;
+    line-height: 1.4rem;
+    position: relative;
+}
+
+.project_documentation_link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background-color: white;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.project_documentation_link:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+.documentation_link {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.1rem;
+}
+
+.project_actions {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.4rem;
+}
+
+.upvote,
+.project_views {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.upvote_count,
+.views_count {
+    opacity: 0.7;
+}
+
+.project_tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0 1rem -0.5rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.project_tag {
+    background: var(--white-opacity-low);
+    border-radius: 2rem;
+    padding: 0.3rem 1.2rem;
+    font-size: clamp(0.9rem, 1.5vw + 0.4rem, 1rem);
+    color: var(--text-primary);
+    white-space: nowrap;
+}
+
+.project_description {
+    margin: 1.8rem 0 0 0;
+    font-size: clamp(1rem, 2vw + 0.5rem, 1.2rem);
+    font-weight: 400;
+    opacity: 0.7;
+}
+
+.external_links {
+    width: 100%;
+    display: flex;
+    flex-grow: 1;
+    margin: 6rem auto;
+    gap: 1rem;
+}
+
+.hosted_link_button,
+.github_link_button {
+    display: flex;
+    color: white;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    flex: 1;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    border-radius: 0.6rem;
+    font-size: clamp(1rem, 2vw + 0.5rem, 1.2rem);
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.github_link_button {
+    color: black;
+    background-color: white;
+}
+.hosted_link_button {
+    border: 1px solid white;
+}
+
+.github_link_button:hover,
+.hosted_link_button:hover {
+    opacity: 0.8;
+}
+
+@media (min-width: 320px) {
+    .project_meta_header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .project_tags {
+        margin: 1rem 0 2rem 0;
+    }
+}
+
+@media (min-width: 375px) {
+    .project_meta_header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .project_tags {
+        margin: 1rem 0 2rem 0;
+    }
+}
+
+@media (min-width: 425px) {
+    .project_meta_header {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+    .project_title {
+        font-size: 1.7rem;
+        font-weight: 600;
+        flex-wrap: wrap;
+    }
+    .project_tags {
+        margin: 1rem 0 2rem 0;
+    }
+}
+
+@media (min-width: 650px) {
+    .project_meta_header {
+        flex-direction: row;
+    }
+}
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 1024px) {
+}
+
+@media (min-width: 1440px) {
+}

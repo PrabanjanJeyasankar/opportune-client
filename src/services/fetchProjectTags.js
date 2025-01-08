@@ -5,7 +5,7 @@ const fetchProjectTags = () => {
         .get('/project/tags')
         .then((response) => {
             if (response.status === 200) {
-                console.log(response.data.data)
+                // console.log(response.data.data)
                 return response.data.data
             } else {
                 console.error('Unexpected response status:', response.status)
