@@ -87,9 +87,10 @@ function LoginPage() {
     }
 
     const handleGithubLogInAuth = async () => {
-
+        // Redirect to backend route for GitHub OAuth flow
+        window.location.href = 'http://localhost:3500/api/v1/auth/github/login'; // Change to your backend GitHub login route
     }
-
+    
     return (
         <div className={loginStyles.container}>
             <form

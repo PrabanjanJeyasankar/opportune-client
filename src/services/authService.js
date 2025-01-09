@@ -41,7 +41,7 @@ const authService = {
     logout: async () => {
         const response = await axiosInstance.post("/auth/logout")
         return response
-    },
+    }
 } 
 
 export default authService
