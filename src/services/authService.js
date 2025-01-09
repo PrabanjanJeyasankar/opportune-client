@@ -12,8 +12,6 @@ const authService = {
     },
     
     changePassword: async(email, password) => {
-        console.log("email" + email)
-        console.log("password" + password)
         const response = await axiosInstance.post("/user/resetPassword", {email, password})
         return response
     },

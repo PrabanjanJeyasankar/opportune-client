@@ -8,8 +8,8 @@ import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 import SpinnerLoaderComponent from '../../loaders/SpinnerLoaderComponent/SpinnerLoaderComponent'
 import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
 import authService from '../../services/authService'
-// import { usePasswordResetContext } from '../../context/PasswordResetContext/passwordResetContext'
-// import handleResetPasswordRequestOtpService from '../../services/authenticationServices/handleResetPasswordRequestOtpService'
+import BackSvg from '@/svg/BackSvg/BackSvg'
+import { toast } from '@/hooks/use-toast'
 
 function RequestOtpPage() {
     const [errors, setErrors] = useState({})
@@ -29,49 +29,63 @@ function RequestOtpPage() {
         const validationError = validateEmail(email)
         if (!validationError) {
             try {
-                console.log(email)
                 const response = await authService.forgotPassword(email)
-                console.log(response)
                 if (response.status === 201) {
-                    // toast.success('OTP sent to your email. Please check your inbox.')
+                    toast({
+                        description: 'OTP sent to your email. Please check your inbox.',
+                    })
                     navigate('/verify-otp', {
                         state: {
                             email: email,
                         },
                     })
                 }
-            } catch (error) {
-                console.error('Request otp error:', error)
-                console.log(error?.response?.status)
-                console.log(error?.response?.data?.message)
-
+            } 
+            catch (error) {
                 if (error.response) {
                     const status = error.response.status
                     const message = error.response.data?.message || "An error occurred"
           
                     if (status === 400) {
                         setErrors({ email: 'Email address not registered' })
-                        console.log("Email address not registered")
-                        // toast.error("Email address not registered")
-                    } else if (status === 401) {
-                        console.log("session expires try again")
-                        // toast.error("Session expired. Try again")
+                        toast({
+                            description: 'Email address not registered',
+                        })
+                    } 
+                    else if (status === 401) {
+                        toast({
+                            description: 'Session expired. Try again',
+                        })
                         navigate("/signup")
-                    } else if (status === 429) {
-                        console.log("too many attempts try again" + message)
-                        // toast.error("Too many attempts. Wait for a while and try the recent otp sent to you.")
-                    } else if (status === 500) {
-                        console.log("Server Error try again" + message)
-                        // toast.error("Server Error try again")
-                    } else {
-                        // toast.error(`Error ${status}: ${message}`);
+                    } 
+                    else if (status === 429) {
+                        toast({
+                            description: 'Too many attempts. Try again after 10 mins',
+                        })
+                    } 
+                    else if (status === 500) {
+                        toast({
+                            description: 'Server Error try again',
+                        })
+                    } 
+                    else {
+                        toast({
+                            description: `Error ${status}: ${message}`,
+                        })
                     }
-                } else if (error.request) {
-                    // toast.error("Network error. Please check your connection and try again.");
-                } else {
-                    // toast.error("Unexpected error occurred. Please try again later.");
+                } 
+                else if (error.request) {
+                    toast({
+                        description: 'Network error. Please check your connection and try again',
+                    })
+                } 
+                else {
+                    toast({
+                        description: 'Unexpected error occurred. Please try again later.',
+                    })
                 }
-            } finally {
+            }
+            finally {
                 setIsLoading(false)
             }
         } else {
@@ -128,19 +142,7 @@ function RequestOtpPage() {
                 <ButtonComponent
                     className={requestOtpStyles.back_button}
                     onClick={handleBack}>
-                    <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        width='24'
-                        height='24'
-                        viewBox='0 0 24 24'
-                        fill='none'
-                        stroke='currentColor'
-                        strokeWidth='2'
-                        strokeLinecap='round'
-                        strokeLinejoin='round'
-                        className='lucide lucide-chevron-left'>
-                        <path d='m15 18-6-6 6-6' />
-                    </svg>
+                    <BackSvg/>
                     <span>Back</span>
                 </ButtonComponent>
             </form>

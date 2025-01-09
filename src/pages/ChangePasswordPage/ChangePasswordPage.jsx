@@ -9,6 +9,7 @@ import PasswordStrengthBar from 'react-password-strength-bar';
 import { validateNewPassword } from '../../utils/authenticationFieldsValidation';
 import authService from '../../services/authService';
 import SpinnerLoaderComponent from '@/loaders/SpinnerLoaderComponent/SpinnerLoaderComponent';
+import { toast } from '@/hooks/use-toast'
 
 function ChangePasswordPage() {
     const { state } = useLocation();
@@ -55,17 +56,47 @@ function ChangePasswordPage() {
         }
 
         try {
-            console.log('Submitting data to backend:', { email, newPassword });
             const response = await authService.changePassword(email, newPassword);
-            console.log(response);
-
-            // Success toast
-            // toast.success('Password updated successfully!');
-            navigate('/login');
+            if(response.status === 200){
+                toast({
+                    description: 'Password updated successfully!',
+                })
+                navigate('/login');
+            }
         } catch (error) {
-            console.error('Error updating password:', error);
-            // toast.error('Failed to update password. Please try again.');
-        } finally {
+            if (error.response) {
+                const status = error.response.status
+                const message = error.response.data?.message || "An error occurred"
+        
+                if (status === 400) {
+                    setErrors({ newPassword: 'Validation error. Try with different combination' })
+                    toast({
+                        description: 'Validation error. Try with different combination',
+                    })
+                } 
+                else if (status === 500) {
+                    toast({
+                        description: 'Failed to update password. Please try again.',
+                    })
+                } 
+                else {
+                    toast({
+                        description: `Error ${status}: ${message}`,
+                    })
+                }
+            } 
+            else if (error.request) {
+                toast({
+                    description: 'Network error. Please check your connection and try again.',
+                })
+            } 
+            else {
+                toast({
+                    description: 'Unexpected error occurred. Please try again later.',
+                })
+            }
+        } 
+        finally {
             setIsLoading(false);
         }
     };
@@ -135,9 +166,7 @@ function ChangePasswordPage() {
                             ) : null
                         }
                     </div>
-                    <span className={
-                            changePasswordStyles.verify_button_state_text
-                        }>
+                    <span className={changePasswordStyles.verify_button_state_text}>
                         {isLoading ? 'Updating...' : 'Update Password'}
                     </span>
                 </PrimaryButtonComponent>

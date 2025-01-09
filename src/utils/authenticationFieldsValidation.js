@@ -163,7 +163,29 @@ const validateLoginInputs = (email, password) => {
     const inputs = { email, password }
     const validations = {
         email: { required: true },
-        password: { required: true, minimumLength: 6, maximumLength: 128 },
+        password: {
+          required: true,
+          minimumLength: 6,
+          maximumLength: 128,
+          rules: [
+              {
+                  regex: /[A-Z]/,
+                  errorMessage: "Password must contain at least one uppercase letter.",
+              },
+              {
+                  regex: /[a-z]/,
+                  errorMessage: "Password must contain at least one lowercase letter.",
+              },
+              {
+                  regex: /[!@#$%^&*(),.?":{}|<>]/,
+                  errorMessage: "Password must contain at least one special character.",
+              },
+              {
+                regex: /[0-9]/,
+                errorMessage: "Password must contain at least one number",
+              },
+          ],
+      },
     }
     return validateInputs(inputs, validations)
 }
