@@ -51,6 +51,7 @@ const FormInputComponent = ({
                         &&
                         <ButtonComponent
                             onClick={togglePasswordVisibility}
+                            type='button'
                             className={formInputStyles.eye_icon}>
                             {showPassword ? 
                                 <EyeShowSVG/>

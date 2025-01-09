@@ -1,4 +1,5 @@
 .project_details_container {
+    color: white;
     display: flex;
     flex-direction: column;
     gap: 0rem;
