@@ -1,4 +1,5 @@
 .container {
+    color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -162,6 +163,12 @@
 .back_button:hover {
     opacity: 0.5;
     transition: opacity 0.1s ease-in;
+}
+
+.spinning_loader {
+    position: absolute;
+    left: 27%;
+    top: 10%;
 }
 
 @media (min-width: 220px) and (max-width: 426px) {

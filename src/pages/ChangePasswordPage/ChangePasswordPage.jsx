@@ -8,6 +8,7 @@ import AppLogo from '../../assets/images/opportune_logo_svg.svg';
 import PasswordStrengthBar from 'react-password-strength-bar';
 import { validateNewPassword } from '../../utils/authenticationFieldsValidation';
 import authService from '../../services/authService';
+import SpinnerLoaderComponent from '@/loaders/SpinnerLoaderComponent/SpinnerLoaderComponent';
 
 function ChangePasswordPage() {
     const { state } = useLocation();
@@ -122,8 +123,23 @@ function ChangePasswordPage() {
                     />
                 )}
 
-                <PrimaryButtonComponent type="submit" disabled={isLoading}>
-                    {isLoading ? 'Updating...' : 'Update Password'}
+                <PrimaryButtonComponent
+                    type='submit'
+                    disabled={isLoading}>
+                    <div>
+                        {
+                            isLoading ? (
+                                <span className={changePasswordStyles.spinning_loader}>
+                                    <SpinnerLoaderComponent />
+                                </span>
+                            ) : null
+                        }
+                    </div>
+                    <span className={
+                            changePasswordStyles.verify_button_state_text
+                        }>
+                        {isLoading ? 'Updating...' : 'Update Password'}
+                    </span>
                 </PrimaryButtonComponent>
             </form>
         </div>

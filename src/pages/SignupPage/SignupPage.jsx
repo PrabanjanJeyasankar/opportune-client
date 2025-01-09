@@ -262,7 +262,7 @@ function SignupPage() {
                         }
                     </div>
                     <span className={signupStyles.signin_button_state_text}>
-                        {isLoading ? ' Sending OTP...' : 'Sign in'}
+                        {isLoading ? ' Sending OTP...' : 'Signup'}
                     </span>
                 </PrimaryButtonComponent>
                 <div className={signupStyles.social_buttons_container}>

@@ -19,6 +19,7 @@ function VerifyOTPPage() {
     const [isLoading, setIsLoading] = useState(false)
     const [countdown, setCountdown] = useState(20)
     const [isResendDisabled, setIsResendDisabled] = useState(true)
+    const [isOtpResending, setIsOtpResending] = useState(false)
 
     const location = useLocation()
     const { isSignup, email } = location.state || {}
@@ -136,41 +137,91 @@ function VerifyOTPPage() {
     }
 
     const handleResendOtp = async () => {
-        try {
-            setIsResendDisabled(true)
-            setOtpString([])
-            const response = await authService.resendOtp(email)
-            console.log(response)
-        } catch (error) {
-            console.error('OTP verification error:', error)
-            console.log(error?.response?.status)
-            console.log(error?.response?.data?.message)
-
-            if (error.response) {
-                const status = error.response.status
-                const message = error.response.data?.message || "An error occurred"
-      
-                if (status === 401) {
-                    console.log("session expires signup again")
-                    // toast.error("Session expired. Signup again")
-                    navigate("/signup")
-                } else if (status === 409) {
-                    console.log("conflict user already exist" + error)
-                    // toast.error("User already Registered")
-                    navigate("/")
-                } else if (status === 429) {
-                    console.log("too many attempts signup again" + message)
-                    // toast.error("Too many attempts. Signup again.")
-                } else if (status === 500) {
-                    console.log("Server Error try again" + message)
-                    // toast.error("Server Error try again")
+        if(isSignup){
+            try {
+                setIsResendDisabled(true)
+                setOtpString(Array(6).fill(''))
+                setIsOtpResending(true)
+                const response = await authService.resendOtp(email)
+                console.log(response)
+            } catch (error) {
+                console.error('OTP verification error:', error)
+                console.log(error?.response?.status)
+                console.log(error?.response?.data?.message)
+    
+                if (error.response) {
+                    const status = error.response.status
+                    const message = error.response.data?.message || "An error occurred"
+          
+                    if (status === 401) {
+                        console.log("session expires signup again")
+                        // toast.error("Session expired. Signup again")
+                        navigate("/signup")
+                    } else if (status === 409) {
+                        console.log("conflict user already exist" + error)
+                        // toast.error("User already Registered")
+                        navigate("/")
+                    } else if (status === 429) {
+                        console.log("too many attempts signup again" + message)
+                        // toast.error("Too many attempts. Signup again.")
+                    } else if (status === 500) {
+                        console.log("Server Error try again" + message)
+                        // toast.error("Server Error try again")
+                    } else {
+                        // toast.error(`Error ${status}: ${message}`);
+                    }
+                } else if (error.request) {
+                    // toast.error("Network error. Please check your connection and try again.");
                 } else {
-                    // toast.error(`Error ${status}: ${message}`);
+                    // toast.error("Unexpected error occurred. Please try again later.");
                 }
-            } else if (error.request) {
-                // toast.error("Network error. Please check your connection and try again.");
-            } else {
-                // toast.error("Unexpected error occurred. Please try again later.");
+            }
+            finally{
+                setIsResendDisabled(false)
+                setIsOtpResending(false)
+            }
+        }
+        else {
+            try {
+                setIsResendDisabled(true)
+                setOtpString(Array(6).fill(''))
+                setIsOtpResending(true)
+                const response = await authService.forgotPassword(email)
+                console.log(response)
+            } catch (error) {
+                console.error('Request otp error:', error)
+                console.log(error?.response?.status)
+                console.log(error?.response?.data?.message)
+
+                if (error.response) {
+                    const status = error.response.status
+                    const message = error.response.data?.message || "An error occurred"
+          
+                    if (status === 400) {
+                        setErrors({ email: 'Email address not registered' })
+                        console.log("Email address not registered")
+                        // toast.error("Email address not registered")
+                    } else if (status === 401) {
+                        console.log("session expires try again")
+                        // toast.error("Session expired. Try again")
+                        navigate("/signup")
+                    } else if (status === 429) {
+                        console.log("too many attempts. Try after 15 mins" + message)
+                        // toast.error("Too many attempts. Wait for a while and try after 15 mins.")
+                    } else if (status === 500) {
+                        console.log("Server Error try again" + message)
+                        // toast.error("Server Error try again")
+                    } else {
+                        // toast.error(`Error ${status}: ${message}`);
+                    }
+                } else if (error.request) {
+                    // toast.error("Network error. Please check your connection and try again.");
+                } else {
+                    // toast.error("Unexpected error occurred. Please try again later.");
+                }
+            } finally {
+                setIsOtpResending(false)
+                setIsResendDisabled(false)
             }
         }
     }
@@ -246,12 +297,20 @@ function VerifyOTPPage() {
                 {errors.otp && (
                     <p className={otpVerificationStyles.error}>{errors.otp}</p>
                 )}
+
                 <PrimaryButtonComponent
                     type='submit'
                     disabled={isLoading}>
-                    {isLoading ? <SpinnerLoaderComponent /> : null}
-                    <span
-                        className={
+                    <div>
+                        {
+                            isLoading ? (
+                                <span className={otpVerificationStyles.spinning_loader}>
+                                    <SpinnerLoaderComponent />
+                                </span>
+                            ) : null
+                        }
+                    </div>
+                    <span className={
                             otpVerificationStyles.verify_button_state_text
                         }>
                         {isLoading ? 'Verifying...' : 'Verify OTP'}
@@ -260,14 +319,21 @@ function VerifyOTPPage() {
 
                 <div className={otpVerificationStyles.resend_otp_container}>
                     <p>Didn't receive the code? </p>
-                    <ButtonComponent
-                        className={otpVerificationStyles.resend_otp_button}
-                        onClick={handleResendOtp}
-                        disabled={isResendDisabled}>
-                        {isResendDisabled
-                            ? `Resend in ${formatCountdown()}`
-                            : 'Resend OTP'}
-                    </ButtonComponent>
+                    {
+                        isOtpResending 
+                        ? 
+                        <p className={otpVerificationStyles.resend_otp_button}>Resending...</p>
+                        :
+                        <ButtonComponent
+                            className={otpVerificationStyles.resend_otp_button}
+                            onClick={handleResendOtp}
+                            disabled={isResendDisabled}>
+                            {isResendDisabled
+                                ? `Resend in ${formatCountdown()}`
+                                : 'Resend OTP'}
+                        </ButtonComponent>
+                    
+                    }
                 </div>
 
                 <ButtonComponent

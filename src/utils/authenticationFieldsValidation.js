@@ -92,6 +92,10 @@ const validateSignupInputs = (name, username, email, password) => {
                     regex: /[!@#$%^&*(),.?":{}|<>]/,
                     errorMessage: "Password must contain at least one special character.",
                 },
+                {
+                  regex: /[0-9]/,
+                  errorMessage: "Password must contain at least one number",
+                },
             ],
         },
     }
