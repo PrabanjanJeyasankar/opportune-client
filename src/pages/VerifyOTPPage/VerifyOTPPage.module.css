@@ -45,12 +45,30 @@
 }
 
 .otp_sent_email {
-    color: var(--green-500);
+    color: white;
     font-weight: 500;
 }
 
 .change_mail {
+    position: relative;
     color: var(--green-500);
+    margin-left: 0.3rem;
+}
+
+.change_mail::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background-color: var(--green-500);
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.change_mail:hover::after {
+    width: 100%;
+    left: 0;
 }
 
 .inputGroup {
@@ -93,16 +111,34 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    padding: 1rem 0;
 }
 
 .resend_otp_button {
+    position: relative;
+    color: var(--green-500);
+    margin-left: 0.3rem;
     background: none;
     border: none;
-    color: var(--green-500);
-    text-decoration: underline;
     cursor: pointer;
     font: inherit;
     padding: 0;
+}
+
+.resend_otp_button::after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background-color: var(--green-500);
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.resend_otp_button:hover::after {
+    width: 100%;
+    left: 0;
 }
 
 .resend_otp_button:disabled {
@@ -110,6 +146,11 @@
     cursor: not-allowed;
     text-decoration: none;
 }
+
+.resend_otp_button:disabled::after {
+    width: 0;
+}
+
 .tooltipContainer {
     position: relative;
     display: inline-block;

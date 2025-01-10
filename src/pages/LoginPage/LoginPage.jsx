@@ -150,9 +150,11 @@ function LoginPage() {
                         error={errors.password}
                     />
                 </div>
-                <Link to='/request-otp' className={loginStyles.forgot_password}>
-                    Forgot password?
-                </Link>
+                <div className={loginStyles.forgot_password_container}>
+                    <Link to='/request-otp' className={loginStyles.forgot_password}>
+                        Forgot password?
+                    </Link>
+                </div>
                 <PrimaryButtonComponent
                     type='submit'
                     >
@@ -169,6 +171,12 @@ function LoginPage() {
                         {isLoading ? 'Logging in...' : 'Login'}{' '}
                     </span>
                 </PrimaryButtonComponent>
+
+                <div className={loginStyles.continue_with_container}>
+                    <div className={loginStyles.continue_with_stripe}></div>
+                    <p className={loginStyles.continue_with_text}>or continue with</p>
+                </div>
+
                 <div className={loginStyles.socialButtonsContainer}>
                     <ButtonComponent
                         type='button'

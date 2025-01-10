@@ -18,17 +18,18 @@
     text-align: center;
     font-size: 1.5rem;
     font-weight: bold;
-    background-color: white;
-    border: 1px solid transparent;
+    background-color: black;
+    border: 1px solid var(--primary-gray);
     border-radius: 0.5rem;
     outline: none;
     transition: border-color 0.2s;
+    caret-color: white;
 }
 
 .otpInput:focus {
-    background-color: white;
+    background-color: black;
     border-color: var(--green-500);
-    box-shadow: 0 0 0 2px var(--green-500); 
+    /* box-shadow: 0 0 0 0px var(--green-500);  */
 }
 
 .error {

@@ -255,6 +255,12 @@ function SignupPage() {
                         {isLoading ? ' Sending OTP...' : 'Signup'}
                     </span>
                 </PrimaryButtonComponent>
+
+                <div className={signupStyles.continue_with_container}>
+                    <div className={signupStyles.continue_with_stripe}></div>
+                    <p className={signupStyles.continue_with_text}>or continue with</p>
+                </div>
+
                 <div className={signupStyles.social_buttons_container}>
                     <ButtonComponent
                         type='button'

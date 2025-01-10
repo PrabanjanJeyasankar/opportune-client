@@ -18,6 +18,7 @@ const OTPInputFieldComponent = ({
     return (
         <div className={containerClass}>
             <input
+                autoComplete='off'
                 type={type}
                 id={id}
                 name={name}
