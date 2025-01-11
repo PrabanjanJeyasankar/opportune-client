@@ -117,9 +117,9 @@ const ProjectDetailsInputFormComponent = () => {
     <div>
       <div className={styles.container}>
         <div className={styles.form_wrapperr}>
-          <h2 className={styles.form_title}>Submit Your Project</h2>
+          <div className={styles.title_container}><h2 className={styles.form_title}>Submit Your Project</h2><p>( * are required field)</p></div>
           <form onSubmit={handleSubmit}>
-            <label className={styles.label}>Title</label>
+            <label className={styles.label}>Title *</label>
             <InputComponent
               className={styles.input_field}
               placeholder="Enter project title"
@@ -133,21 +133,22 @@ const ProjectDetailsInputFormComponent = () => {
               <p className={styles.error_message}>{errors.title}</p>
             )}
 
-            <div className={styles.label}>Description</div>
-            <InputComponent
-              className={styles.textarea_field}
-              placeholder="Enter project description"
-              name="description"
-              value={formData.description}
-              label="Description"
-              onChange={handleInputChange}
-              error={errors.description}
-            />
+            <div className={styles.label}>Description *</div>
+                      <textarea
+                        id="description"
+                        className={`${styles.input_field} ${styles.textarea}`}
+                        placeholder="Enter project description"
+                        name="description"
+                        value={formData.description}
+                        onChange={handleInputChange}
+                        rows={8}
+                        error={errors.description}
+                      />
             {errors.description && (
               <p className={styles.error_message}>{errors.description}</p>
             )}
 
-            <div className={styles.label}>Thumbnail</div>
+            <div className={styles.label}>Thumbnail *</div>
             <ThumbnailUploadComponent
               thumbnail={formData.thumbnail}
               handleInputChange={handleInputChange}
@@ -160,7 +161,7 @@ const ProjectDetailsInputFormComponent = () => {
               selectedTags={formData.tags}
               error={errors.tags}
             />
-            <div className={styles.label}>GithubLink</div>
+            <div className={styles.label}>GithubLink *</div>
             <InputComponent
               className={styles.input_field}
               placeholder="Enter GitHub repository URL"

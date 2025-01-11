@@ -75,7 +75,7 @@ const UpdateProfileComponent = () => {
 
       if (response.status === 200) {
         toast({
-          description: "Submitted successfully.",
+          description: "Profile updated successfully.",
         });
         setFormData({
           bio: "",
@@ -119,10 +119,13 @@ const UpdateProfileComponent = () => {
   return (
     <div className={styles.container}>
       <div className={styles.form_wrapperr}>
-        <h2 className={styles.form_title}>Update Your Profile</h2>
+        <div className={styles.title_container}>
+          <h2 className={styles.form_title}>Update Your Profile</h2>
+          <p>( * are required field)</p>
+        </div>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <label htmlFor="bio" className={styles.label}>
-            Bio
+            Bio *
           </label>
           <textarea
             id="bio"
@@ -136,7 +139,7 @@ const UpdateProfileComponent = () => {
           {errors.bio && <p className={styles.error_message}>{errors.bio}</p>}
 
           <label htmlFor="portfolioLink" className={styles.label}>
-            Portfolio Link
+            Portfolio Link *
           </label>
           <InputComponent
             id="portfolioLink"
@@ -152,7 +155,7 @@ const UpdateProfileComponent = () => {
           )}
 
           <label htmlFor="resumeLink" className={styles.label}>
-            Resume Link
+            Resume Link *
           </label>
           <InputComponent
             id="resumeLink"
@@ -210,7 +213,7 @@ const UpdateProfileComponent = () => {
           </div>
 
           <label htmlFor="passedOutYear" className={styles.label}>
-            Passed Out Year
+            Passed Out Year *
           </label>
           <InputComponent
             id="passedOutYear"
@@ -233,6 +236,9 @@ const UpdateProfileComponent = () => {
               <label htmlFor={`account_${index}`} className={styles.label}>
                 {account.domain.charAt(0).toUpperCase() +
                   account.domain.slice(1)}
+                {(account.domain === "linkedin" ||
+                  account.domain === "leetcode") &&
+                  " *"}
               </label>
               <InputComponent
                 id={`account_${index}`}

@@ -53,7 +53,7 @@ const TagSelectComponent = ({ handleTagClick, selectedTags, error }) => {
   return (
     <div className={styles.tags_section}>
       <label className={styles.tags_label}>
-        Tags <span className={styles.user_instruction}>(Select up to 3 tags)</span>
+        Tags * <span className={styles.user_instruction}>(Select up to 3 tags)</span>
       </label>
 
       <div className={styles.search_section}>

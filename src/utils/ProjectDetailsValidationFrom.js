@@ -29,13 +29,13 @@ const ProjectDetailsValidationFrom = (formData) => {
     errors.githubLink = "Invalid URL format for GitHub link.";
   }
 
-  if (formData.hostedLink) {
+  if (formData.hostedLink && formData.hostedLink.trim() !== "") {
     if (!/^https?:\/\/.+/.test(formData.hostedLink.trim())) {
       errors.hostedLink = "Invalid URL format for live demo.";
     }
   }
 
-  if (formData.documentation) {
+  if (formData.documentation && formData.documentation.trim() !== "") {
     if (!/^https?:\/\/.+/.test(formData.documentation.trim())) {
       errors.documentation = "Invalid URL format for documentation.";
     }

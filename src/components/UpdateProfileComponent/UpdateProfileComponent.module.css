@@ -20,6 +20,14 @@
   font-size: 1.875rem;
   font-weight: bold;
   color: white;
+}
+
+.title_container{
+  display: flex;
+  flex-direction: column;
+  color: white;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 1.5rem;
 }
 
