@@ -9,9 +9,9 @@ import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
 import RequestOtpPage from '../pages/RequestOtpPage/RequestOtpPage'
 import AccountLayout from '../layouts/AccountLayout/AccountLayout'
 import ProjectDetailsInputFormComponent from '../components/ProjectDetailsInputFormComponent/ProjectDetailsInputFormComponent'
-import ProjectDetailsValidationFrom from '../utils/ProjectDetailsValidationFrom'
 import ProjectDetailsPage from '../pages/ProjectDetailsPage/ProjectDetailsPage'
 import ScrollToTop from '../utils/scrollToTop'
+import UpdateProfileComponent from '@/components/UpdateProfileComponent/UpdateProfileComponent'
 
 const AppRoutes = () => {
     return (
@@ -54,6 +54,10 @@ const AppRoutes = () => {
                         <Route
                             path='/project-details'
                             element={<ProjectDetailsPage />}
+                        />
+                        <Route
+                            path='/update-profile'
+                            element={<UpdateProfileComponent/>}
                         />
                     </Route>
 

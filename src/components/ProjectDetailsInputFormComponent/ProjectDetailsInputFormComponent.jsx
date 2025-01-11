@@ -147,6 +147,7 @@ const ProjectDetailsInputFormComponent = () => {
               <p className={styles.error_message}>{errors.description}</p>
             )}
 
+            <div className={styles.label}>Thumbnail</div>
             <ThumbnailUploadComponent
               thumbnail={formData.thumbnail}
               handleInputChange={handleInputChange}

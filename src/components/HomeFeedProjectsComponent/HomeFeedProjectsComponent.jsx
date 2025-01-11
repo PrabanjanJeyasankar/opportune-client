@@ -28,7 +28,7 @@ const HomeFeedProjectsComponent = ({ searchTerm, selectedTag }) => {
                 const fetchedProjects = await fetchHomeFeedProjectsService()
                 setProjects(fetchedProjects)
             } catch (error) {
-                setError('Failed to fetch projects. Please try again.')
+                setError('Failed to fetch projects. Please try again.') 
             } finally {
                 setLoading(false)
             }

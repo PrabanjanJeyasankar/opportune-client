@@ -19,7 +19,6 @@ const ThumbnailUploadComponent = ({ thumbnail, handleInputChange, error }) => {
 
     return (
         <div className={styles.thumbnail_upload}>
-            <label>Thumbnail</label>
             <input
                 className='hidden'
                 accept='image/*'
