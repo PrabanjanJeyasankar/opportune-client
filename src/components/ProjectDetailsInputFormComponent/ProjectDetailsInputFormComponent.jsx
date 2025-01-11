@@ -72,8 +72,12 @@ const ProjectDetailsInputFormComponent = () => {
         formDataObj.append("description", formData.description);
         formDataObj.append("thumbnail", formData.thumbnail);
         formDataObj.append("githubLink", formData.githubLink);
-        formDataObj.append("hostedLink", formData.hostedLink);
-        formDataObj.append("documentation", formData.documentation);
+        if (formData.hostedLink.trim()) {
+          formDataObj.append("hostedLink", formData.hostedLink.trim());
+        }
+        if (formData.documentation.trim()) {
+          formDataObj.append("documentation", formData.documentation.trim());
+        }
   
         formData.tags.forEach((tag) => {
           formDataObj.append("tags[]", tag);
