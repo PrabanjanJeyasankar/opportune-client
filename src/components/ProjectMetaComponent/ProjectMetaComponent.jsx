@@ -8,6 +8,8 @@ import GithubSvg from '../../svg/GithubSvg/GithubSvg'
 import ChainLinkSvg from '../../svg/ChainLinkSvg/ChainLinkSvg'
 
 function ProjectMetaComponent({ project, handleClick }) {
+
+    // if(project.)
     return (
         <div className={styles.project_meta}>
             <div className={styles.thumbnail}>
@@ -71,7 +73,7 @@ function ProjectMetaComponent({ project, handleClick }) {
                     <span>Hosted Link</span>
                 </a>
                 <a
-                    href={project?.hostedLink}
+                    href={project?.githubLink}
                     target='_blank'
                     rel='noopener noreferrer'
                     className={styles.github_link_button}>

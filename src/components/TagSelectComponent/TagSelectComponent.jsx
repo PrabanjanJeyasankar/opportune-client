@@ -64,7 +64,6 @@ const TagSelectComponent = ({ handleTagClick, selectedTags, error }) => {
           onChange={(event) => setSearchTerm(event.target.value)} 
           className={styles.search_input}
         />
-        {loading && searchTerm && <p className={styles.loading_message}>Loading...</p>} 
         {suggestedTags.length > 0 && (
           <div className={styles.suggestions}>
             {suggestedTags.map((tag) => (

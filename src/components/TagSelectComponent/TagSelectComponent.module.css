@@ -6,12 +6,15 @@
 .tags_section {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    top: 1rem;
+    position: relative;
 }
 
 .tags_label {
     font-size: 1rem;
     color: white;
+    bottom: 1rem;
+    position: relative;
 }
 
 
@@ -19,7 +22,7 @@
 .tags_container {
     display: flex;
     flex-wrap: wrap;
-    gap: 0.5rem;
+    margin-bottom: 1rem;
 }
 
 .tag_button {
@@ -27,7 +30,7 @@
     border-radius: 90px;
     font-size: 0.875rem;
     font-weight: 500;
-    border: 1px solid rgba(255, 255, 255, 0.176);
+    border: 2px solid rgba(255, 255, 255, 0.176);
     background-color: transparent;
     color: white;
     cursor: pointer;

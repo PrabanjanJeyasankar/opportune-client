@@ -5,8 +5,7 @@ import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 
 function NavigationBarComponent() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const navbarRef = useRef(null)
-
+    const navbarRef = useRef(null)    
     const toggleMenu = () => {
         setIsMenuOpen((prev) => !prev)
     }
@@ -56,7 +55,7 @@ function NavigationBarComponent() {
                         Login
                     </Link>
                     <Link
-                        to='/signup'
+                        to='/project-input-form'
                         className={navBarStyles.signup_button}
                         onClick={handleCloseMenu}>
                         Post your projects!

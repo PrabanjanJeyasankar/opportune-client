@@ -101,9 +101,10 @@
     font-size: 0.9rem;
     color: var(--text-secondary);
     text-align: left;
-    /* padding-top: 1rem; */
-    /* min-height: 4.5rem; */
+    /* padding-top: 1rem; 
+    min-height: 4.5rem;  */
     text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .project_card_tags {

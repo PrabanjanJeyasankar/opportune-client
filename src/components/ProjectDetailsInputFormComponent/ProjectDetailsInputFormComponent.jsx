@@ -82,7 +82,7 @@ const ProjectDetailsInputFormComponent = () => {
         formData.tags.forEach((tag) => {
           formDataObj.append("tags[]", tag);
         });
-  
+        console.log(formData)
         const response = await postProjectService.postProjectData(formDataObj);
   
         setFormData({
