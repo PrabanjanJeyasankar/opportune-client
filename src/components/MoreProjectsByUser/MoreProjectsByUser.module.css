@@ -20,10 +20,13 @@
 
 .image {
     display: block;
+    /* height: 250px; */
     height: 250px;
     width: 350px;
     object-fit: cover;
     border-radius: 0.6rem;
+    border: none;
+    outline: none;
 }
 
 .view_profile_link {

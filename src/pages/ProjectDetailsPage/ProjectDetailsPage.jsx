@@ -12,7 +12,6 @@ import ProjectMetaComponent from '@/components/ProjectMetaComponent/ProjectMetaC
 function ProjectDetailsPage() {
     const location = useLocation()
     const project = location.state?.project
-    console.log(project)
     const galleryRef = useRef(null)
 
     const username = project?.authorDetails?.name

@@ -1,7 +1,7 @@
+import ImageComponent from '@/elements/ImageComponent/ImageComponent'
 import fetchMoreProjectsByUser from '@/services/fetchMoreProjectsByUser'
 import { useEffect, useRef, useState } from 'react'
 import styles from './MoreProjectsByUser.module.css'
-import ImageComponent from '@/elements/ImageComponent/ImageComponent'
 
 function MoreProjectsByUser({ username, slug }) {
     const [moreProjectsByUser, setMoreProjectsByUser] = useState([])
@@ -18,7 +18,7 @@ function MoreProjectsByUser({ username, slug }) {
                     setLoading(true)
                     fetchMoreProjectsByUser(username, slug)
                         .then((data) => {
-                            setMoreProjectsByUser(data.data.slice(0, 4))
+                            setMoreProjectsByUser(data.data[0].projects.slice(0,4))
                         })
                         .catch((error) => setError(error))
                         .finally(() => setLoading(false))
@@ -43,17 +43,23 @@ function MoreProjectsByUser({ username, slug }) {
                 <p className={styles.view_profile_link}>View Profile</p>
             </div>
             <div className={styles.image_gallery}>
-                {moreProjectsByUser.map((image, index) => (
-                    <div
-                        key={image.id || `${username}-${slug}-${index}`}
-                        className={styles.image_wrapper}>
-                        <ImageComponent
-                            src={image.thumbnailUrl}
-                            alt={image.alt}
-                            className={styles.image}
-                        />
+                {moreProjectsByUser && moreProjectsByUser.length > 0 ? (
+                    <div className={styles.image_gallery}>
+                        {moreProjectsByUser.map((image, index) => (
+                            <div
+                                key={image.id || `${username}-${slug}-${index}`}
+                                className={styles.image_wrapper}>
+                                <ImageComponent
+                                    src={image.thumbnailUrl}
+                                    alt={image.alt}
+                                    className={styles.image}
+                                />
+                            </div>
+                        ))}
                     </div>
-                ))}
+                ) : (
+                    <p>No more projects by user</p>
+                )}
             </div>
         </div>
     )

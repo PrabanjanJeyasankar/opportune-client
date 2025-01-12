@@ -54,6 +54,7 @@
     justify-items: stretch;
     align-items: start;
     overflow-x: hidden;
+ 
 }
 
 .project_card_container {
@@ -65,9 +66,9 @@
     cursor: pointer;
     background: rgba(0, 0, 0, 0.37);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(1px);
     transition: transform 0.3s ease;
     color: white;
+    min-height: 10%;
 }
 
 .project_card_container:hover {
@@ -101,11 +102,16 @@
     font-size: 0.9rem;
     color: var(--text-secondary);
     text-align: left;
-    /* padding-top: 1rem; 
-    min-height: 4.5rem;  */
+    min-height: 4.5rem;  
     text-overflow: ellipsis;
     overflow: hidden;
+    display: block;
+    line-height: 1.5rem; 
+    max-height: 4.5rem; 
+    height: 100%;
 }
+
+
 
 .project_card_tags {
     display: flex;
@@ -208,3 +214,21 @@
     margin: 10px 0 !important;
     background: rgba(200, 200, 200, 0.2) !important;
 }
+.no_results {
+    place-items: center; 
+    color: var(--text-secondary);
+    grid-column: 2;
+  }
+  
+  .clock_svg {
+    margin: 0;
+  }
+  
+  .no_results p {
+    font-size: 1.3rem;
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  
+  

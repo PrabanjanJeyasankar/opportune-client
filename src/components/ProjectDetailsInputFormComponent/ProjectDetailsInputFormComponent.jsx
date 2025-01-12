@@ -82,7 +82,6 @@ const ProjectDetailsInputFormComponent = () => {
         formData.tags.forEach((tag) => {
           formDataObj.append("tags[]", tag);
         });
-        console.log(formData)
         const response = await postProjectService.postProjectData(formDataObj);
   
         setFormData({
@@ -207,7 +206,7 @@ const ProjectDetailsInputFormComponent = () => {
               <p className={styles.error_message}>{errors.documentation}</p>
             )}
 
-            <ButtonComponent type="submit" className={styles.submit_button}>
+            <ButtonComponent type="submit" className={styles.submit_button} disabled={loading}>
             {loading ? "Submitting..." : "Submit Project"} 
             </ButtonComponent>
           </form>

@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import AppLogo from '../../assets/images/opportune_logo_svg.svg'
+import tempimage from '../../assets/images/ProjectTemplates/img11.png'
 import navBarStyles from './NavigationBarComponent.module.css'
 
 function NavigationBarComponent() {
@@ -12,6 +13,13 @@ function NavigationBarComponent() {
 
     const handleCloseMenu = () => {
         setIsMenuOpen(false)
+    }
+
+    const handleKeyDown = (event, toggleMenu) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault()
+            toggleMenu()
+        }
     }
 
     return (
@@ -48,17 +56,24 @@ function NavigationBarComponent() {
                     Feedback
                 </Link>
                 <div className={navBarStyles.authentication_links}>
-                    <Link
+                    {/* <Link
                         to='/login'
                         className={navBarStyles.link}
                         onClick={handleCloseMenu}>
                         Login
-                    </Link>
+                    </Link> */}
                     <Link
                         to='/project-input-form'
                         className={navBarStyles.signup_button}
                         onClick={handleCloseMenu}>
                         Post your projects!
+                    </Link>
+                    <Link to='/' className={navBarStyles.logo}>
+                        <img
+                            src={tempimage}
+                            alt='AppLogo'
+                            className={navBarStyles.logo_image}
+                        />
                     </Link>
                 </div>
             </nav>
