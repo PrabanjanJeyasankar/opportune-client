@@ -2,20 +2,24 @@ import { useEffect, useState } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import StarryMotionComponent from './components/StarryMotionComponent/StarryMotionComponent'
 import { UserProvider } from './context/userContext'
-import AppRoutes from './routes/AppRoutes'
 import InitialLoadingAnimation from './loaders/InitialLoadingAnimation/InitialLoadingAnimation'
+import AppRoutes from './routes/AppRoutes'
 
 function App() {
-    const [loading, setLoading] = useState(true)
+    const [loading, setLoading] = useState(() => {
+        return !localStorage.getItem('initialLoadComplete')
+    })
 
     useEffect(() => {
-        // Simulate initial loading time
-        const timer = setTimeout(() => {
-            setLoading(false)
-        }, 2000) // 2 seconds delay
+        if (loading) {
+            const timer = setTimeout(() => {
+                setLoading(false)
+                localStorage.setItem('initialLoadComplete', 'true')
+            }, 2000)
 
-        return () => clearTimeout(timer)
-    }, [])
+            return () => clearTimeout(timer)
+        }
+    }, [loading])
 
     if (loading) {
         return <InitialLoadingAnimation />

@@ -1,10 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react'
-import styles from './TagFilterComponent.module.css'
+import { Skeleton } from '@/components/ui/skeleton'
+import PropTypes from 'prop-types'
+import { useEffect, useRef, useState } from 'react'
+import fetchProjectTags from '../../services/fetchProjectTags'
 import ChevronRight from '../../svg/ChervronRight/ChevronRight'
 import ChevronLeft from '../../svg/ChevronLeft/ChevronLeft'
-import fetchProjectTags from '../../services/fetchProjectTags'
-import { Skeleton } from '@/components/ui/skeleton'
 import ButtonComponent from '../ButtonComponent/ButtonComponent'
+import styles from './TagFilterComponent.module.css'
 
 function TagFilterComponent({ selectedTag, setSelectedTag }) {
     const [tags, setTags] = useState([{ tag: 'All' }])
@@ -17,15 +18,17 @@ function TagFilterComponent({ selectedTag, setSelectedTag }) {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        fetchProjectTags()
-            .then((fetchedTags) => {
+        const fetchTags = async () => {
+            try {
+                const fetchedTags = await fetchProjectTags()
                 setTags([{ tag: 'All' }, ...fetchedTags])
                 setLoading(false)
-            })
-            .catch((error) => {
+            } catch (error) {
                 console.error('Error fetching tags:', error)
                 setLoading(false)
-            })
+            }
+        }
+        fetchTags()
     }, [])
 
     const scroll = (direction) => {
@@ -86,6 +89,7 @@ function TagFilterComponent({ selectedTag, setSelectedTag }) {
     }, [])
 
     const handleMouseDown = (e) => {
+        if (!tagsContainerRef.current) return
         setIsDragging(true)
         setStartX(e.pageX - tagsContainerRef.current.offsetLeft)
         setScrollLeft(tagsContainerRef.current.scrollLeft)
@@ -96,7 +100,7 @@ function TagFilterComponent({ selectedTag, setSelectedTag }) {
     }
 
     const handleMouseMove = (e) => {
-        if (!isDragging) return
+        if (!isDragging || !tagsContainerRef.current) return
         e.preventDefault()
         const x = e.pageX - tagsContainerRef.current.offsetLeft
         const walk = (x - startX) * 0.5
@@ -162,6 +166,11 @@ function TagFilterComponent({ selectedTag, setSelectedTag }) {
             </ButtonComponent>
         </div>
     )
+}
+
+TagFilterComponent.propTypes = {
+    selectedTag: PropTypes.string.isRequired,
+    setSelectedTag: PropTypes.func.isRequired,
 }
 
 export default TagFilterComponent
