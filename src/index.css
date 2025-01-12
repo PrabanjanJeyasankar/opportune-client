@@ -74,6 +74,7 @@ html,
 body {
     height: 100%;
     margin: 0 auto;
+    background-color: black;
     /* overflow-x: hidden; */
     /* overflow-y: scroll; */
 }

@@ -1,10 +1,11 @@
-import React, { useState } from 'react'
+import PropTypes from 'prop-types'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import styles from './ProjectCardComponent.module.css'
 import ImageComponent from '../../elements/ImageComponent/ImageComponent'
 import ShareIconSvg from '../../svg/ShareIconSvg/ShareIconSvg'
 import UpvoteIconSvg from '../../svg/UpvoteIconSvg/UpvoteIconSvg'
 import { Skeleton } from '../ui/skeleton'
+import styles from './ProjectCardComponent.module.css'
 
 const ProjectCardComponent = ({ filteredProjects, isLoading }) => {
     return (
@@ -97,6 +98,22 @@ const ProjectCard = ({ project }) => {
             </div>
         </div>
     )
+}
+
+ProjectCard.propTypes = {
+    project: PropTypes.shape({
+        thumbnailUrl: PropTypes.string,
+        title: PropTypes.string,
+        tags: PropTypes.array,
+        description: PropTypes.string,
+        upvoteCount: PropTypes.number,
+        projectTitle: PropTypes.string,
+    }).isRequired,
+}
+
+ProjectCardComponent.propTypes = {
+    filteredProjects: PropTypes.array.isRequired,
+    isLoading: PropTypes.bool.isRequired,
 }
 
 export default ProjectCardComponent

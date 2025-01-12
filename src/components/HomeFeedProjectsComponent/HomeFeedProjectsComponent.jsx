@@ -1,7 +1,8 @@
-import React, { useMemo, useState, useEffect } from 'react'
-import ProjectCardComponent from '../ProjectCardComponent/ProjectCardComponent'
+import PropTypes from 'prop-types'
+import { useEffect, useMemo, useState } from 'react'
 import fetchHomeFeedProjectsService from '../../services/fetchHomeFeedProjects'
-
+import ProjectCardComponent from '../ProjectCardComponent/ProjectCardComponent'
+import styles from './HomeFeedProjectsComponent.module.css'
 
 const HomeFeedProjectsComponent = ({ searchTerm, selectedTag }) => {
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
@@ -27,8 +28,8 @@ const HomeFeedProjectsComponent = ({ searchTerm, selectedTag }) => {
             try {
                 const fetchedProjects = await fetchHomeFeedProjectsService()
                 setProjects(fetchedProjects)
-            } catch (error) {
-                setError('Failed to fetch projects. Please try again.') 
+            } catch {
+                setError('Failed to fetch projects. Please try again.')
             } finally {
                 setLoading(false)
             }
@@ -58,11 +59,18 @@ const HomeFeedProjectsComponent = ({ searchTerm, selectedTag }) => {
     }
 
     return (
-        <ProjectCardComponent
-            filteredProjects={filteredProjects}
-            isLoading={loading}
-        />
+        <div className={styles.home_feed_projects_container}>
+            <ProjectCardComponent
+                filteredProjects={filteredProjects}
+                isLoading={loading}
+            />
+        </div>
     )
+}
+
+HomeFeedProjectsComponent.propTypes = {
+    searchTerm: PropTypes.string,
+    selectedTag: PropTypes.string,
 }
 
 export default HomeFeedProjectsComponent
