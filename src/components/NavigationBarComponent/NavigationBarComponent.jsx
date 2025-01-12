@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import navBarStyles from './NavigationBarComponent.module.css'
 import AppLogo from '../../assets/images/opportune_logo_svg.svg'
+import navBarStyles from './NavigationBarComponent.module.css'
 
 function NavigationBarComponent() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
-    const navbarRef = useRef(null)    
+    const navbarRef = useRef(null)
     const toggleMenu = () => {
         setIsMenuOpen((prev) => !prev)
     }

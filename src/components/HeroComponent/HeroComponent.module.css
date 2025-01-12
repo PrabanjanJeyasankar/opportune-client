@@ -158,7 +158,7 @@
 }
 
 .rock8 {
-    width: 50%;
+    width: 40%;
     top: 50%;
     left: -46%;
     z-index: -1;
@@ -301,26 +301,39 @@
     }
 }
 
-@media (max-width: 1024px) {
+@media (max-width: 1025px) {
     .hero_section {
         overflow-x: hidden;
     }
     .rock7 {
-        width: 60%;
-        top: 45%;
+        width: 50%;
+        top: 50%;
         left: 80%;
         z-index: -1;
     }
+    /* .rock8 {
+        width: 50%;
+        top: 90%;
+        left: -60%;
+    } */
 }
 
 @media (max-width: 1280px) {
     .rock7 {
-        top: 25%;
+        top: 10%;
+    }
+    .rock8 {
+        width: 50%;
+        top: 80%;
+        left: -66%;
+        z-index: -1;
     }
 }
 
 @media (max-width: 2560px) {
     .rock7 {
-        top: 25%;
+        top: 12%;
+        left: 85%;
     }
+    
 }

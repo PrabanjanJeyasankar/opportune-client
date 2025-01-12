@@ -1,6 +1,7 @@
 import fetchMoreProjectsByUser from '@/services/fetchMoreProjectsByUser'
+import { useEffect, useRef, useState } from 'react'
 import styles from './MoreProjectsByUser.module.css'
-import { useState, useEffect, useRef } from 'react'
+import ImageComponent from '@/elements/ImageComponent/ImageComponent'
 
 function MoreProjectsByUser({ username, slug }) {
     const [moreProjectsByUser, setMoreProjectsByUser] = useState([])
@@ -42,9 +43,11 @@ function MoreProjectsByUser({ username, slug }) {
                 <p className={styles.view_profile_link}>View Profile</p>
             </div>
             <div className={styles.image_gallery}>
-                {moreProjectsByUser.map((image) => (
-                    <div key={image.id} className={styles.image_wrapper}>
-                        <img
+                {moreProjectsByUser.map((image, index) => (
+                    <div
+                        key={image.id || `${username}-${slug}-${index}`}
+                        className={styles.image_wrapper}>
+                        <ImageComponent
                             src={image.thumbnailUrl}
                             alt={image.alt}
                             className={styles.image}
