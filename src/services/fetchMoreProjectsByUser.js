@@ -5,7 +5,6 @@ const fetchMoreProjectsByUser = (username, slug) => {
         .get(`/project/${username}/${slug}/more`)
         .then((response) => {
             if (response.status === 200) {
-                console.log(response.data.data[0].projects)
                 return response.data
             } else {
                 throw new Error(

@@ -1,16 +1,16 @@
-import React from 'react'
-import NavigationBarComponent from '../../components/NavigationBarComponent/NavigationBarComponent'
-import { Outlet } from 'react-router-dom'
-import { Toaster } from '@/components/ui/toaster'
+import React from "react";
+import NavigationBarComponent from "../../components/NavigationBarComponent/NavigationBarComponent";
+import { Outlet } from "react-router-dom";
+import { Toaster } from "@/components/ui/toaster";
 
-function MainLayout() {
-    return (
-        <div>
-            <NavigationBarComponent />
-            <Toaster />
-            <Outlet />
-        </div>
-    )
-}
+const MainLayout = () => {
+  return (
+    <div>
+      <NavigationBarComponent />
+      <Toaster />
+      <Outlet />
+    </div>
+  );
+};
 
-export default MainLayout
+export default MainLayout;

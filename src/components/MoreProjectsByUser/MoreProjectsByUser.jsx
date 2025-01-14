@@ -33,6 +33,9 @@ function MoreProjectsByUser({ username, slug }) {
 
         return () => observer.disconnect()
     }, [username, slug])
+    if (loading) {
+        return <div>Loading...</div>; 
+    }
 
     return (
         <div className={styles.more_projects_by_user} ref={galleryRef}>

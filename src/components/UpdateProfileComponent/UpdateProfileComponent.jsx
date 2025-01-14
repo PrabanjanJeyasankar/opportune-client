@@ -52,7 +52,7 @@ const UpdateProfileComponent = () => {
     e.preventDefault();
 
     const validationErrors = updateProfileValidation(formData);
-    console.log(validationErrors);
+    console.error(validationErrors);
 
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
