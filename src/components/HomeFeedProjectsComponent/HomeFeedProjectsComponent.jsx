@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import { useEffect, useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import fetchHomeFeedProjectsService from "../../services/fetchHomeFeedProjects";
 import ProjectCardComponent from "../ProjectCardComponent/ProjectCardComponent";
 import styles from "./HomeFeedProjectsComponent.module.css";
@@ -7,9 +8,6 @@ import useHomeFeedResetContext from "@/hooks/useHomeFeedResetContext";
 
 const HomeFeedProjectsComponent = () => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-  const [projects, setProjects] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
   const { searchTerm, selectedTag } = useHomeFeedResetContext();
 
   useEffect(() => {
@@ -21,49 +19,44 @@ const HomeFeedProjectsComponent = () => {
     };
   }, [searchTerm]);
 
-  useEffect(() => {
-    const fetchProjects = async () => {
-      setLoading(true);
-      setError(null);
+  const {
+    data: fetchedProjects,
+    isLoading: queryLoading,
+    error: queryError,
+  } = useQuery({
+    queryKey: ["homeFeedProjects", { searchTerm: debouncedSearchTerm, selectedTag }],
+    queryFn: fetchHomeFeedProjectsService,
+    staleTime: 5 * 60 * 1000,
+    cacheTime: 10 * 60 * 1000, 
+    retry: 2,
+  });
 
-      try {
-        const fetchedProjects = await fetchHomeFeedProjectsService();
-        setProjects(fetchedProjects);
-      } catch {
-        setError("Failed to fetch projects. Please try again.");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProjects();
-  }, []);
-
+ 
   const filteredProjects = useMemo(() => {
+    if (!fetchedProjects) return [];
     const lowercasedSearchTerm = debouncedSearchTerm?.toLowerCase();
-    return (projects || []).filter((project) => {
+    return fetchedProjects.filter((project) => {
       const matchesSearchTerm = project.title
         ?.toLowerCase()
         .includes(lowercasedSearchTerm);
       const matchesSelectedTag =
         selectedTag === "All" ||
         (project.tags &&
-          project.tags.some(
-            (tag) => tag.toLowerCase() === selectedTag.toLowerCase()
-          ));
+          project.tags.some((tag) => tag.toLowerCase() === selectedTag.toLowerCase()));
       return matchesSearchTerm && matchesSelectedTag;
     });
-  }, [debouncedSearchTerm, selectedTag, projects]);
+  }, [debouncedSearchTerm, selectedTag, fetchedProjects]);
 
-  if (error) {
-    return <div>{error}</div>;
+
+  if (queryError) {
+    return <div>Failed to fetch projects. Please try again.</div>;
   }
 
   return (
     <div className={styles.home_feed_projects_container}>
       <ProjectCardComponent
         filteredProjects={filteredProjects}
-        isLoading={loading}
+        isLoading={queryLoading}
       />
     </div>
   );
