@@ -12,6 +12,7 @@ import ProjectDetailsInputFormComponent from '../components/ProjectDetailsInputF
 import ProjectDetailsPage from '../pages/ProjectDetailsPage/ProjectDetailsPage'
 import ScrollToTop from '../utils/scrollToTop'
 import UpdateProfileComponent from '@/components/UpdateProfileComponent/UpdateProfileComponent'
+import FeedbackPage from '@/pages/FeedbackPage/FeedbackPage'
 
 const AppRoutes = () => {
     return (
@@ -23,6 +24,7 @@ const AppRoutes = () => {
                         <Route exact path='/' element={<HomePage />} />
                         <Route path='/login' element={<LoginPage />} />
                         <Route path='/signup' element={<SignupPage />} />
+                        <Route path='/feedback' element={<FeedbackPage />} />
                         <Route
                             path='/request-otp'
                             element={<RequestOtpPage />}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import styles from "./HeroComponent.module.css";
 import ImageComponent from "../../elements/ImageComponent/ImageComponent";
 import Rock1 from "../../assets/images/rocks/rock_1.webp";
