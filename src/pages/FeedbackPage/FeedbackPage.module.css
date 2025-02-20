@@ -52,7 +52,7 @@
     width: 100%;
     max-width: 380px;
     line-height: 1.5;
-    margin-bottom: 3rem;
+    margin-bottom: 3.2rem;
     text-align: center;
 }
 
@@ -82,7 +82,7 @@
 .mood_button::after {
     content: attr(data-tooltip);
     position: absolute;
-    bottom: 80%;
+    bottom: 90%;
     left: 50%;
     transform: translateX(-50%) translateY(-8px);
     background-color: var(--gray-300);

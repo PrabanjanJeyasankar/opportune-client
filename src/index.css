@@ -21,6 +21,12 @@
     /* overflow-x: hidden; */
     min-width: 320px;
 
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --glass-blur: blur(1px);
+    --glass-webkit-blur: blur(1.5px);
+    --glass-border: 1px solid rgba(255, 255, 255, 0);
+    
     --background-dark: rgba(0, 0, 0, 0.616);
     --background-light: rgba(255, 255, 255, 0.055);
     --background-medium: rgba(255, 255, 255, 0.07);

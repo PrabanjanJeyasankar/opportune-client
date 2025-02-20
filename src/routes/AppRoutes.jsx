@@ -1,18 +1,20 @@
-import React, { lazy, Suspense } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
-import LoginPage from '../pages/LoginPage/LoginPage'
-import SignupPage from '../pages/SignupPage/SignupPage'
-import HomePage from '../pages/HomePage/HomePage'
-import MainLayout from '../layouts/MainLayout/MainLayout'
-import VerifyOTPPage from '../pages/VerifyOTPPage/VerifyOTPPage'
-import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
-import RequestOtpPage from '../pages/RequestOtpPage/RequestOtpPage'
-import AccountLayout from '../layouts/AccountLayout/AccountLayout'
-import ProjectDetailsInputFormComponent from '../components/ProjectDetailsInputFormComponent/ProjectDetailsInputFormComponent'
-import ProjectDetailsPage from '../pages/ProjectDetailsPage/ProjectDetailsPage'
-import ScrollToTop from '../utils/scrollToTop'
 import UpdateProfileComponent from '@/components/UpdateProfileComponent/UpdateProfileComponent'
 import FeedbackPage from '@/pages/FeedbackPage/FeedbackPage'
+import PublicProfilePage from '@/pages/PortfolioPage/PortfolioPage'
+import React, { Suspense } from 'react'
+import { Navigate, Route, Routes } from 'react-router-dom'
+import ProjectDetailsInputFormComponent from '../components/ProjectDetailsInputFormComponent/ProjectDetailsInputFormComponent'
+import AccountLayout from '../layouts/AccountLayout/AccountLayout'
+import MainLayout from '../layouts/MainLayout/MainLayout'
+import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
+import HomePage from '../pages/HomePage/HomePage'
+import LoginPage from '../pages/LoginPage/LoginPage'
+import ProjectDetailsPage from '../pages/ProjectDetailsPage/ProjectDetailsPage'
+import RequestOtpPage from '../pages/RequestOtpPage/RequestOtpPage'
+import SignupPage from '../pages/SignupPage/SignupPage'
+import VerifyOTPPage from '../pages/VerifyOTPPage/VerifyOTPPage'
+import ScrollToTop from '../utils/scrollToTop'
+import PortfolioPage from '@/pages/PortfolioPage/PortfolioPage'
 
 const AppRoutes = () => {
     return (
@@ -25,6 +27,14 @@ const AppRoutes = () => {
                         <Route path='/login' element={<LoginPage />} />
                         <Route path='/signup' element={<SignupPage />} />
                         <Route path='/feedback' element={<FeedbackPage />} />
+
+                        {/* STRICTLY FOR DEVELOPMENT PURPOSE ONLY , DELETE BEFORE COMMITTING */}
+                        <Route
+                            path='/aboutus'
+                            element={<PortfolioPage />}
+                        />
+                        {/* STRICTLY FOR DEVELOPMENT PURPOSE ONLY , DELETE BEFORE COMMITTING */}
+
                         <Route
                             path='/request-otp'
                             element={<RequestOtpPage />}
@@ -59,7 +69,7 @@ const AppRoutes = () => {
                         />
                         <Route
                             path='/update-profile'
-                            element={<UpdateProfileComponent/>}
+                            element={<UpdateProfileComponent />}
                         />
                     </Route>
 

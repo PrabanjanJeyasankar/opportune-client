@@ -136,7 +136,6 @@
         width: 100%;
         opacity: 0;
         transition: right 0.4s ease, opacity 0.4s ease;
-        z-index: 2000;
     }
 
     .authentication_links {
@@ -154,6 +153,7 @@
     .hamburger {
         display: flex;
         margin-right: 0.5rem;
+        /* z-index: 10000; */
     }
 
     .signup_button {
@@ -179,7 +179,7 @@
         background: rgba(0, 0, 0, 0.945);
         /* top: 12%; */
         right: -100%;
-        z-index: 10;
+        z-index: 9000;
         padding: 4rem 2rem 2rem 2rem;
         align-items: flex-end;
         gap: 12px;
