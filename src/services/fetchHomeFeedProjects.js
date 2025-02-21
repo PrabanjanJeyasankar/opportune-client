@@ -1,4 +1,4 @@
-import axiosInstance from '../utils/axiosInstance'
+import axiosInstance from '../utils/axiosInstance';
 
 const fetchHomeFeedProjectsService = (limit = 10, page = 1) => {
 
