@@ -1,6 +1,6 @@
 .container {
   min-height: 100vh;
-  margin-top: 5.5rem;
+  margin-top: 1.7rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -22,14 +22,20 @@
   color: white;
 }
 
+.label_Heading{
+  font-size: x-large;
+  color: white;
+}
+
 .title_container{
   display: flex;
   flex-direction: column;
-  color: white;
+  color: var( --gray-800);
   justify-content: center;
   align-items: center;
   margin-bottom: 1.5rem;
 }
+
 
 .input_field,
 .textarea_field {
@@ -63,6 +69,7 @@
 .error_message {
   color: var(--red-primary);
   font-size: 0.875rem;
+  padding-bottom: 9px;
 }
 
 .textarea {
@@ -100,6 +107,16 @@
 .submit_button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+}
+
+.label_singleLine_instruction{
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.input_instruction{
+  font-size:small;
 }
 
 .btn_Social_action {

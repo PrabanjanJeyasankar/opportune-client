@@ -14,14 +14,18 @@ const UpdateProfileComponent = () => {
     portfolioLink: "",
     resumeLink: "",
     passedOutYear: "",
+    experience: "",
     accounts: [
       { domain: "linkedin", url: "" },
       { domain: "instagram", url: "" },
+      { domain: "X", url: "" },
       { domain: "reddit", url: "" },
       { domain: "leetcode", url: "" },
       { domain: "hackerrank", url: "" },
       { domain: "hackerearth", url: "" },
       { domain: "codechef", url: "" },
+      { domain: "behance", url: "" },
+      { domain: "dribble", url: "" },
       { domain: "geeksforgeeks", url: "" },
     ],
   });
@@ -82,13 +86,17 @@ const UpdateProfileComponent = () => {
           portfolioLink: "",
           resumeLink: "",
           passedOutYear: "",
+          experience: "",
           accounts: [
             { domain: "linkedin", url: "" },
             { domain: "instagram", url: "" },
+            { domain: "X", url: "" },
             { domain: "reddit", url: "" },
             { domain: "leetcode", url: "" },
             { domain: "hackerrank", url: "" },
             { domain: "hackerearth", url: "" },
+            { domain: "behance", url: "" },
+            { domain: "dribble", url: "" },
             { domain: "codechef", url: "" },
             { domain: "geeksforgeeks", url: "" },
           ],
@@ -125,7 +133,10 @@ const UpdateProfileComponent = () => {
         </div>
         <form onSubmit={handleSubmit} encType="multipart/form-data">
           <label htmlFor="bio" className={styles.label}>
-            Bio *
+            <div className={styles.label_singleLine_instruction}>
+              Bio *{" "}
+              <p className={styles.input_instruction}>(max 200 characters)</p>
+            </div>
           </label>
           <textarea
             id="bio"
@@ -135,11 +146,12 @@ const UpdateProfileComponent = () => {
             value={formData.bio}
             onChange={handleInputChange}
             rows={8}
+            maxLength={300}
           />
           {errors.bio && <p className={styles.error_message}>{errors.bio}</p>}
 
           <label htmlFor="portfolioLink" className={styles.label}>
-            Portfolio Link *
+            Portfolio Link
           </label>
           <InputComponent
             id="portfolioLink"
@@ -228,7 +240,27 @@ const UpdateProfileComponent = () => {
             <p className={styles.error_message}>{errors.passedOutYear}</p>
           )}
 
-          <label className={styles.label}>Accounts</label>
+          <label htmlFor="experience" className={styles.label}>
+            <div className={styles.label_singleLine_instruction}>
+              {" "}
+              Professional Experience *{" "}
+              <p className={styles.input_instruction}> (in years) </p>
+            </div>
+          </label>
+          <InputComponent
+            id="experience"
+            className={styles.input_field}
+            placeholder="Enter your experience in years"
+            name="experience"
+            value={formData.experience}
+            onChange={handleInputChange}
+            error={errors.experience}
+          />
+          {errors.experience && (
+            <p className={styles.error_message}>{errors.experience}</p>
+          )}
+
+          <label className={styles.label_Heading}>Accounts</label>
           <br></br>
           <br></br>
           {formData.accounts.map((account, index) => (

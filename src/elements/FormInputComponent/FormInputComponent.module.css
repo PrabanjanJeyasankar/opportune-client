@@ -60,6 +60,12 @@
     /* margin-top: 0.25rem;
     margin-left: 0.4rem; */
 }
+.helperText {
+    color: var(--green-500);
+    font-size: 12px;
+    /* margin-top: 0.25rem;
+    margin-left: 0.4rem; */
+}
 
 .eye_icon {
     height: 100%;

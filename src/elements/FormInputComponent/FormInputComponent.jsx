@@ -13,10 +13,12 @@ const FormInputComponent = ({
     label,
     onChange,
     error,
+    helperText,
     containerClass,
     inputClass,
     labelClass,
     errorClass,
+    helperTextClass,
     ...props
 }) => {
 
@@ -63,6 +65,9 @@ const FormInputComponent = ({
                                     
                 </div>
                 {error && <p className={formInputStyles.error}>{error}</p>}
+                {helperText && (
+                    <p className={helperTextClass || formInputStyles.helperText}>{helperText}</p>
+                )}
             </div>
         </div>
     )

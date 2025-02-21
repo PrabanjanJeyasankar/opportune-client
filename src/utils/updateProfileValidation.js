@@ -9,9 +9,6 @@ const updateProfileValidation = (formData) => {
     errors.bio = "Bio is required.";
   }
 
-  if (!formData.portfolioLink || !formData.portfolioLink.trim()) {
-    errors.portfolioLink = "Portfolio link is required.";
-  }
 
   if (!formData.resumeLink || !formData.resumeLink.trim()) {
     errors.resumeLink = "Resume link is required.";
@@ -19,6 +16,10 @@ const updateProfileValidation = (formData) => {
 
   if (!formData.passedOutYear || !formData.passedOutYear.trim()) {
     errors.passedOutYear = "Passed out year is required.";
+  }
+
+  if (!formData.experience || !formData.experience.trim()) {
+    errors.experience = "experience is required.";
   }
 
   if (formData.accounts && Array.isArray(formData.accounts)) {

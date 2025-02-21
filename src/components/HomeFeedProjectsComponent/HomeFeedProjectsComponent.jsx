@@ -27,7 +27,7 @@ const HomeFeedProjectsComponent = () => {
     queryKey: ["homeFeedProjects", { searchTerm: debouncedSearchTerm, selectedTag }],
     queryFn: fetchHomeFeedProjectsService,
     staleTime: 5 * 60 * 1000,
-    cacheTime: 10 * 60 * 1000, 
+    cacheTime: 5 * 60 * 1000, 
     retry: 2,
   });
 

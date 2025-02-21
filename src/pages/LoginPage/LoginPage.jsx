@@ -101,6 +101,7 @@ function LoginPage() {
     }
 
     const handleGithubLogInAuth = async () => {
+        console.log('sdf')
         window.location.href = 'http://localhost:3500/api/v1/auth/github/login'; 
     }
     

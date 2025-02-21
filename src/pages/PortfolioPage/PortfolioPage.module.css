@@ -3,6 +3,7 @@
     flex-direction: column;
     max-width: 1440px;
     margin: 0 auto;
+    overflow-y: scroll;
 }
 
 .navbar {
@@ -181,9 +182,9 @@
 }
 
 .profileImage {
-    height: auto; 
-    width: 25vmin; 
-    border-radius: 50%; 
+    height: auto;
+    width: 25vmin;
+    border-radius: 50%;
     object-fit: cover;
 }
 
@@ -331,8 +332,6 @@
     .logoLink {
         font-size: 1rem;
     }
-
-    
 }
 
 @media (max-width: 768px) {
@@ -385,3 +384,268 @@
         gap: 1rem;
     }
 }
+
+.countAndSkillsContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.upvoteProjectExperienceCount {
+    flex: 1;
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0.5rem;
+}
+
+.totalUpvoteCountContainer,
+.totalProjectCountContainer,
+.professionalExperienceContainer {
+    border-radius: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    padding: 2.5rem 3rem;
+    align-items: center;
+    justify-content: center;
+    background-color: #111111;
+}
+
+.totalUpvoteCount,
+.totalProjectCount,
+.professionalExperienceCount {
+    font-size: 4rem;
+    /* color: #808080; */
+}
+
+.totalUpvoteCountTitle,
+.totalProjectCountTitle,
+.professionalExperienceCountTitle {
+    color: #808080;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+.upvoteProjectExperienceCount,
+.skillsGridContainer {
+    flex: 1; 
+}
+
+.skillsGridContainer {
+    flex: 1;
+    height: auto;
+    width: 100%;
+    max-width: 1024px;
+    margin: 0 auto;
+    padding: 0.5rem 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.skillsGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+}
+
+.skillItem {
+    background-color: #111;
+    color: white;
+    padding: 0.7rem 1.8rem; /* Adjusts naturally to text length */
+    border-radius: 1.5rem; /* Fully rounded */
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: 500;
+    display: inline-block; /* Ensures width matches text */
+    transition: background-color 0.2s ease-in-out;
+}
+
+/* Hover effect */
+.skillItem:hover {
+    background-color: #1c1c1c;
+}
+
+.bioContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #111;
+    color: white;
+    padding: 2.5rem 0;
+    border-radius: 1.5rem;
+    text-align: center;
+}
+
+/* Second Div - Bio */
+.bioText {
+    max-width: 90%;
+    font-size: 3rem;
+    line-height: 4rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    text-align: left;
+    white-space: normal;
+    flex-wrap: wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* white-space: nowrap; */
+    /* Ensures bio doesn’t overflow */
+}
+
+.firstHalf {
+    color: white;
+}
+
+.secondHalf {
+    color: #8a8a93; /* Deep Sky Blue */
+}
+
+/* resume social */
+.resumeSocialContainer {
+    display: flex;
+    gap: 0.5rem;
+    align-items: stretch; /* Changed from center to stretch to maintain equal height */
+    width: 100%;
+    padding: 0.5rem 0;
+    /* padding: 20px 0; */
+}
+
+.resumeContainer {
+    flex: 1; /* Changed from 40% to 1 for better responsiveness */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #111;
+    border-radius: 1.5rem;
+    padding: 4rem 4rem;
+    gap: 2rem;
+    min-height: 100%;
+    transition: color 2s ease-in-out;
+}
+
+.resumeContainer svg {
+    color: white;
+    fill: white;
+    stroke: white;
+}
+
+.resumeContainer:hover {
+    color: rgba(255, 94, 26);
+}
+
+.resumeContainer:hover .resumeText {
+    transition: color 0.2s ease-in-out;
+    color: rgba(255, 94, 26);
+}
+
+.resumeContainer:hover .resumeText span {
+    color: #808080;
+}
+
+.resumeContainer:hover svg {
+    transition: color 0.2s ease-in-out, fill 0.2s ease-in-out,
+        stroke 0.2s ease-in-out;
+    color: rgba(255, 94, 26) !important;
+    fill: rgba(255, 94, 26) !important;
+    stroke: rgba(255, 94, 26) !important;
+}
+
+.downloadIcon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 2rem;
+}
+
+.resumeText {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    font-size: 2.4rem;
+    text-align: center;
+    line-height: 3.4rem;
+    font-weight: 500;
+}
+
+.resumeText span {
+    color: #808080;
+}
+
+.socialContainer {
+    flex: 2;
+    padding: 0.5rem 0;
+    gap: 1rem;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.socialItem {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #111111;
+    border-radius: 5rem;
+    text-decoration: none;
+    color: inherit;
+    padding: 1rem 3rem;
+    gap: 0.5rem;
+    transition: background-color 0.3s ease;
+}
+.socialItem:hover {
+    fill: rgba(255, 94, 26) !important;
+}
+.socialItem svg {
+    width: 30px;
+    height: 30px;
+}
+
+.socialPlatformName {
+    color: white;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+    .resumeSocialContainer {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .resumeContainer,
+    .socialContainer {
+        flex: none;
+        width: 100%;
+    }
+
+    .socialContainer {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+
+    .socialItem {
+        padding: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .socialContainer {
+        grid-template-columns: repeat(
+            2,
+            1fr
+        ); /* Forces 2 columns on very small screens */
+    }
+
+    .socialItem {
+        padding: 1rem;
+    }
+}
+
+
+
+/* Project */
+
+

@@ -1,19 +1,20 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import FormInputComponent from '../../elements/FormInputComponent/FormInputComponent'
 import AppLogo from '../../assets/images/opportune_logo_svg.svg'
+import FormInputComponent from '../../elements/FormInputComponent/FormInputComponent'
 
-import signupStyles from './SignupPage.module.css'
-import PrimaryButtonComponent from '../../elements/PrimaryButtonComponent/PrimaryButtonComponent'
-import { validateSignupInputs } from '../../utils/authenticationFieldsValidation'
+import { toast } from '@/hooks/use-toast'
+import GithubSvg from '@/svg/GithubSvg/GithubSvg'
+import GoogleSvg from '@/svg/GoogleSvg/GoogleSvg'
 import PasswordStrengthBar from 'react-password-strength-bar'
 import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
-import authService from '../../services/authService'
+import PrimaryButtonComponent from '../../elements/PrimaryButtonComponent/PrimaryButtonComponent'
 import SpinnerLoaderComponent from '../../loaders/SpinnerLoaderComponent/SpinnerLoaderComponent'
-import GoogleSvg from '@/svg/GoogleSvg/GoogleSvg'
-import GithubSvg from '@/svg/GithubSvg/GithubSvg'
-import { toast } from '@/hooks/use-toast'
+import authService from '../../services/authService'
+import { validateSignupInputs } from '../../utils/authenticationFieldsValidation'
+import signupStyles from './SignupPage.module.css'
+
 
 function SignupPage() {
     const [formData, setFormData] = useState({
@@ -22,7 +23,9 @@ function SignupPage() {
         email: '',
         password: '',
     })
+    let debounceTimer = null;
 
+    const [usernameStatus, setUsernameStatus] = useState("");
     const [errors, setErrors] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
@@ -39,7 +42,7 @@ function SignupPage() {
 
         const { isValid, errors: validationErrors } = validateSignupInputs(
             formData.name,
-            formData. username,
+            formData.username,
             formData.email,
             formData.password
         )
@@ -56,22 +59,23 @@ function SignupPage() {
                         },
                     })
                     toast({
-                        description: 'OTP sent to your email. Please check your inbox.',
+                        description:
+                            'OTP sent to your email. Please check your inbox.',
                     })
                 }
-            } 
-            catch (error) {
+            } catch (error) {
                 if (error.response) {
                     const status = error.response.status
-                    const message = error.response.data?.message || "An error occurred"
-          
+                    const message =
+                        error.response.data?.message || 'An error occurred'
+
                     if (status === 409) {
                         setErrors({ email: 'User already exists' })
                         toast({
-                            description: 'User already exists. Login to continue',
+                            description:
+                                'User already exists. Login to continue',
                         })
-                    } 
-                    else if (status === 403) {
+                    } else if (status === 403) {
                         navigate('/verify-otp', {
                             state: {
                                 isSignup: true,
@@ -81,34 +85,30 @@ function SignupPage() {
                         toast({
                             description: 'OTP already sent.',
                         })
-                    } 
-                    else if (status === 500) {
+                    } else if (status === 500) {
                         toast({
                             description: 'Server error, please try again later',
                         })
-                    } 
-                    else {
+                    } else {
                         toast({
                             description: `Error ${status}: ${message}`,
                         })
                     }
-                } 
-                else if (error.request) {
+                } else if (error.request) {
                     toast({
-                        description: 'Network error. Please check your connection and try again.',
+                        description:
+                            'Network error. Please check your connection and try again.',
                     })
-                } 
-                else {
+                } else {
                     toast({
-                        description: 'Unexpected error occurred. Please try again later.',
+                        description:
+                            'Unexpected error occurred. Please try again later.',
                     })
                 }
-            } 
-            finally {
+            } finally {
                 setIsLoading(false)
             }
-        } 
-        else {
+        } else {
             setErrors(validationErrors)
             setIsLoading(false)
         }
@@ -116,52 +116,66 @@ function SignupPage() {
 
     const handleGoogleSignUpAuth = async () => {
         try {
-            
-        } 
-        catch (error) {
+        } catch (error) {
             console.log(error)
             console.log(error?.response?.data)
         }
     }
 
-    const handleGithubSignUpAuth = async() => {
-        try {
-            
-        } 
-        catch (error) {
-            console.log(error)
-            console.log(error?.response?.data)
-        }
+    const handleGithubSignUpAuth = async () => {
+        // authService
+        //     .githubAuthentication()
+        //     .then((response) => {
+        //         console.log(response)
+        //     })
+        //     .catch((error) => {
+        //         console.log(error)
+        //         console.log(error?.response?.data)
+        //     })
+        console.log('something obn the way')
+        window.location.href = 'http://localhost:3500/api/v1/auth/github/login'
     }
 
-    const handleUsernameInputChange = async (event) => {
-        const newUsername = event.target.value
+
+
+    const handleUsernameInputChange = (event) => {
+        const newUsername = event.target.value;
+
         setFormData((prev) => ({
             ...prev,
             username: newUsername,
-        }))
-    
-        if (newUsername !== null) {
-            try {
-                const response = await authService.checkUserName(newUsername);
-                if (response.status === 200 && response.data) {
-                    setErrors((prev) => ({username: "" }))
-                }
-            } 
-            catch (error) {
-                if (error.response) {
-                    const status = error.response.status;
-                    const message = error.response.data?.message || "An error occurred"
+        }));
 
-                    if (status === 409) {
-                        setErrors({username: "User Name already taken. Try different one"})
+        if (debounceTimer) {
+            clearTimeout(debounceTimer);
+        }
+
+        debounceTimer = setTimeout(async () => {
+            if (newUsername) {
+                try {
+                    const response = await authService.checkUserName(newUsername);
+                    if (response.status === 200 && response.data) {
+                        setErrors((prev) => ({ ...prev, username: "" }));
+                        setUsernameStatus("Username available"); 
                     }
-                    else if (status === 400) {
-                        setErrors({username: message})
+                } catch (error) {
+                    setUsernameStatus(""); 
+                    if (error.response) {
+                        const status = error.response.status;
+                        const message = error.response.data?.message || "An error occurred";
+
+                        if (status === 409) {
+                            setErrors({ username: "Username already taken. Try a different one" });
+                        } else if (status === 400) {
+                            setErrors({ username: message });
+                        }
                     }
                 }
+            } else {
+                setUsernameStatus("");
+                setErrors({ username: "" });
             }
-        }
+        }, 200);
     };
     
 
@@ -206,6 +220,7 @@ function SignupPage() {
                     autoComplete='username'
                     onChange={handleUsernameInputChange}
                     error={errors.username}
+                    helperText={usernameStatus}
                 />
 
                 <FormInputComponent
@@ -239,17 +254,13 @@ function SignupPage() {
                     />
                 )}
 
-                <PrimaryButtonComponent
-                    type='submit'
-                    disabled={isLoading}>
+                <PrimaryButtonComponent type='submit' disabled={isLoading}>
                     <div>
-                        {
-                            isLoading ? (
-                                <span className={signupStyles.spinning_loader}>
-                                    <SpinnerLoaderComponent />
-                                </span>
-                            ) : null
-                        }
+                        {isLoading ? (
+                            <span className={signupStyles.spinning_loader}>
+                                <SpinnerLoaderComponent />
+                            </span>
+                        ) : null}
                     </div>
                     <span className={signupStyles.signin_button_state_text}>
                         {isLoading ? ' Sending OTP...' : 'Signup'}
@@ -258,26 +269,26 @@ function SignupPage() {
 
                 <div className={signupStyles.continue_with_container}>
                     <div className={signupStyles.continue_with_stripe}></div>
-                    <p className={signupStyles.continue_with_text}>or continue with</p>
+                    <p className={signupStyles.continue_with_text}>
+                        or continue with
+                    </p>
                 </div>
 
                 <div className={signupStyles.social_buttons_container}>
                     <ButtonComponent
                         type='button'
                         className={signupStyles.social_button}
-                        onClick={handleGoogleSignUpAuth}
-                    >
-                        <GoogleSvg/>
-                        Signup with Google  
+                        onClick={handleGoogleSignUpAuth}>
+                        <GoogleSvg />
+                        Signup with Google
                     </ButtonComponent>
 
                     <ButtonComponent
                         type='button'
                         className={signupStyles.social_button}
-                        onClick={handleGithubSignUpAuth}
-                    >
-                        <GithubSvg/>
-                        Signup with Github  
+                        onClick={handleGithubSignUpAuth}>
+                        <GithubSvg />
+                        Signup with Github
                     </ButtonComponent>
                 </div>
             </form>

@@ -71,9 +71,6 @@
     min-height: 10%;
 }
 
-.project_card_container:hover {
-    transform: translateY(-8px);
-}
 
 .project_card_image img {
     width: 100%;

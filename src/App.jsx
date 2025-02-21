@@ -1,41 +1,42 @@
-import { useEffect, useState } from "react";
-import { BrowserRouter as Router } from "react-router-dom";
-import StarryMotionComponent from "./components/StarryMotionComponent/StarryMotionComponent";
-import { UserProvider } from "./context/userContext";
-import InitialLoadingAnimation from "./loaders/InitialLoadingAnimation/InitialLoadingAnimation";
-import AppRoutes from "./routes/AppRoutes";
-import HomeFeedResetContextProvider from "./context/HomeFeedResetContext";
+import { useEffect, useState } from 'react'
+import { BrowserRouter as Router } from 'react-router-dom'
+import './App.css'
+import StarryMotionComponent from './components/StarryMotionComponent/StarryMotionComponent'
+import HomeFeedResetContextProvider from './context/HomeFeedResetContext'
+import { UserProvider } from './context/userContext'
+import InitialLoadingAnimation from './loaders/InitialLoadingAnimation/InitialLoadingAnimation'
+import AppRoutes from './routes/AppRoutes'
 
 function App() {
-  const [loading, setLoading] = useState(() => {
-    return !localStorage.getItem("initialLoadComplete");
-  });
+    const [loading, setLoading] = useState(() => {
+        return !localStorage.getItem('initialLoadComplete')
+    })
 
-  useEffect(() => {
+    useEffect(() => {
+        if (loading) {
+            const timer = setTimeout(() => {
+                setLoading(false)
+                localStorage.setItem('initialLoadComplete', 'true')
+            }, 2000)
+
+            return () => clearTimeout(timer)
+        }
+    }, [loading])
+
     if (loading) {
-      const timer = setTimeout(() => {
-        setLoading(false);
-        localStorage.setItem("initialLoadComplete", "true");
-      }, 2000);
-
-      return () => clearTimeout(timer);
+        return <InitialLoadingAnimation />
     }
-  }, [loading]);
 
-  if (loading) {
-    return <InitialLoadingAnimation />;
-  }
-
-  return (
-    <HomeFeedResetContextProvider>
-      <Router>
-        <UserProvider>
-          <AppRoutes />
-        </UserProvider>
-        <StarryMotionComponent />
-      </Router>
-    </HomeFeedResetContextProvider>
-  );
+    return (
+        <HomeFeedResetContextProvider>
+            <Router>
+                <UserProvider>
+                    <AppRoutes />
+                </UserProvider>
+                <StarryMotionComponent />
+            </Router>
+        </HomeFeedResetContextProvider>
+    )
 }
 
-export default App;
+export default App

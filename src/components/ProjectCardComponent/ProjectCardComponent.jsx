@@ -6,6 +6,7 @@ import ShareIconSvg from "../../svg/ShareIconSvg/ShareIconSvg";
 import UpvoteIconSvg from "../../svg/UpvoteIconSvg/UpvoteIconSvg";
 import { Skeleton } from "../ui/skeleton";
 import styles from "./ProjectCardComponent.module.css";
+import NumberFlow from "@number-flow/react";
 
 const ProjectCardComponent = ({ filteredProjects, isLoading }) => {
   return (
@@ -75,8 +76,8 @@ const ProjectCardComponent = ({ filteredProjects, isLoading }) => {
             </svg>
 
             <p>
-              &quot;No projects here... yet! It&apos;s like an empty canvas waiting for
-              your masterpiece!&quot;
+              &quot;No projects here... yet! It&apos;s like an empty canvas
+              waiting for your masterpiece!&quot;
             </p>
           </div>
         )}
@@ -141,9 +142,15 @@ const ProjectCard = ({ project }) => {
               }}
             />
             <span>
-              {isUpvoted ? project.upvoteCount + 1 : project.upvoteCount}
+              <NumberFlow
+                value={
+                  isUpvoted ? project.upvoteCount + 1 : project.upvoteCount
+                }
+                format={{ notation: "compact" }}
+              />
             </span>
           </div>
+
           <ShareIconSvg className={styles.share_icon} />
         </div>
       </div>

@@ -11,8 +11,12 @@
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
+    "@number-flow/react": "^0.5.5",
     "@radix-ui/react-toast": "^1.2.4",
+    "@studio-freight/lenis": "^1.0.42",
+    "@tanstack/query-sync-storage-persister": "^5.66.4",
     "@tanstack/react-query": "^5.64.1",
+    "@tanstack/react-query-persist-client": "^5.66.8",
     "axios": "^1.7.9",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -25,6 +29,7 @@
     "react-modal": "^3.16.3",
     "react-password-strength-bar": "^0.4.1",
     "react-router-dom": "^7.1.1",
+    "smooth-scrollbar-react": "^2.4.1",
     "tailwind-merge": "^2.6.0",
     "tailwind-variants": "^0.3.0",
     "tailwindcss-animate": "^1.0.7"
