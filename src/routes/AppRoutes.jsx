@@ -1,6 +1,6 @@
 import UpdateProfileComponent from '@/components/UpdateProfileComponent/UpdateProfileComponent'
 import FeedbackPage from '@/pages/FeedbackPage/FeedbackPage'
-import PublicProfilePage from '@/pages/PortfolioPage/PortfolioPage'
+import PortfolioPage from '@/pages/PortfolioPage/PortfolioPage'
 import React, { Suspense } from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
 import ProjectDetailsInputFormComponent from '../components/ProjectDetailsInputFormComponent/ProjectDetailsInputFormComponent'
@@ -14,7 +14,6 @@ import RequestOtpPage from '../pages/RequestOtpPage/RequestOtpPage'
 import SignupPage from '../pages/SignupPage/SignupPage'
 import VerifyOTPPage from '../pages/VerifyOTPPage/VerifyOTPPage'
 import ScrollToTop from '../utils/scrollToTop'
-import PortfolioPage from '@/pages/PortfolioPage/PortfolioPage'
 
 const AppRoutes = () => {
     return (
@@ -29,10 +28,7 @@ const AppRoutes = () => {
                         <Route path='/feedback' element={<FeedbackPage />} />
 
                         {/* STRICTLY FOR DEVELOPMENT PURPOSE ONLY , DELETE BEFORE COMMITTING */}
-                        <Route
-                            path='/aboutus'
-                            element={<PortfolioPage />}
-                        />
+                        <Route path='/aboutus' element={<PortfolioPage />} />
                         {/* STRICTLY FOR DEVELOPMENT PURPOSE ONLY , DELETE BEFORE COMMITTING */}
 
                         <Route
@@ -64,7 +60,7 @@ const AppRoutes = () => {
                             element={<ProjectDetailsInputFormComponent />}
                         />
                         <Route
-                            path='/project-details'
+                            path='/:username/:projectSlug'
                             element={<ProjectDetailsPage />}
                         />
                         <Route

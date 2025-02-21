@@ -1,20 +1,20 @@
+import { toast } from '@/hooks/use-toast'
+import GithubSvg from '@/svg/GithubSvg/GithubSvg'
+import GoogleSvg from '@/svg/GoogleSvg/GoogleSvg'
+import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { useContext, useState } from 'react'
+import AppLogo from '../../assets/images/opportune_logo_svg.svg'
+import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
 import FormInputComponent from '../../elements/FormInputComponent/FormInputComponent'
 import PrimaryButtonComponent from '../../elements/PrimaryButtonComponent/PrimaryButtonComponent'
-import loginStyles from './LoginPage.module.css'
-import AppLogo from '../../assets/images/opportune_logo_svg.svg'
-import { validateLoginInputs } from '../../utils/authenticationFieldsValidation'
-import SpinnerLoaderComponent from '../../loaders/SpinnerLoaderComponent/SpinnerLoaderComponent'
-import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
 import useUserContext from '../../hooks/useUserContext'
+import SpinnerLoaderComponent from '../../loaders/SpinnerLoaderComponent/SpinnerLoaderComponent'
 import authService from '../../services/authService'
-import { toast } from '@/hooks/use-toast'
-import GoogleSvg from '@/svg/GoogleSvg/GoogleSvg'
-import GithubSvg from '@/svg/GithubSvg/GithubSvg'
+import { validateLoginInputs } from '../../utils/authenticationFieldsValidation'
+import loginStyles from './LoginPage.module.css'
 
 function LoginPage() {
-    const { setIsUserLoggedIn, setUserProfile } = useUserContext()
+    const { setIsUserLoggedIn } = useUserContext()
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -22,7 +22,6 @@ function LoginPage() {
     const [errors, setErrors] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
-
 
     const handleInputChange = (event) => {
         const { name, value } = event.target
@@ -41,70 +40,71 @@ function LoginPage() {
         if (isValid) {
             try {
                 const response = await authService.login(formData)
-                if(response.status === 200){
+                if (response.status === 200) {
                     toast({
                         description: 'Logged in successfully.',
                     })
                     setIsUserLoggedIn(true)
-                    setUserProfile(response.data)
-                    navigate("/")
+                    localStorage.setItem(
+                        'userData',
+                        JSON.stringify(response.data.data)
+                    )
+                    console.log(response.data.data)
+                    navigate('/')
                 }
-            } 
-            catch (error) {
+            } catch (error) {
                 if (error.response) {
                     const status = error.response.status
-                    const message = error.response.data?.message || "An error occurred"
-          
-                    if (status === 401 && message === "Invalid password") {
+                    const message =
+                        error.response.data?.message || 'An error occurred'
+
+                    if (status === 401 && message === 'Invalid password') {
                         toast({
                             description: 'Incorrect password',
                         })
-                    } 
-                    else if (status === 401 && message === "Invalid email address") {
+                    } else if (
+                        status === 401 &&
+                        message === 'Invalid email address'
+                    ) {
                         toast({
                             description: 'User is not registered',
                         })
-                    }
-                    else if (status === 500) {
+                    } else if (status === 500) {
                         toast({
                             description: 'Server error, please try again later',
                         })
-                    } 
-                    else {
+                    } else {
                         toast({
                             description: `Error ${status}: ${message}`,
                         })
                     }
-                } 
-                else if (error.request) {
+                } else if (error.request) {
                     toast({
-                        description: 'Network error. Please check your connection and try again.',
+                        description:
+                            'Network error. Please check your connection and try again.',
                     })
-                } 
-                else {
+                } else {
                     toast({
-                        description: 'Unexpected error occurred. Please try again later.',
+                        description:
+                            'Unexpected error occurred. Please try again later.',
                     })
                 }
-            } 
-            finally {
+            } finally {
                 setIsLoading(false)
             }
         } else {
             setErrors(validationErrors)
             setIsLoading(false)
-        }  
+        }
     }
 
-    const handleGoogleLogInAuth = async () => {
-        
-    }
+    const handleGoogleLogInAuth = async () => {}
 
     const handleGithubLogInAuth = async () => {
         console.log('sdf')
-        window.location.href = 'http://localhost:3500/api/v1/auth/github/login'; 
+        window.location.href = 'http://localhost:3500/api/v1/auth/github/login'
     }
-    
+
     return (
         <div className={loginStyles.container}>
             <form
@@ -151,21 +151,19 @@ function LoginPage() {
                     />
                 </div>
                 <div className={loginStyles.forgot_password_container}>
-                    <Link to='/request-otp' className={loginStyles.forgot_password}>
+                    <Link
+                        to='/request-otp'
+                        className={loginStyles.forgot_password}>
                         Forgot password?
                     </Link>
                 </div>
-                <PrimaryButtonComponent
-                    type='submit'
-                    >
+                <PrimaryButtonComponent type='submit'>
                     <div>
-                        {
-                            isLoading ? (
-                                <span className={loginStyles.spinning_loader}>
-                                    <SpinnerLoaderComponent />
-                                </span>
-                            ) : null
-                        }
+                        {isLoading ? (
+                            <span className={loginStyles.spinning_loader}>
+                                <SpinnerLoaderComponent />
+                            </span>
+                        ) : null}
                     </div>
                     <span className={loginStyles.login_button_state_text}>
                         {isLoading ? 'Logging in...' : 'Login'}{' '}
@@ -174,27 +172,26 @@ function LoginPage() {
 
                 <div className={loginStyles.continue_with_container}>
                     <div className={loginStyles.continue_with_stripe}></div>
-                    <p className={loginStyles.continue_with_text}>or continue with</p>
+                    <p className={loginStyles.continue_with_text}>
+                        or continue with
+                    </p>
                 </div>
 
                 <div className={loginStyles.socialButtonsContainer}>
                     <ButtonComponent
                         type='button'
                         className={loginStyles.socialButton}
-                        onClick={handleGoogleLogInAuth}
-                    >
-                        <GoogleSvg/>
-                        Signin with Google  
+                        onClick={handleGoogleLogInAuth}>
+                        <GoogleSvg />
+                        Signin with Google
                     </ButtonComponent>
 
                     <ButtonComponent
                         type='button'
                         className={loginStyles.socialButton}
-                        onClick={handleGithubLogInAuth}
-                    >
-                        <GithubSvg/>
-
-                        Signin with Github  
+                        onClick={handleGithubLogInAuth}>
+                        <GithubSvg />
+                        Signin with Github
                     </ButtonComponent>
                 </div>
             </form>

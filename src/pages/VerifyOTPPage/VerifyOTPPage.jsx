@@ -51,7 +51,10 @@ function VerifyOTPPage() {
                         description: 'Verification sucess. Signup completed.',
                     })
                     setIsUserLoggedIn(true)
-                    setUserProfile(response.data)
+                    localStorage.setItem(
+                        'userData',
+                        JSON.stringify(response.data.data)
+                    )
                     navigate("/")
                 }
             }
