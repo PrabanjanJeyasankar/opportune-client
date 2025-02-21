@@ -1,6 +1,6 @@
 import axiosInstance from '../utils/axiosInstance'
 
-const postProjectService = {
+const projectService = {
     postProjectData: async (formData) => {
         const response = await axiosInstance.post('/project', formData)
         return response
@@ -12,6 +12,20 @@ const postProjectService = {
         })
         return response
     },
+    upvoteProject: async (projectSlug) => {
+        const response = await axiosInstance.post(
+            `/project/${projectSlug}/upvote`
+        )
+        console.log(response)
+        return response
+    },
+
+    deleteUpvoteProject: async (projectSlug) => {
+        const response = await axiosInstance.delete(
+            `/project/${projectSlug}/upvote`
+        )
+        return response
+    },
 }
 
-export default postProjectService
+export default projectService

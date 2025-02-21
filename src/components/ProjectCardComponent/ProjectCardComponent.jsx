@@ -1,3 +1,6 @@
+import { toast } from '@/hooks/use-toast'
+import useUserContext from '@/hooks/useUserContext'
+import projectService from '@/services/projectService'
 import NumberFlow from '@number-flow/react'
 import PropTypes from 'prop-types'
 import { useState } from 'react'
@@ -91,11 +94,64 @@ const SkeletonCard = () => (
         <Skeleton className={styles.skeleton_project_card_description} />
     </div>
 )
+
 const ProjectCard = ({ project }) => {
-    const [isUpvoted, setIsUpvoted] = useState(false)
+    const [isUpvoted, setIsUpvoted] = useState(project.isUpvoted || false)
+    const [upvoteCount, setUpvoteCount] = useState(project.upvoteCount)
     const navigate = useNavigate()
-    const handleUpvoteClick = () => {
-        setIsUpvoted(!isUpvoted)
+    const { isUserLoggedIn } = useUserContext()
+
+    const handleUpvoteClick = (e) => {
+        e.stopPropagation()
+
+        if (!isUserLoggedIn) {
+            toast({
+                description: 'Please login to upvote.',
+            })
+            navigate('/login')
+            return
+        }
+
+        const newUpvoteState = !isUpvoted
+        setIsUpvoted(newUpvoteState)
+        setUpvoteCount((prev) => (newUpvoteState ? prev + 1 : prev - 1))
+
+        const upvoteAction = newUpvoteState
+            ? projectService.upvoteProject(project.slug)
+            : projectService.deleteUpvoteProject(project.slug)
+
+        upvoteAction
+            .then((response) => {
+                if (response.status !== 200)
+                    throw new Error('Failed to update upvote')
+            })
+            .catch((error) => {
+                setIsUpvoted(!newUpvoteState) // Revert state
+                setUpvoteCount((prev) => (newUpvoteState ? prev - 1 : prev + 1)) // Revert count
+
+                console.error(error)
+
+                if (error.response) {
+                    const status = error.response.status
+                    if (status === 401) {
+                        toast({ description: 'Please login to upvote.' })
+                        navigate('/login')
+                    } else if (status === 500) {
+                        toast({
+                            description: 'Server error, please try again later',
+                        })
+                    }
+                } else if (error.request) {
+                    toast({
+                        description: 'Network error. Check your connection.',
+                    })
+                } else {
+                    toast({
+                        description:
+                            'Unexpected error. Please try again later.',
+                    })
+                }
+            })
     }
 
     const handleCardClick = () => {
@@ -135,10 +191,7 @@ const ProjectCard = ({ project }) => {
                         className={`${styles.upvotes} ${
                             isUpvoted ? styles.upvoted : ''
                         }`}
-                        onClick={(e) => {
-                            e.stopPropagation()
-                            handleUpvoteClick()
-                        }}>
+                        onClick={handleUpvoteClick}>
                         <UpvoteIconSvg
                             className={styles.upvote_icon}
                             style={{
@@ -148,11 +201,7 @@ const ProjectCard = ({ project }) => {
                         />
                         <span>
                             <NumberFlow
-                                value={
-                                    isUpvoted
-                                        ? project.upvoteCount + 1
-                                        : project.upvoteCount
-                                }
+                                value={upvoteCount}
                                 format={{ notation: 'compact' }}
                             />
                         </span>
