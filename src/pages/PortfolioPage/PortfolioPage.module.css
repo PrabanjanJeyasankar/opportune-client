@@ -3,7 +3,6 @@
     flex-direction: column;
     max-width: 1440px;
     margin: 0 auto;
-    overflow-y: scroll;
 }
 
 .navbar {
@@ -427,7 +426,7 @@
 }
 .upvoteProjectExperienceCount,
 .skillsGridContainer {
-    flex: 1; 
+    flex: 1;
 }
 
 .skillsGridContainer {
@@ -644,8 +643,4 @@
     }
 }
 
-
-
 /* Project */
-
-

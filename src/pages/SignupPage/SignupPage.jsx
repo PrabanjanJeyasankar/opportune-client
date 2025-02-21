@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 import FormInputComponent from '../../elements/FormInputComponent/FormInputComponent'
-
+import signupStyles from './SignupPage.module.css'
 import { toast } from '@/hooks/use-toast'
 import GithubSvg from '@/svg/GithubSvg/GithubSvg'
 import GoogleSvg from '@/svg/GoogleSvg/GoogleSvg'
@@ -11,10 +11,8 @@ import PasswordStrengthBar from 'react-password-strength-bar'
 import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
 import PrimaryButtonComponent from '../../elements/PrimaryButtonComponent/PrimaryButtonComponent'
 import SpinnerLoaderComponent from '../../loaders/SpinnerLoaderComponent/SpinnerLoaderComponent'
-import authService from '../../services/authService'
-import { validateSignupInputs } from '../../utils/authenticationFieldsValidation'
-import signupStyles from './SignupPage.module.css'
-
+import { validateSignupInputs } from '@/utils/authenticationFieldsValidation'
+import authService from '@/services/authService'
 
 function SignupPage() {
     const [formData, setFormData] = useState({
@@ -23,9 +21,9 @@ function SignupPage() {
         email: '',
         password: '',
     })
-    let debounceTimer = null;
+    let debounceTimer = null
 
-    const [usernameStatus, setUsernameStatus] = useState("");
+    const [usernameStatus, setUsernameStatus] = useState('')
     const [errors, setErrors] = useState({})
     const [isLoading, setIsLoading] = useState(false)
     const navigate = useNavigate()
@@ -64,10 +62,12 @@ function SignupPage() {
                     })
                 }
             } catch (error) {
+                console.log(error)
                 if (error.response) {
                     const status = error.response.status
                     const message =
                         error.response.data?.message || 'An error occurred'
+                        
 
                     if (status === 409) {
                         setErrors({ email: 'User already exists' })
@@ -136,48 +136,51 @@ function SignupPage() {
         window.location.href = 'http://localhost:3500/api/v1/auth/github/login'
     }
 
-
-
     const handleUsernameInputChange = (event) => {
-        const newUsername = event.target.value;
+        const newUsername = event.target.value
 
         setFormData((prev) => ({
             ...prev,
             username: newUsername,
-        }));
+        }))
 
         if (debounceTimer) {
-            clearTimeout(debounceTimer);
+            clearTimeout(debounceTimer)
         }
 
         debounceTimer = setTimeout(async () => {
             if (newUsername) {
                 try {
-                    const response = await authService.checkUserName(newUsername);
+                    const response = await authService.checkUserName(
+                        newUsername
+                    )
                     if (response.status === 200 && response.data) {
-                        setErrors((prev) => ({ ...prev, username: "" }));
-                        setUsernameStatus("Username available"); 
+                        setErrors((prev) => ({ ...prev, username: '' }))
+                        setUsernameStatus('Username available')
                     }
                 } catch (error) {
-                    setUsernameStatus(""); 
+                    setUsernameStatus('')
                     if (error.response) {
-                        const status = error.response.status;
-                        const message = error.response.data?.message || "An error occurred";
+                        const status = error.response.status
+                        const message =
+                            error.response.data?.message || 'An error occurred'
 
                         if (status === 409) {
-                            setErrors({ username: "Username already taken. Try a different one" });
+                            setErrors({
+                                username:
+                                    'Username already taken. Try a different one',
+                            })
                         } else if (status === 400) {
-                            setErrors({ username: message });
+                            setErrors({ username: message })
                         }
                     }
                 }
             } else {
-                setUsernameStatus("");
-                setErrors({ username: "" });
+                setUsernameStatus('')
+                setErrors({ username: '' })
             }
-        }, 200);
-    };
-    
+        }, 200)
+    }
 
     return (
         <div className={signupStyles.container}>

@@ -1,15 +1,16 @@
-import styles from './ProjectMetaComponent.module.css'
-import UpvoteIconSvg from '../../svg/UpvoteIconSvg/UpvoteIconSvg'
-import EyeShowSVG from '../../svg/EyeShowSVG/EyeShowSVG'
-import ShareIconSvg from '../../svg/ShareIconSvg/ShareIconSvg'
 import ImageComponent from '../../elements/ImageComponent/ImageComponent'
 import ArrowUpRightSvg from '../../svg/ArrowUpRightSvg/ArrowUpRightSvg'
-import GithubSvg from '../../svg/GithubSvg/GithubSvg'
 import ChainLinkSvg from '../../svg/ChainLinkSvg/ChainLinkSvg'
+import EyeShowSVG from '../../svg/EyeShowSVG/EyeShowSVG'
+import GithubSvg from '../../svg/GithubSvg/GithubSvg'
+import ShareIconSvg from '../../svg/ShareIconSvg/ShareIconSvg'
+import UpvoteIconSvg from '../../svg/UpvoteIconSvg/UpvoteIconSvg'
+import styles from './ProjectMetaComponent.module.css'
 
 function ProjectMetaComponent({ project, handleClick }) {
-
-    // if(project.)
+    // const [upvoteCount, setUpvoteCount] = useState(project?.upvoteCount || 0)
+    // const [isUpvoted, setIsUpvoted] = useState(false)
+    // const { userData } = UserContext()
     return (
         <div className={styles.project_meta}>
             <div className={styles.thumbnail}>
