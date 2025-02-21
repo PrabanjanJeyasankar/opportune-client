@@ -98,11 +98,14 @@ function LoginPage() {
         }
     }
 
-    const handleGoogleLogInAuth = async () => {}
+    const handleGoogleLogInAuth = async () => {
+        const baseUrl = import.meta.env.VITE_API_BASE_URL;
+        window.location.href = `${baseUrl}/auth/google/login`;
+    };
 
     const handleGithubLogInAuth = async () => {
-        console.log('sdf')
-        window.location.href = 'http://localhost:3500/api/v1/auth/github/login'
+        const baseUrl = import.meta.env.VITE_API_BASE_URL;
+        window.location.href = `${baseUrl}/auth/github/login`; 
     }
 
     return (
