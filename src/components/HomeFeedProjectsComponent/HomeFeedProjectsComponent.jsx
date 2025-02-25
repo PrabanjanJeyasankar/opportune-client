@@ -1,14 +1,18 @@
-import useHomeFeedResetContext from '@/hooks/useHomeFeedResetContext'
-import { useQuery } from '@tanstack/react-query'
-import PropTypes from 'prop-types'
-import { useEffect, useMemo, useState } from 'react'
-import fetchHomeFeedProjectsService from '../../services/fetchHomeFeedProjects'
-import ProjectCardComponent from '../ProjectCardComponent/ProjectCardComponent'
-import styles from './HomeFeedProjectsComponent.module.css'
+import PropTypes from "prop-types"
+import { useEffect, useMemo, useState } from "react"
+import { useQuery,useQueryClient } from "@tanstack/react-query"
+import fetchHomeFeedProjectsService from "../../services/fetchHomeFeedProjects"
+import ProjectCardComponent from "../ProjectCardComponent/ProjectCardComponent"
+import styles from "./HomeFeedProjectsComponent.module.css"
+import useHomeFeedResetContext from "@/hooks/useHomeFeedResetContext"
+import useUserContext from "@/hooks/useUserContext"
 
 const HomeFeedProjectsComponent = () => {
-    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
+    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("")
     const { searchTerm, selectedTag } = useHomeFeedResetContext()
+    const { isUserLoggedIn } = useUserContext()
+    const queryClient = useQueryClient()
+    // console.log(isUserLoggedIn)
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -25,14 +29,21 @@ const HomeFeedProjectsComponent = () => {
         error: queryError,
     } = useQuery({
         queryKey: [
-            'homeFeedProjects',
+            "homeFeedProjects",
             { searchTerm: debouncedSearchTerm, selectedTag },
         ],
         queryFn: fetchHomeFeedProjectsService,
-        staleTime: 5 * 60 * 1000,
-        cacheTime: 5 * 60 * 1000,
+        staleTime: 60 * 1000,
+        cacheTime: 60 * 1000,
         retry: 2,
     })
+
+    useEffect(()=>{
+      if(isUserLoggedIn){
+        queryClient.invalidateQueries({ queryKey: ["homeFeedProjects"] })
+      }
+    },[isUserLoggedIn,queryClient])
+
 
     const filteredProjects = useMemo(() => {
         if (!fetchedProjects) return []
@@ -42,7 +53,7 @@ const HomeFeedProjectsComponent = () => {
                 ?.toLowerCase()
                 .includes(lowercasedSearchTerm)
             const matchesSelectedTag =
-                selectedTag === 'All' ||
+                selectedTag === "All" ||
                 (project.tags &&
                     project.tags.some(
                         (tag) => tag.toLowerCase() === selectedTag.toLowerCase()
