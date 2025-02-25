@@ -63,14 +63,21 @@
     color: #ffffff;
 }
 
-.view_profile_button {
+.view_profile_button, .edit_project_button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
     color: black;
     background-color: white;
     padding: 0.3rem 1rem;
-    border-radius: 0.5rem;
+    border-radius: 0.6rem;
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
+}
+
+.edit_project_button {
+
 }
 
 .separator {

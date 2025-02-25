@@ -18,7 +18,9 @@ function MoreProjectsByUser({ username, slug }) {
                     setLoading(true)
                     fetchMoreProjectsByUser(username, slug)
                         .then((data) => {
-                            setMoreProjectsByUser(data.data[0].projects.slice(0,4))
+                            setMoreProjectsByUser(
+                                data.data[0].projects.slice(0, 4)
+                            )
                         })
                         .catch((error) => setError(error))
                         .finally(() => setLoading(false))
@@ -34,7 +36,7 @@ function MoreProjectsByUser({ username, slug }) {
         return () => observer.disconnect()
     }, [username, slug])
     if (loading) {
-        return <div>Loading...</div>; 
+        return <div>Loading...</div>
     }
 
     return (
@@ -61,7 +63,9 @@ function MoreProjectsByUser({ username, slug }) {
                         ))}
                     </div>
                 ) : (
-                    <p>No more projects by user</p>
+                    <div className={styles.no_projects_message}>
+                        Still cooking up ideas! &#127859;
+                    </div>
                 )}
             </div>
         </div>

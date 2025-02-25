@@ -7,11 +7,11 @@ const UserProvider = ({ children }) => {
         localStorage.getItem('isUserLoggedIn') === 'true'
     )
     const [userProfile, setUserProfile] = useState(
-        JSON.parse(localStorage.getItem('userProfile')) || {}
+        JSON.parse(localStorage.getItem('userData')) || {}
     )
 
     useEffect(() => {
-        const userData = localStorage.getItem('userProfile')
+        const userData = localStorage.getItem('userData')
         if (userData) {
             setIsUserLoggedIn(true)
             setUserProfile(JSON.parse(userData))

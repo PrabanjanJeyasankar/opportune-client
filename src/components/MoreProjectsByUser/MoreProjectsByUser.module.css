@@ -36,6 +36,7 @@
     line-height: 1.4rem;
     position: relative;
     margin-bottom: 1.5rem;
+    cursor: pointer;
 }
 
 .view_profile_link::after {
@@ -52,6 +53,15 @@
 .view_profile_link:hover::after {
     width: 100%;
     left: 0;
+}
+
+.no_projects_message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+    width: 100%;
+    font-size: 1.1rem;
 }
 
 @media (min-width: 320px) {

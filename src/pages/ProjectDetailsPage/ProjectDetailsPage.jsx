@@ -1,21 +1,26 @@
-import styles from './ProjectDetailsPage.module.css'
-import UserImage from '../../assets/images/ProjectTemplates/img2.png'
 import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
 import ImageComponent from '../../elements/ImageComponent/ImageComponent'
+import styles from './ProjectDetailsPage.module.css'
 
-import { useLocation } from 'react-router-dom'
-import { toast } from '@/hooks/use-toast'
-import { useRef } from 'react'
 import MoreProjectsByUser from '@/components/MoreProjectsByUser/MoreProjectsByUser'
 import ProjectMetaComponent from '@/components/ProjectMetaComponent/ProjectMetaComponent'
+import { toast } from '@/hooks/use-toast'
+import useUserContext from '@/hooks/useUserContext'
+import EditPenSvg from '@/svg/EditPenSvg/EditPenSvg'
+import EyeShowSVG from '@/svg/EyeShowSVG/EyeShowSVG'
+import { useRef } from 'react'
+import { useLocation } from 'react-router-dom'
 
 function ProjectDetailsPage() {
     const location = useLocation()
-    const project = location.state?.project
     const galleryRef = useRef(null)
 
+    const project = location.state?.project
     const username = project?.authorDetails?.name
+    const { userProfile } = useUserContext()
     const slug = project?.slug
+    console.log(project)
+
 
     const handleClick = () => {
         navigator.clipboard
@@ -28,6 +33,10 @@ function ProjectDetailsPage() {
             .catch((error) => console.error('Error copying link: ', error))
     }
 
+    const handleEditProject = () => {
+        navigate(`/edit-project/${slug}`, { state: { project } })
+    }
+
     return (
         <>
             <section className={styles.project_details_container}>
@@ -35,7 +44,7 @@ function ProjectDetailsPage() {
                     <div className={styles.profile_section}>
                         <div>
                             <ImageComponent
-                                src={UserImage}
+                                src={project?.authorDetails.profilePicture}
                                 alt='Profile'
                                 className={styles.avatar}
                             />
@@ -50,9 +59,20 @@ function ProjectDetailsPage() {
                         </div>
                     </div>
                     <div className={styles.user_profile_actions}>
-                        <ButtonComponent className={styles.view_profile_button}>
-                            View Profile
-                        </ButtonComponent>
+                        {userProfile?.name === username ? (
+                            <ButtonComponent
+                                className={styles.edit_project_button}
+                                onClick={handleEditProject}>
+                                <EditPenSvg />
+                                <span>Edit Project</span>
+                            </ButtonComponent>
+                        ) : (
+                            <ButtonComponent
+                                className={styles.view_profile_button}>
+                                    <EyeShowSVG/>
+                                View Profile
+                            </ButtonComponent>
+                        )}
                     </div>
                 </header>
                 <ProjectMetaComponent

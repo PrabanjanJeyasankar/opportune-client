@@ -87,6 +87,9 @@
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+.share {
+    cursor: pointer;
+}
 
 .project_tag {
     background: var(--white-opacity-low);
