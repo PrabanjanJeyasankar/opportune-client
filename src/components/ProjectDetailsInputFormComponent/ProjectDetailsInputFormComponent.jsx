@@ -7,6 +7,9 @@ import ProjectDetailsValidationFrom from '../../utils/ProjectDetailsValidationFr
 import styles from '../ProjectDetailsInputFormComponent/ProjectDetailsInputFormComponent.module.css'
 import TagSelectComponent from '../TagSelectComponent/TagSelectComponent'
 import ThumbnailUploadComponent from '../ThumbnailUploadComponent/ThumbnailUploadComponent'
+import { toast } from '@/hooks/use-toast'
+
+
 const ProjectDetailsInputFormComponent = () => {
     const [formData, setFormData] = useState({
         title: '',
@@ -20,8 +23,7 @@ const ProjectDetailsInputFormComponent = () => {
 
     const [errors, setErrors] = useState({})
     const [loading, setLoading] = useState(false)
-    const [isModalOpen, setIsModalOpen] = useState(false)
-    const [modalContent, setModalContent] = useState({ message: '', type: '' })
+
 
     const handleInputChange = (event) => {
         const { name, type, files } = event.target
@@ -29,7 +31,7 @@ const ProjectDetailsInputFormComponent = () => {
         if (type === 'file') {
             if (files && files[0]) {
                 if (files[0].size > 2 * 1024 * 1024) {
-                    alert('File size should not exceed 2MB.')
+                    toast({description:'File size should not exceed 2MB.'})
                 } else {
                     setFormData((prevData) => ({
                         ...prevData,
@@ -88,30 +90,32 @@ const ProjectDetailsInputFormComponent = () => {
                 const response = await projectService.postProjectData(
                     formDataObj
                 )
+                
+                if(response.status === 201)
+                    {
+                        toast({description: '🎉 Project submitted successfully!'})
 
-                setFormData({
-                    title: '',
-                    description: '',
-                    thumbnail: null,
-                    tags: [],
-                    githubLink: '',
-                    hostedLink: '',
-                    documentation: '',
-                })
-
-                setModalContent({
-                    message: 'Project submitted successfully!',
-                    type: 'success',
-                })
-                setIsModalOpen(true)
+                        setFormData({
+                            title: '',
+                            description: '',
+                            thumbnail: null,
+                            tags: [],
+                            githubLink: '',
+                            hostedLink: '',
+                            documentation: '',
+                        })
+                    }
             } catch (error) {
-                console.error('Error submitting project', error)
-
-                setModalContent({
-                    message: 'Failed to submit the project. Please try again!',
-                    type: 'error',
-                })
-                setIsModalOpen(true)
+                console.error('Error submitting project', error)       
+                if (error.response && error.response.status === 409 && error.response.data.error === "existing_project_title") {
+                    console.log(error.response.data.error)
+                    setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        title: "This project title already exists. Please choose another one.",
+                    }));
+                } else {
+                    toast({ description: "Failed to submit the project. Please try again!" });
+                }
             } finally {
                 setLoading(false)
             }
@@ -230,12 +234,12 @@ const ProjectDetailsInputFormComponent = () => {
                             {loading ? 'Submitting...' : 'Submit Project'}
                         </ButtonComponent>
                     </form>
-                    <ModalComponent
+                    {/* <ModalComponent
                         isOpen={isModalOpen}
                         message={modalContent.message}
                         type={modalContent.type}
                         onClose={() => setIsModalOpen(false)}
-                    />
+                    /> */}
                 </div>
             </div>
         </div>
