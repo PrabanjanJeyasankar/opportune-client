@@ -1,13 +1,12 @@
-import React, { useState } from "react"
-import ButtonComponent from "../../elements/ButtonComponent/ButtonComponent"
-import InputComponent from "../../elements/InputComponent/InputComponent"
-import ModalComponent from "../../elements/ModalComponent/ModalComponent"
-import projectService from "../../services/projectService"
-import ProjectDetailsValidationFrom from "../../utils/ProjectDetailsValidationFrom"
-import styles from "../ProjectDetailsInputFormComponent/ProjectDetailsInputFormComponent.module.css"
-import TagSelectComponent from "../TagSelectComponent/TagSelectComponent"
-import ThumbnailUploadComponent from "../ThumbnailUploadComponent/ThumbnailUploadComponent"
-import { toast } from "@/hooks/use-toast"
+import { toast } from '@/hooks/use-toast'
+import React, { useState } from 'react'
+import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
+import InputComponent from '../../elements/InputComponent/InputComponent'
+import projectService from '../../services/projectService'
+import ProjectDetailsValidationFrom from '../../utils/ProjectDetailsValidationFrom'
+import styles from '../ProjectDetailsInputFormComponent/ProjectDetailsInputFormComponent.module.css'
+import TagSelectComponent from '../TagSelectComponent/TagSelectComponent'
+import ThumbnailUploadComponent from '../ThumbnailUploadComponent/ThumbnailUploadComponent'
 
 const ProjectDetailsInputFormComponent = () => {
     const [formData, setFormData] = useState({
@@ -29,7 +28,7 @@ const ProjectDetailsInputFormComponent = () => {
         if (type === "file") {
             if (files && files[0]) {
                 if (files[0].size > 2 * 1024 * 1024) {
-                    toast({ description: "File size should not exceed 2MB." })
+                    toast({ description: 'File size should not exceed 2MB.' })
                 } else {
                     setFormData((prevData) => ({
                         ...prevData,
@@ -90,34 +89,34 @@ const ProjectDetailsInputFormComponent = () => {
                 )
 
                 if (response.status === 201) {
-                    toast({ description: "🎉 Project submitted successfully!" })
+                    toast({ description: '🎉 Project submitted successfully!' })
 
                     setFormData({
-                        title: "",
-                        description: "",
+                        title: '',
+                        description: '',
                         thumbnail: null,
                         tags: [],
-                        githubLink: "",
-                        hostedLink: "",
-                        documentation: "",
+                        githubLink: '',
+                        hostedLink: '',
+                        documentation: '',
                     })
                 }
             } catch (error) {
-                console.error("Error submitting project", error)
+                console.error('Error submitting project', error)
                 if (
                     error.response &&
                     error.response.status === 409 &&
-                    error.response.data.error === "existing_project_title"
+                    error.response.data.error === 'existing_project_title'
                 ) {
                     console.log(error.response.data.error)
                     setErrors((prevErrors) => ({
                         ...prevErrors,
-                        title: "This project title already exists. Please choose another one.",
+                        title: 'This project title already exists. Please choose another one.',
                     }))
                 } else {
                     toast({
                         description:
-                            "Failed to submit the project. Please try again!",
+                            'Failed to submit the project. Please try again!',
                     })
                 }
             } finally {
@@ -175,7 +174,7 @@ const ProjectDetailsInputFormComponent = () => {
                             thumbnail={formData.thumbnail}
                             handleInputChange={handleInputChange}
                             error={errors.thumbnail}
-                            placeholderText="Upload image"
+                            placeholderText='Upload image'
                         />
 
                         <TagSelectComponent
