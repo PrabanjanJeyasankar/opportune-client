@@ -34,47 +34,52 @@
 .app_name {
     font-size: 1.1rem;
     font-weight: 500;
-    color: white;
+    color: #fff;
 }
 
 .navigation_bar {
     display: flex;
     align-items: center;
-    gap: 3rem;
-    color: white;
+    gap: 2.5rem;
+    color: #fff;
 }
 
 .link {
     text-decoration: none;
     opacity: 0.8;
-    color: rgb(173, 173, 173);
+    color: #adadad;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.3rem;
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.link:hover {
-    transform: scale(1.05);
-    color: white;
-}
-
-.activeLink {
-    color: white;
+.activeLink,
+.link.active,
+.link:active,
+.link:focus {
+    color: #fff !important;
+    opacity: 1;
 }
 
 .authentication_links {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 3rem;
+    gap: 2.5rem;
 }
 
 .signup_button {
-    color: black;
-    background-color: white;
+    color: #000;
+    background-color: #fff;
     padding: 0.3rem 1rem;
     border-radius: 1rem;
     font-size: 1rem;
     font-weight: 500;
     cursor: pointer;
+    text-decoration: none;
 }
 
 .hamburger {
@@ -95,7 +100,7 @@
     position: absolute;
     width: 20px;
     height: 2px;
-    background-color: white;
+    background-color: #fff;
     transition: all 250ms ease-out;
 }
 
@@ -115,6 +120,111 @@
     transform: translateY(0) rotate(-45deg);
 }
 
+.profile_dropdown_container {
+    position: relative;
+    cursor: pointer;
+}
+
+.profile_btn_container {
+    display: flex;
+    align-items: center;
+    padding: 0.3rem 0;
+    transition: color 0.2s ease;
+    color: #adadad;
+}
+
+.text_active {
+    color: #fff !important;
+}
+
+.rotate_arrow {
+    transform: rotate(-180deg);
+    transition: transform 0.3s ease-in-out;
+}
+
+.default_arrow {
+    transform: rotate(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+.icon_active {
+    transform: rotate(-180deg);
+    color: #fff !important;
+}
+
+@keyframes dropdownSlide {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.dropdown_menu {
+    position: absolute;
+    top: 140%;
+    right: -60%;
+    width: 160px;
+    background-color: var( --dark-gray);
+    backdrop-filter: blur(0px);
+    border-radius: 8px;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0.2rem;
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.dropdown_menu.show {
+    animation: dropdownSlide 0.3s ease-out forwards;
+}
+
+.dropdown_profile_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 0;
+    background: var(--background-low);
+}
+
+.dropdown_profile_image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.dropdown_item {
+    font-size: 1.1rem;
+    border-radius: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: 0.6rem 1rem;
+    margin: 0.1rem;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+    gap: 0.5rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.dropdown_item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
 @media (max-width: 820px) {
     .header {
         padding: 0.5rem 0.6rem;
@@ -127,7 +237,7 @@
         align-items: flex-end;
         position: absolute;
         background: rgba(0, 0, 0, 0.945);
-        top: 0%;
+        top: 0;
         right: 100%;
         z-index: 10;
         padding: 4rem 2rem 2rem 2rem;
@@ -153,21 +263,39 @@
     .hamburger {
         display: flex;
         margin-right: 0.5rem;
-        /* z-index: 10000; */
     }
 
     .signup_button {
         font-size: 1.4rem;
         font-weight: 600;
         padding: 0.4rem 1rem;
-        /* padding: 0.6rem; */
     }
 
     .link {
         font-size: 1.4rem;
         font-weight: 400;
-        color: rgb(255, 255, 255);
+        color: #fff;
         padding: 0.6rem;
+    }
+
+    .profile_dropdown_container {
+        margin-top: 1rem;
+    }
+
+    .profile_text {
+        font-size: 1.4rem;
+    }
+
+    .dropdown_menu {
+        position: static;
+        width: 100%;
+        margin-top: 10px;
+        right: 0;
+    }
+
+    .dropdown_item {
+        font-size: 1.2rem;
+        padding: 12px 16px;
     }
 }
 
@@ -177,7 +305,6 @@
         flex-direction: column;
         position: absolute;
         background: rgba(0, 0, 0, 0.945);
-        /* top: 12%; */
         right: -100%;
         z-index: 9000;
         padding: 4rem 2rem 2rem 2rem;
@@ -196,7 +323,6 @@
 
     .signup_button {
         padding: 0.3rem 1.3rem;
-        /* border-radius: 0.5rem; */
         font-size: 1.4rem;
         font-weight: 500;
     }

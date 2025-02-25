@@ -1,31 +1,64 @@
 import useHomeFeedResetContext from '@/hooks/useHomeFeedResetContext'
-import { useRef, useState } from 'react'
-import { Link } from 'react-router-dom'
+import useUserContext from '@/hooks/useUserContext'
+import authService from '@/services/authService'
+import CheveronArrowDownSvg from '@/svg/ChevronArrowDownSvg/CheveronArrowDownSvg'
+import LogoutSvg from '@/svg/LogoutSvg/LogoutSvg'
+import UserRoundSvg from '@/svg/UserRoundSvg/UserRoundSvg'
+import { useEffect, useRef, useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import AppLogo from '../../assets/images/opportune_logo_svg.svg'
-import tempimage from '../../assets/images/ProjectTemplates/img11.png'
 import navBarStyles from './NavigationBarComponent.module.css'
 
 const NavigationBarComponent = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const navbarRef = useRef(null)
+    const dropdownRef = useRef(null)
     const { setSearchTerm } = useHomeFeedResetContext()
-    const toggleMenu = () => {
-        setIsMenuOpen((prev) => !prev)
-    }
-    const handleCloseMenu = () => {
-        setIsMenuOpen(false)
+    const { isUserLoggedIn, setIsUserLoggedIn, setUserProfile } =
+        useUserContext()
+
+    const toggleMenu = () => setIsMenuOpen((prev) => !prev)
+    const handleCloseMenu = () => setIsMenuOpen(false)
+    const handleClearSearch = () => setSearchTerm('')
+    const toggleDropdown = () => setIsDropdownOpen((prev) => !prev)
+
+    const logout = () => {
+        authService
+            .logout()
+            .then(() => {
+                localStorage.removeItem('userData')
+
+                setIsUserLoggedIn(false)
+                setUserProfile({})
+
+                window.location.href = '/'
+            })
+            .catch((error) => {
+                console.error('Logout failed:', error)
+            })
     }
 
-    const handleClearSearch = () => {
-        setSearchTerm('')
-    }
-
-    const handleKeyDown = (event, toggleMenu) => {
-        if (event.key === 'Enter' || event.key === ' ') {
-            event.preventDefault()
-            toggleMenu()
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (
+                dropdownRef.current &&
+                !dropdownRef.current.contains(event.target)
+            ) {
+                setIsDropdownOpen(false)
+            }
         }
-    }
+
+        if (isDropdownOpen) {
+            document.addEventListener('click', handleClickOutside)
+        } else {
+            document.removeEventListener('click', handleClickOutside)
+        }
+
+        return () => {
+            document.removeEventListener('click', handleClickOutside)
+        }
+    }, [isDropdownOpen])
 
     return (
         <header ref={navbarRef} className={navBarStyles.header}>
@@ -35,7 +68,7 @@ const NavigationBarComponent = () => {
                 onClick={handleClearSearch}>
                 <img
                     src={AppLogo}
-                    alt='AppLogo'
+                    alt='App Logo'
                     className={navBarStyles.logo_image}
                 />
                 <div className={navBarStyles.app_name}>Opportune</div>
@@ -45,52 +78,138 @@ const NavigationBarComponent = () => {
                 className={`${navBarStyles.navigation_bar} ${
                     isMenuOpen ? navBarStyles.show : ''
                 }`}>
-                <Link
+                <NavLink
                     to='/'
-                    className={`${navBarStyles.link} ${navBarStyles.activeLink}`}
-                    onClick={{ handleCloseMenu, handleClearSearch }}>
+                    className={({ isActive }) =>
+                        `${navBarStyles.link} ${
+                            isActive ? navBarStyles.activeLink : ''
+                        }`
+                    }
+                    onClick={() => {
+                        handleCloseMenu()
+                        handleClearSearch()
+                    }}>
                     Home
-                </Link>
-                <Link
+                </NavLink>
+                <NavLink
                     to='/aboutus'
-                    className={navBarStyles.link}
+                    className={({ isActive }) =>
+                        `${navBarStyles.link} ${
+                            isActive ? navBarStyles.activeLink : ''
+                        }`
+                    }
                     onClick={handleCloseMenu}>
                     About us
-                </Link>
-                <Link
+                </NavLink>
+                <NavLink
                     to='/feedback'
-                    className={navBarStyles.link}
+                    className={({ isActive }) =>
+                        `${navBarStyles.link} ${
+                            isActive ? navBarStyles.activeLink : ''
+                        }`
+                    }
                     onClick={handleCloseMenu}>
                     Feedback
-                </Link>
+                </NavLink>
+
                 <div className={navBarStyles.authentication_links}>
-                    <Link
-                        to='/login'
-                        className={navBarStyles.link}
-                        onClick={handleCloseMenu}>
-                        Login
-                    </Link>
-                    <Link
-                        to='/project-input-form'
-                        className={navBarStyles.signup_button}
-                        onClick={handleCloseMenu}>
-                        Post your projects!
-                    </Link>
-                    <Link to='/' className={navBarStyles.logo}>
-                        <img
-                            src={tempimage}
-                            alt='AppLogo'
-                            className={navBarStyles.logo_image}
-                        />
-                    </Link>
+                    {!isUserLoggedIn ? (
+                        <>
+                            <NavLink
+                                to='/login'
+                                className={navBarStyles.link}
+                                onClick={handleCloseMenu}>
+                                Login
+                            </NavLink>
+                            <NavLink
+                                to='/project-input-form'
+                                className={navBarStyles.signup_button}
+                                onClick={handleCloseMenu}>
+                                Post your projects!
+                            </NavLink>
+                        </>
+                    ) : (
+                        <>
+                            <div
+                                className={
+                                    navBarStyles.profile_dropdown_container
+                                }
+                                ref={dropdownRef}>
+                                <button
+                                    className={`${
+                                        navBarStyles.profile_btn_container
+                                    } ${
+                                        isDropdownOpen
+                                            ? navBarStyles.profile_active
+                                            : ''
+                                    }`}
+                                    onClick={toggleDropdown}>
+                                    <div className={navBarStyles.link}>
+                                        <div
+                                            className={`${
+                                                navBarStyles.arrow_icon
+                                            } ${
+                                                isDropdownOpen
+                                                    ? `${navBarStyles.icon_active} ${navBarStyles.rotate_arrow}`
+                                                    : navBarStyles.default_arrow
+                                            }`}>
+                                            <CheveronArrowDownSvg />
+                                        </div>
+                                        <span
+                                            className={
+                                                isDropdownOpen
+                                                    ? navBarStyles.text_active
+                                                    : ''
+                                            }>
+                                            Profile
+                                        </span>
+                                    </div>
+                                </button>
+
+                                {isDropdownOpen && (
+                                    <div
+                                        className={`${navBarStyles.dropdown_menu} ${navBarStyles.show}`}>
+                                        <NavLink
+                                            to='/profile'
+                                            className={
+                                                navBarStyles.dropdown_item
+                                            }
+                                            onClick={() =>
+                                                setIsDropdownOpen(false)
+                                            }>
+                                            <UserRoundSvg />
+                                            <span>My Profile</span>
+                                        </NavLink>
+                                        <button
+                                            className={
+                                                navBarStyles.dropdown_item
+                                            }
+                                            onClick={() => {
+                                                logout()
+                                                setIsDropdownOpen(false)
+                                            }}>
+                                            <LogoutSvg />
+                                            <span>Logout</span>
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+                            <NavLink
+                                to='/project-input-form'
+                                className={navBarStyles.signup_button}
+                                onClick={handleCloseMenu}>
+                                Post your projects!
+                            </NavLink>
+                        </>
+                    )}
                 </div>
             </nav>
+
             <button
                 className={`${navBarStyles.hamburger} ${
                     isMenuOpen ? navBarStyles.active : ''
                 }`}
                 onClick={toggleMenu}
-                onKeyDown={(event) => handleKeyDown(event, toggleMenu)}
                 aria-expanded={isMenuOpen}
                 aria-label='Toggle navigation menu'>
                 <span className={navBarStyles.line} />

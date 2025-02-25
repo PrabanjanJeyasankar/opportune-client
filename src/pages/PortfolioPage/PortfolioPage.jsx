@@ -93,9 +93,6 @@ const PortfolioPage = () => {
         icon: defaultSocialPlatforms[platform.name],
     }))
 
-    // console.log('Portfolio Data:', portfolioData)
-    console.log('Extracted Data:', { personalInfo, skills, socialPlatforms })
-    console.log('Matched Platforms:', matchedPlatforms)
     return (
         <>
             <div className={styles.parentContainer}>

@@ -3,24 +3,25 @@ import React, { createContext, useEffect, useState } from 'react'
 const UserContext = createContext()
 
 const UserProvider = ({ children }) => {
-    const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
-    const [userProfile, setUserProfile] = useState({})
+    const [isUserLoggedIn, setIsUserLoggedIn] = useState(
+        localStorage.getItem('isUserLoggedIn') === 'true'
+    )
+    const [userProfile, setUserProfile] = useState(
+        JSON.parse(localStorage.getItem('userProfile')) || {}
+    )
 
     useEffect(() => {
-        const token = localStorage.getItem('authToken')
-        const userData = localStorage.getItem('userData')
-        if (token && userData) {
+        const userData = localStorage.getItem('userProfile')
+        if (userData) {
             setIsUserLoggedIn(true)
             setUserProfile(JSON.parse(userData))
         }
     }, [])
 
-    const logout = () => {
-        localStorage.removeItem('authToken')
-        localStorage.removeItem('userData')
-        setIsUserLoggedIn(false)
-        setUserProfile(null)
-    }
+    useEffect(() => {
+        localStorage.setItem('isUserLoggedIn', isUserLoggedIn)
+    }, [isUserLoggedIn])
+
     return (
         <UserContext.Provider
             value={{
