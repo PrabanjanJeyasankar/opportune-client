@@ -1,73 +1,83 @@
 import ImageComponent from '@/elements/ImageComponent/ImageComponent'
 import fetchMoreProjectsByUser from '@/services/fetchMoreProjectsByUser'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styles from './MoreProjectsByUser.module.css'
 
-function MoreProjectsByUser({ username, slug }) {
+function MoreProjectsByUser({ username, slug, onProjectSelect }) {
     const [moreProjectsByUser, setMoreProjectsByUser] = useState([])
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(true)
     const [error, setError] = useState(null)
-    const galleryRef = useRef(null)
+    const [projectKey, setProjectKey] = useState(`${username}-${slug}`)
 
     useEffect(() => {
-        const galleryDiv = galleryRef.current
+        setProjectKey(`${username}-${slug}-${Date.now()}`)
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                if (entries[0].isIntersecting) {
-                    setLoading(true)
-                    fetchMoreProjectsByUser(username, slug)
-                        .then((data) => {
-                            setMoreProjectsByUser(
-                                data.data[0].projects.slice(0, 4)
-                            )
-                        })
-                        .catch((error) => setError(error))
-                        .finally(() => setLoading(false))
+        setMoreProjectsByUser([])
+        setLoading(true)
+        setError(null)
 
-                    observer.disconnect()
-                }
-            },
-            { threshold: 0.1 }
-        )
-
-        if (galleryDiv) observer.observe(galleryDiv)
-
-        return () => observer.disconnect()
+        if (username && slug) {
+            fetchMoreProjectsByUser(username, slug)
+                .then((data) => {
+                    if (data.data && data.data[0]?.projects) {
+                        setMoreProjectsByUser(data.data[0].projects.slice(0, 4))
+                    } else {
+                        setMoreProjectsByUser([])
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error fetching projects:', error)
+                    setError(error)
+                })
+                .finally(() => setLoading(false))
+        }
     }, [username, slug])
+
+    const handleProjectClick = (project) => {
+        if (onProjectSelect && project.slug !== slug) {
+            onProjectSelect(project)
+        }
+    }
+
     if (loading) {
-        return <div>Loading...</div>
+        return <div>Loading more projects...</div>
+    }
+
+    if (error) {
+        return <div>Error loading projects</div>
     }
 
     return (
-        <div className={styles.more_projects_by_user} ref={galleryRef}>
+        <div className={styles.more_projects_by_user} key={projectKey}>
             <div className={styles.more_projects_header}>
                 <h1 className={styles.more_projects_title}>
                     More by {username}
                 </h1>
                 <p className={styles.view_profile_link}>View Profile</p>
             </div>
-            <div className={styles.image_gallery}>
-                {moreProjectsByUser && moreProjectsByUser.length > 0 ? (
-                    <div className={styles.image_gallery}>
-                        {moreProjectsByUser.map((image, index) => (
-                            <div
-                                key={image.id || `${username}-${slug}-${index}`}
-                                className={styles.image_wrapper}>
-                                <ImageComponent
-                                    src={image.thumbnailUrl}
-                                    alt={image.alt}
-                                    className={styles.image}
-                                />
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <div className={styles.no_projects_message}>
-                        Still cooking up ideas! &#127859;
-                    </div>
-                )}
-            </div>
+
+            {moreProjectsByUser && moreProjectsByUser.length > 0 ? (
+                <div className={styles.image_gallery}>
+                    {moreProjectsByUser.map((project, index) => (
+                        <div
+                            key={`${
+                                project.id || project.slug
+                            }-${index}-${projectKey}`}
+                            onClick={() => handleProjectClick(project)}
+                            className={styles.image_wrapper}>
+                            <ImageComponent
+                                src={project.thumbnailUrl}
+                                alt={project.title || 'Project thumbnail'}
+                                className={styles.image}
+                            />
+                        </div>
+                    ))}
+                </div>
+            ) : (
+                <div className={styles.no_projects_message}>
+                    Still cooking up ideas! &#127859;
+                </div>
+            )}
         </div>
     )
 }

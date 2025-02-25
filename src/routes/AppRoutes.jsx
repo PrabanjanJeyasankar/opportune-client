@@ -1,19 +1,31 @@
-import UpdateProfileComponent from '@/components/UpdateProfileComponent/UpdateProfileComponent'
-import FeedbackPage from '@/pages/FeedbackPage/FeedbackPage'
 import PortfolioPage from '@/pages/PortfolioPage/PortfolioPage'
-import React, { Suspense } from 'react'
-import { Navigate, Route, Routes } from 'react-router-dom'
-import ProjectDetailsInputFormComponent from '../components/ProjectDetailsInputFormComponent/ProjectDetailsInputFormComponent'
-import AccountLayout from '../layouts/AccountLayout/AccountLayout'
+import React, { Suspense, lazy } from 'react'
+import { Route, Routes } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout/MainLayout'
-import ChangePasswordPage from '../pages/ChangePasswordPage/ChangePasswordPage'
-import HomePage from '../pages/HomePage/HomePage'
-import LoginPage from '../pages/LoginPage/LoginPage'
-import ProjectDetailsPage from '../pages/ProjectDetailsPage/ProjectDetailsPage'
-import RequestOtpPage from '../pages/RequestOtpPage/RequestOtpPage'
-import SignupPage from '../pages/SignupPage/SignupPage'
-import VerifyOTPPage from '../pages/VerifyOTPPage/VerifyOTPPage'
 import ScrollToTop from '../utils/scrollToTop'
+
+const HomePage = lazy(() => import('../pages/HomePage/HomePage'))
+const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'))
+const SignupPage = lazy(() => import('../pages/SignupPage/SignupPage'))
+const FeedbackPage = lazy(() => import('@/pages/FeedbackPage/FeedbackPage'))
+const RequestOtpPage = lazy(() =>
+    import('../pages/RequestOtpPage/RequestOtpPage')
+)
+const VerifyOTPPage = lazy(() => import('../pages/VerifyOTPPage/VerifyOTPPage'))
+const ChangePasswordPage = lazy(() =>
+    import('../pages/ChangePasswordPage/ChangePasswordPage')
+)
+const ProjectDetailsPage = lazy(() =>
+    import('../pages/ProjectDetailsPage/ProjectDetailsPage')
+)
+const ProjectDetailsInputFormComponent = lazy(() =>
+    import(
+        '../components/ProjectDetailsInputFormComponent/ProjectDetailsInputFormComponent'
+    )
+)
+const UpdateProfileComponent = lazy(() =>
+    import('@/components/UpdateProfileComponent/UpdateProfileComponent')
+)
 
 const AppRoutes = () => {
     return (
@@ -26,11 +38,6 @@ const AppRoutes = () => {
                         <Route path='/login' element={<LoginPage />} />
                         <Route path='/signup' element={<SignupPage />} />
                         <Route path='/feedback' element={<FeedbackPage />} />
-
-                        {/* STRICTLY FOR DEVELOPMENT PURPOSE ONLY , DELETE BEFORE COMMITTING */}
-                        <Route path='/aboutus' element={<PortfolioPage />} />
-                        {/* STRICTLY FOR DEVELOPMENT PURPOSE ONLY , DELETE BEFORE COMMITTING */}
-
                         <Route
                             path='/request-otp'
                             element={<RequestOtpPage />}
@@ -40,21 +47,10 @@ const AppRoutes = () => {
                             path='/change-password'
                             element={<ChangePasswordPage />}
                         />
-                        <Route path='/account' element={<AccountLayout />}>
-                            <Route
-                                index
-                                path=''
-                                element={<Navigate to={'my-profile'} replace />}
-                            />
-                            <Route
-                                path='my-profile'
-                                element={<div>My Profile</div>}
-                            />
-                            <Route
-                                path='my-projects'
-                                element={<div>My Projects</div>}
-                            />
-                        </Route>
+                        <Route
+                            path='/my-portfolio'
+                            element={<PortfolioPage />}
+                        />
                         <Route
                             path='/project-input-form'
                             element={<ProjectDetailsInputFormComponent />}

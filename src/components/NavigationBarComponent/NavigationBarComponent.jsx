@@ -1,3 +1,4 @@
+import ButtonComponent from '@/elements/ButtonComponent/ButtonComponent'
 import useHomeFeedResetContext from '@/hooks/useHomeFeedResetContext'
 import useUserContext from '@/hooks/useUserContext'
 import authService from '@/services/authService'
@@ -8,7 +9,6 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 import navBarStyles from './NavigationBarComponent.module.css'
-import ButtonComponent from '@/elements/ButtonComponent/ButtonComponent'
 
 const NavigationBarComponent = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -126,7 +126,7 @@ const NavigationBarComponent = () => {
                                 to='/project-input-form'
                                 className={navBarStyles.signup_button}
                                 onClick={handleCloseMenu}>
-                                Post your projects!
+                                Post a project!
                             </NavLink>
                         </>
                     ) : (
@@ -171,7 +171,7 @@ const NavigationBarComponent = () => {
                                     <div
                                         className={`${navBarStyles.dropdown_menu} ${navBarStyles.show}`}>
                                         <NavLink
-                                            to='/'
+                                            to='/my-portfolio'
                                             className={
                                                 navBarStyles.dropdown_item
                                             }
@@ -199,14 +199,14 @@ const NavigationBarComponent = () => {
                                 to='/project-input-form'
                                 className={navBarStyles.signup_button}
                                 onClick={handleCloseMenu}>
-                                Post your projects!
+                                <span>Post a project &#128640;</span>
                             </NavLink>
                         </>
                     )}
                 </div>
             </nav>
 
-            <button
+            <ButtonComponent
                 className={`${navBarStyles.hamburger} ${
                     isMenuOpen ? navBarStyles.active : ''
                 }`}
@@ -215,7 +215,7 @@ const NavigationBarComponent = () => {
                 aria-label='Toggle navigation menu'>
                 <span className={navBarStyles.line} />
                 <span className={navBarStyles.line} />
-            </button>
+            </ButtonComponent>
         </header>
     )
 }

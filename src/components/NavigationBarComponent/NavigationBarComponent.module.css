@@ -72,6 +72,9 @@
 }
 
 .signup_button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     color: #000;
     background-color: #fff;
     padding: 0.3rem 1rem;
@@ -168,7 +171,7 @@
     top: 140%;
     right: -60%;
     width: 160px;
-    background-color: var( --dark-gray);
+    background-color: var(--dark-gray);
     backdrop-filter: blur(0px);
     border-radius: 8px;
     z-index: 1000;
