@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import './App.css'
 import StarryMotionComponent from './components/StarryMotionComponent/StarryMotionComponent'
+import ScrollToTopComponent from './components/SupportingComponents/ScrollToTopComponent/ScrollToTopComponent'
 import HomeFeedResetContextProvider from './context/HomeFeedResetContext'
 import { UserProvider } from './context/userContext'
 import InitialLoadingAnimation from './loaders/InitialLoadingAnimation/InitialLoadingAnimation'
@@ -30,6 +31,7 @@ function App() {
     return (
         <HomeFeedResetContextProvider>
             <Router>
+                <ScrollToTopComponent />
                 <UserProvider>
                     <AppRoutes />
                 </UserProvider>
