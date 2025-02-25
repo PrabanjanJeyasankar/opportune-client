@@ -1,17 +1,28 @@
-import ButtonComponent from '@/elements/ButtonComponent/ButtonComponent'
-import CloseXSvg from '@/svg/CloseXSvg/CloseXSvg'
-import EyeShowSVG from '@/svg/EyeShowSVG/EyeShowSVG'
-import React, { useState } from 'react'
-import ReactModal from 'react-modal'
-import ImageComponent from '../../elements/ImageComponent/ImageComponent'
-import styles from '../ThumbnailUploadComponent/ThumbnailUploadComponent.module.css'
+import ButtonComponent from "@/elements/ButtonComponent/ButtonComponent"
+import CloseXSvg from "@/svg/CloseXSvg/CloseXSvg"
+import EyeShowSVG from "@/svg/EyeShowSVG/EyeShowSVG"
+import React, { useState, useEffect } from "react"
+import ReactModal from "react-modal"
+import ImageComponent from "../../elements/ImageComponent/ImageComponent"
+import styles from "../ThumbnailUploadComponent/ThumbnailUploadComponent.module.css"
 
-ReactModal.setAppElement('#root')
+ReactModal.setAppElement("#root")
 
 const ThumbnailUploadComponent = ({ thumbnail, handleInputChange, error }) => {
     const [isModalOpen, setModalOpen] = useState(false)
+    const [previewURL, setPreviewURL] = useState(null)
 
-    const handlePreviewClick = () => {
+    useEffect(() => {
+        if (thumbnail) {
+            const objectURL = URL.createObjectURL(thumbnail)
+            setPreviewURL(objectURL)
+
+            return () => URL.revokeObjectURL(objectURL)
+        }
+    }, [thumbnail])
+
+    const handlePreviewClick = (event) => {
+        event.preventDefault()
         setModalOpen(true)
     }
 
@@ -22,27 +33,30 @@ const ThumbnailUploadComponent = ({ thumbnail, handleInputChange, error }) => {
     return (
         <div className={styles.thumbnail_upload}>
             <input
-                className='hidden'
-                accept='image/*'
-                id='thumbnail_upload'
-                type='file'
-                name='thumbnail'
+                className="hidden"
+                accept="image/*"
+                id="thumbnail_upload"
+                type="file"
+                name="thumbnail"
                 onChange={handleInputChange}
             />
 
             <label
-                htmlFor='thumbnail_upload'
-                className={styles.thumbnail_label}>
+                htmlFor="thumbnail_upload"
+                className={styles.thumbnail_label}
+            >
                 {thumbnail ? (
                     <div className={styles.thumbnail_preview_container}>
                         <ImageComponent
-                            src={URL.createObjectURL(thumbnail)}
-                            alt='Thumbnail Preview'
+                            src={previewURL}
+                            alt="Thumbnail Preview"
                             className={styles.thumbnail_preview}
                         />
                         <ButtonComponent
+                            type="button"
                             className={`preview_button ${styles.preview_button}`}
-                            onClick={handlePreviewClick}>
+                            onClick={handlePreviewClick}
+                        >
                             <EyeShowSVG />
                             <span>Preview</span>
                         </ButtonComponent>
@@ -59,17 +73,19 @@ const ThumbnailUploadComponent = ({ thumbnail, handleInputChange, error }) => {
                 <ReactModal
                     isOpen={isModalOpen}
                     onRequestClose={closeModal}
-                    contentLabel='Thumbnail Preview'
+                    contentLabel="Thumbnail Preview"
                     className={styles.modal_content}
-                    overlayClassName={styles.modal_overlay}>
+                    overlayClassName={styles.modal_overlay}
+                >
                     <button
                         onClick={closeModal}
-                        className={styles.close_modal_button}>
+                        className={styles.close_modal_button}
+                    >
                         <CloseXSvg />
                     </button>
                     <ImageComponent
-                        src={URL.createObjectURL(thumbnail)}
-                        alt='Thumbnail Preview in Modal'
+                        src={previewURL}
+                        alt="Thumbnail Preview in Modal"
                         className={styles.thumbnail_preview}
                     />
                 </ReactModal>
