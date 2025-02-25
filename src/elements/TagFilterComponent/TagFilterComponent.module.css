@@ -3,7 +3,7 @@
     grid-template-rows: repeat(3, auto);
     grid-auto-flow: column;
     gap: 1rem;
-    width: 60vw;
+    width: 50vw;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     padding: 1rem auto;
@@ -38,44 +38,6 @@
     -webkit-backdrop-filter: blur(10px);
 }
 
-/* .tags_filter {
-    display: grid;
-    grid-template-rows: repeat(3, auto);
-    grid-auto-flow: column;
-    gap: 1rem;
-    width: 60vw;
-    overflow-x: auto;
-    padding: 1rem auto;
-    margin-top: 2.5em;
-    max-height: calc(3 * 2.5rem + 2rem);
-    position: relative;
-    scrollbar-width: none;
-    cursor: grab;
-    scroll-behavior: smooth;
-    visibility: hidden; 
-}
-
-.tags_filter.loaded {
-    visibility: visible; 
-}
-
-.tag {
-    padding: 0.35rem 1rem;
-    border-radius: 2rem;
-    border: none;
-    background: var(--background-low);
-    color: var(--gray-ccc);
-    cursor: pointer;
-    font-size: 0.875rem;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-    user-select: none;
-}
-
-.tag_all {
-    flex-shrink: 0;
-} */
-
 .tags_filter > :nth-child(3n + 1) {
     transform: translateX(2rem);
 }
@@ -91,9 +53,8 @@
     width: 80px !important;
     height: 32px !important;
     border-radius: 2rem !important;
-    background: rgba(200, 200, 200, 0.2) !important; 
+    background: rgba(200, 200, 200, 0.2) !important;
 }
-
 
 .arrow {
     position: absolute;
@@ -139,13 +100,22 @@
     color: black;
 }
 
-@media (max-width: 320px) {
-    .tags_filter {
-        width: 100%;
+@media (max-width: 425px) {
+    .arrow {
+        display: none;
     }
 }
 
-@media (max-width: 768px) {
+@media (min-width: 320px) and (max-width: 767px) {
+    .tags_filter {
+        width: 90vw;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+    .tags_filter {
+        width: 100vw;
+    }
     .tag {
         padding: 0.4rem 0.8rem;
         font-size: 0.8rem;
@@ -153,5 +123,35 @@
 
     .tags_container {
         gap: 0.4rem;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1199px) {
+    .tags_filter {
+        width: 95vw;
+    }
+}
+
+@media (min-width: 1200px) and (max-width: 1439px) {
+    .tags_filter {
+        width: 75vw;
+    }
+}
+
+@media (min-width: 1440px) and (max-width: 1799px) {
+    .tags_filter {
+        width: 65vw;
+    }
+}
+
+@media (min-width: 1800px) and (max-width: 2559px) {
+    .tags_filter {
+        width: 50vw;
+    }
+}
+
+@media (min-width: 2560px) {
+    .tags_filter {
+        width: 40vw;
     }
 }

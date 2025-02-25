@@ -53,11 +53,12 @@
     letter-spacing: -0.01em;
     width: 50%;
 }
+
 .projectContainer {
     position: relative;
     width: inherit;
 }
-/* Image Container */
+
 .projectImageContainer {
     position: relative;
     width: 100%;
@@ -86,7 +87,6 @@
     font-size: 30px;
     transition: transform 0.3s ease;
 }
-
 .button {
     position: absolute;
     top: 2.5rem;
@@ -114,42 +114,43 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    transition: background 300ms;
 }
 
 .buttonCircle:hover {
     background: #111111;
+    color: white;
 }
 
 .buttonIcon {
     width: 28px;
     height: 28px;
+    transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
 }
 
 .buttonIconCopy {
     position: absolute;
     transform: translate(-150%, 150%);
+    color: white;
+    transition: transform 0.3s ease-in-out 0.1s;
 }
 
-/* Hover Effects */
 .button:hover {
     background: #000;
 }
 
-.button:hover .buttonIcon {
+.buttonCircle:hover .buttonIcon {
     color: white;
 }
 
-.button:hover .buttonIcon:first-child {
-    transition: transform 0.3s ease-in-out;
+.buttonCircle:hover .buttonIcon:first-child {
     transform: translate(150%, -150%);
 }
 
-.button:hover .buttonIconCopy {
-    transition: transform 0.3s ease-in-out 0.1s;
+.buttonCircle:hover .buttonIconCopy {
     transform: translate(0);
 }
 
-/* Responsive Styles */
 @media (max-width: 768px) {
     .projectGrid {
         grid-template-columns: 1fr;

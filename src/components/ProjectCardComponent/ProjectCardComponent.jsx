@@ -1,5 +1,6 @@
 import { toast } from '@/hooks/use-toast'
 import useUserContext from '@/hooks/useUserContext'
+import FloatingAstronautAnimation from '@/loaders/FloatingAstronautAnimation/FloatingAstronautAnimation'
 import projectService from '@/services/projectService'
 import NumberFlow from '@number-flow/react'
 import PropTypes from 'prop-types'
@@ -25,7 +26,7 @@ const ProjectCardComponent = ({ filteredProjects, isLoading }) => {
                     ))
                 ) : (
                     <div className={styles.no_results}>
-                        <svg
+                        {/* <svg
                             xmlns='http://www.w3.org/2000/svg'
                             viewBox='0 0 100 100'
                             width='100'
@@ -73,11 +74,11 @@ const ProjectCardComponent = ({ filteredProjects, isLoading }) => {
                                     repeatCount='indefinite'
                                 />
                             </line>
-                        </svg>
-
-                        <p>
-                            &quot;No projects here... yet! It&apos;s like an
-                            empty canvas waiting for your masterpiece!&quot;
+                        </svg> */}
+                        <FloatingAstronautAnimation />
+                        <p className={styles.no_tag_result_text}>
+                            This tag is feeling lonely! Be the first to add a
+                            project.
                         </p>
                     </div>
                 )}
@@ -125,7 +126,9 @@ const ProjectCard = ({ project }) => {
                 if (error.response) {
                     const status = error.response.status
                     if (status === 401) {
-                        toast({ description: 'Please login to upvote.' })
+                        toast({
+                            description: 'Please login to upvote.',
+                        })
                         navigate('/login')
                     } else if (status === 500) {
                         toast({
