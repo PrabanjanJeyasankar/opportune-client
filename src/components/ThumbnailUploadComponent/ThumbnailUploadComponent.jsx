@@ -8,7 +8,12 @@ import styles from "../ThumbnailUploadComponent/ThumbnailUploadComponent.module.
 
 ReactModal.setAppElement("#root")
 
-const ThumbnailUploadComponent = ({ thumbnail, handleInputChange, error }) => {
+const ThumbnailUploadComponent = ({
+    thumbnail,
+    handleInputChange,
+    error,
+    placeholderText = "Upload Thumbnail",
+}) => {
     const [isModalOpen, setModalOpen] = useState(false)
     const [previewURL, setPreviewURL] = useState(null)
 
@@ -63,7 +68,7 @@ const ThumbnailUploadComponent = ({ thumbnail, handleInputChange, error }) => {
                     </div>
                 ) : (
                     <span className={styles.thumbnail_placeholder}>
-                        Upload Thumbnail
+                        {placeholderText}
                     </span>
                 )}
             </label>

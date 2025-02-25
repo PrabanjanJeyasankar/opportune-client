@@ -175,6 +175,7 @@ const ProjectDetailsInputFormComponent = () => {
                             thumbnail={formData.thumbnail}
                             handleInputChange={handleInputChange}
                             error={errors.thumbnail}
+                            placeholderText="Upload image"
                         />
 
                         <TagSelectComponent
@@ -239,12 +240,6 @@ const ProjectDetailsInputFormComponent = () => {
                             {loading ? "Submitting..." : "Submit Project"}
                         </ButtonComponent>
                     </form>
-                    {/* <ModalComponent
-                        isOpen={isModalOpen}
-                        message={modalContent.message}
-                        type={modalContent.type}
-                        onClose={() => setIsModalOpen(false)}
-                    /> */}
                 </div>
             </div>
         </div>
