@@ -8,6 +8,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 import navBarStyles from './NavigationBarComponent.module.css'
+import ButtonComponent from '@/elements/ButtonComponent/ButtonComponent'
 
 const NavigationBarComponent = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -135,7 +136,7 @@ const NavigationBarComponent = () => {
                                     navBarStyles.profile_dropdown_container
                                 }
                                 ref={dropdownRef}>
-                                <button
+                                <ButtonComponent
                                     className={`${
                                         navBarStyles.profile_btn_container
                                     } ${
@@ -164,13 +165,13 @@ const NavigationBarComponent = () => {
                                             Profile
                                         </span>
                                     </div>
-                                </button>
+                                </ButtonComponent>
 
                                 {isDropdownOpen && (
                                     <div
                                         className={`${navBarStyles.dropdown_menu} ${navBarStyles.show}`}>
                                         <NavLink
-                                            to='/profile'
+                                            to='/'
                                             className={
                                                 navBarStyles.dropdown_item
                                             }
@@ -180,7 +181,7 @@ const NavigationBarComponent = () => {
                                             <UserRoundSvg />
                                             <span>My Profile</span>
                                         </NavLink>
-                                        <button
+                                        <ButtonComponent
                                             className={
                                                 navBarStyles.dropdown_item
                                             }
@@ -190,7 +191,7 @@ const NavigationBarComponent = () => {
                                             }}>
                                             <LogoutSvg />
                                             <span>Logout</span>
-                                        </button>
+                                        </ButtonComponent>
                                     </div>
                                 )}
                             </div>

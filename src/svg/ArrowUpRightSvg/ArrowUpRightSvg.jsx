@@ -2,7 +2,7 @@ function ArrowUpRightSvg({
     strokeWidth = 1.5,
     width = 24,
     height = 24,
-    stroke = 'black',
+    stroke = 'white',
 }) {
     return (
         <svg

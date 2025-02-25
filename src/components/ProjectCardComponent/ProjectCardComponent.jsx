@@ -1,14 +1,13 @@
 import { toast } from '@/hooks/use-toast'
 import useUserContext from '@/hooks/useUserContext'
 import projectService from '@/services/projectService'
-import NumberFlow from '@number-flow/react'
 import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ImageComponent from '../../elements/ImageComponent/ImageComponent'
 import ShareIconSvg from '../../svg/ShareIconSvg/ShareIconSvg'
-import UpvoteIconSvg from '../../svg/UpvoteIconSvg/UpvoteIconSvg'
-import { Skeleton } from '../ui/skeleton'
+import SkeletonCardComponent from '../SupportingComponents/SkeletonCardComponent/SkeletonCardComponent'
+import UpvoteComponent from '../UpvoteComponent/UpvoteComponent'
 import styles from './ProjectCardComponent.module.css'
 
 const ProjectCardComponent = ({ filteredProjects, isLoading }) => {
@@ -17,7 +16,7 @@ const ProjectCardComponent = ({ filteredProjects, isLoading }) => {
             <div className={styles.project_display_container}>
                 {isLoading ? (
                     Array.from({ length: 15 }).map((_, index) => (
-                        <SkeletonCard key={index} />
+                        <SkeletonCardComponent key={index} />
                     ))
                 ) : filteredProjects.length > 0 ? (
                     filteredProjects.map((project, index) => (
@@ -85,15 +84,6 @@ const ProjectCardComponent = ({ filteredProjects, isLoading }) => {
         </div>
     )
 }
-
-const SkeletonCard = () => (
-    <div className={styles.skeleton_project_card_container}>
-        <Skeleton className={styles.skeleton_project_card_image} />
-        <Skeleton className={styles.skeleton_project_card_title} />
-        <Skeleton className={styles.skeleton_project_card_tags} />
-        <Skeleton className={styles.skeleton_project_card_description} />
-    </div>
-)
 
 const ProjectCard = ({ project }) => {
     const [isUpvoted, setIsUpvoted] = useState(project.isUpvoted || false)
@@ -192,19 +182,12 @@ const ProjectCard = ({ project }) => {
                             isUpvoted ? styles.upvoted : ''
                         }`}
                         onClick={handleUpvoteClick}>
-                        <UpvoteIconSvg
-                            className={styles.upvote_icon}
-                            style={{
-                                stroke: isUpvoted ? '#7DFF40' : 'white',
-                                fill: isUpvoted ? '#7DFF40' : 'none',
-                            }}
+                        <UpvoteComponent
+                            projectSlug={project.slug}
+                            initialUpvoteCount={project.upvoteCount}
+                            initialIsUpvoted={project.isUpvoted || false}
+                            className={styles.upvotes}
                         />
-                        <span>
-                            <NumberFlow
-                                value={upvoteCount}
-                                format={{ notation: 'compact' }}
-                            />
-                        </span>
                     </div>
 
                     <ShareIconSvg className={styles.share_icon} />

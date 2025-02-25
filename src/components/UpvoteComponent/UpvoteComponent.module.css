@@ -1,0 +1,26 @@
+.upvote_container {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.upvote_container:hover .upvote_icon {
+    stroke: var(--green-500);
+}
+
+.upvoted .upvote_icon {
+    stroke: var(--green-500) !important;
+    fill: var(--green-500) !important;
+}
+
+.count {
+    font-size: 14px;
+    font-weight: 500;
+    color: white;
+}
+
+.compact {
+    padding: 4px 8px;
+}
