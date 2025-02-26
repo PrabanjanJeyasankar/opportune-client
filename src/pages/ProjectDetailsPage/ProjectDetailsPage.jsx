@@ -1,3 +1,4 @@
+import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
@@ -12,6 +13,29 @@ import useUserContext from '@/hooks/useUserContext'
 import projectService from '@/services/projectService'
 import EditPenSvg from '@/svg/EditPenSvg/EditPenSvg'
 import EyeShowSVG from '@/svg/EyeShowSVG/EyeShowSVG'
+
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.3,
+            delayChildren: 0.1,
+        },
+    },
+}
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.6,
+            ease: 'easeOut',
+        },
+    },
+}
 
 function ProjectDetailsPage() {
     const location = useLocation()
@@ -62,7 +86,10 @@ function ProjectDetailsPage() {
     }
 
     return (
-        <div>
+        <motion.div
+            initial='hidden'
+            animate='visible'
+            variants={containerVariants}>
             <MetaTagsComponent
                 title={`${currentProject.title} by ${currentProject.authorDetails.name} | MyPlatform`}
                 description={
@@ -73,9 +100,9 @@ function ProjectDetailsPage() {
                 url={window.location.href}
             />
             <section className={styles.project_details_container}>
-                <header className={styles.header}>
-                    <div className={styles.profile_section}>
-                        <div>
+                <motion.div variants={itemVariants}>
+                    <header className={styles.header}>
+                        <div className={styles.profile_section}>
                             <ImageComponent
                                 src={
                                     currentProject?.authorDetails.profilePicture
@@ -83,58 +110,61 @@ function ProjectDetailsPage() {
                                 alt='Profile'
                                 className={styles.avatar}
                             />
-                        </div>
-                        <div className={styles.info}>
-                            <span className={styles.user_name}>
-                                {currentProject?.authorDetails.name}
-                            </span>
-                            <span className={styles.status}>
-                                Available for work
-                            </span>
-                        </div>
-                    </div>
-
-                    <div className={styles.user_profile_actions}>
-                        {userProfile?.name ===
-                        currentProject?.authorDetails.name ? (
-                            <ButtonComponent
-                                onClick={handleEditProject}
-                                className={styles.edit_project_button}>
-                                <EditPenSvg />
-                                <span className={styles.edit_button_text}>
-                                    Edit Project
+                            <div className={styles.info}>
+                                <span className={styles.user_name}>
+                                    {currentProject?.authorDetails.name}
                                 </span>
-                            </ButtonComponent>
-                        ) : (
-                            <ButtonComponent
-                                onClick={handleViewProfile}
-                                className={styles.view_profile_button}>
-                                <EyeShowSVG />
-                                View Profile
-                            </ButtonComponent>
-                        )}
-                    </div>
-                </header>
+                                <span className={styles.status}>
+                                    Available for work
+                                </span>
+                            </div>
+                        </div>
 
-                <ProjectMetaComponent
-                    project={currentProject}
-                    handleClick={handleClick}
-                />
+                        <div className={styles.user_profile_actions}>
+                            {userProfile?.name ===
+                            currentProject?.authorDetails.name ? (
+                                <ButtonComponent
+                                    onClick={handleEditProject}
+                                    className={styles.edit_project_button}>
+                                    <EditPenSvg />
+                                    <span className={styles.edit_button_text}>
+                                        Edit Project
+                                    </span>
+                                </ButtonComponent>
+                            ) : (
+                                <ButtonComponent
+                                    onClick={handleViewProfile}
+                                    className={styles.view_profile_button}>
+                                    <EyeShowSVG />
+                                    View Profile
+                                </ButtonComponent>
+                            )}
+                        </div>
+                    </header>
+                </motion.div>
 
-                <div className={styles.separator}></div>
+                <motion.div variants={itemVariants}>
+                    <ProjectMetaComponent
+                        project={currentProject}
+                        handleClick={handleClick}
+                    />
+                </motion.div>
 
-                {currentProject && (
-                    <div className={styles.more_projects_container}>
-                        <MoreProjectsByUser
-                            key={`more-projects-${currentProject.slug}`}
-                            username={currentProject?.authorDetails.name}
-                            slug={currentProject?.slug}
-                            onProjectSelect={() => {}}
-                        />
-                    </div>
-                )}
+                <motion.div variants={itemVariants}>
+                    <div className={styles.separator}></div>
+                    {currentProject && (
+                        <div className={styles.more_projects_container}>
+                            <MoreProjectsByUser
+                                key={`more-projects-${currentProject.slug}`}
+                                username={currentProject?.authorDetails.name}
+                                slug={currentProject?.slug}
+                                onProjectSelect={() => {}}
+                            />
+                        </div>
+                    )}
+                </motion.div>
             </section>
-        </div>
+        </motion.div>
     )
 }
 
