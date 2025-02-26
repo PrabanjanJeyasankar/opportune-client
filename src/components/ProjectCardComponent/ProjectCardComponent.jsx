@@ -15,7 +15,12 @@ import styles from './ProjectCardComponent.module.css'
 const ProjectCardComponent = ({ filteredProjects, isLoading }) => {
     return (
         <div className={styles.initial_project_whole_container}>
-            <div className={styles.project_display_container}>
+            <div
+                className={`${styles.project_display_container} ${
+                    !isLoading && filteredProjects.length === 0
+                        ? styles.no_result_flex_center
+                        : ''
+                }`}>
                 {isLoading ? (
                     Array.from({ length: 15 }).map((_, index) => (
                         <SkeletonCardComponent key={index} />
@@ -26,55 +31,6 @@ const ProjectCardComponent = ({ filteredProjects, isLoading }) => {
                     ))
                 ) : (
                     <div className={styles.no_results}>
-                        {/* <svg
-                            xmlns='http://www.w3.org/2000/svg'
-                            viewBox='0 0 100 100'
-                            width='100'
-                            height='100'
-                            className={styles.clock_svg}>
-                            <circle
-                                cx='50'
-                                cy='50'
-                                r='45'
-                                stroke='#ddd'
-                                strokeWidth='5'
-                                fill='none'
-                            />
-                            <line
-                                x1='50'
-                                y1='50'
-                                x2='50'
-                                y2='20'
-                                stroke='#555'
-                                strokeWidth='4'
-                                strokeLinecap='round'>
-                                <animateTransform
-                                    attributeName='transform'
-                                    type='rotate'
-                                    from='0 50 50'
-                                    to='360 50 50'
-                                    dur='2s'
-                                    repeatCount='indefinite'
-                                />
-                            </line>
-                            <line
-                                x1='50'
-                                y1='50'
-                                x2='75'
-                                y2='50'
-                                stroke='#888'
-                                strokeWidth='3'
-                                strokeLinecap='round'>
-                                <animateTransform
-                                    attributeName='transform'
-                                    type='rotate'
-                                    from='0 50 50'
-                                    to='360 50 50'
-                                    dur='5s'
-                                    repeatCount='indefinite'
-                                />
-                            </line>
-                        </svg> */}
                         <FloatingAstronautAnimation />
                         <p className={styles.no_tag_result_text}>
                             This tag is feeling lonely! Be the first to add a

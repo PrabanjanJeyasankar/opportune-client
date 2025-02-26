@@ -1,18 +1,18 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 
-import AppLogo from '../../assets/images/opportune_logo_svg.svg'
-import FormInputComponent from '../../elements/FormInputComponent/FormInputComponent'
-import signupStyles from './SignupPage.module.css'
 import { toast } from '@/hooks/use-toast'
+import authService from '@/services/authService'
 import GithubSvg from '@/svg/GithubSvg/GithubSvg'
 import GoogleSvg from '@/svg/GoogleSvg/GoogleSvg'
+import { validateSignupInputs } from '@/utils/authenticationFieldsValidation'
 import PasswordStrengthBar from 'react-password-strength-bar'
+import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
+import FormInputComponent from '../../elements/FormInputComponent/FormInputComponent'
 import PrimaryButtonComponent from '../../elements/PrimaryButtonComponent/PrimaryButtonComponent'
 import SpinnerLoaderComponent from '../../loaders/SpinnerLoaderComponent/SpinnerLoaderComponent'
-import { validateSignupInputs } from '@/utils/authenticationFieldsValidation'
-import authService from '@/services/authService'
+import signupStyles from './SignupPage.module.css'
 
 function SignupPage() {
     const [formData, setFormData] = useState({
@@ -67,7 +67,6 @@ function SignupPage() {
                     const status = error.response.status
                     const message =
                         error.response.data?.message || 'An error occurred'
-                        
 
                     if (status === 409) {
                         setErrors({ email: 'User already exists' })

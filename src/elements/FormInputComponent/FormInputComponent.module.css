@@ -1,9 +1,9 @@
-.form_input_container  {
+.form_input_container {
     color: white;
     position: relative;
 }
 
-.input_container{
+.input_container {
     margin-bottom: 1rem;
 }
 
@@ -50,8 +50,8 @@
     top: -6px;
     left: 12px;
     font-size: 12px;
-    color: var(--gray-100);
-    background-color:black;
+    color: var(--gray-900);
+    background-color: black;
 }
 
 .error {
@@ -79,8 +79,7 @@
 }
 
 @media (min-width: 220px) and (max-width: 426px) {
-
-    .input{
+    .input {
         font-size: 0.9rem;
     }
 
@@ -90,7 +89,6 @@
 }
 
 @media (min-width: 425px) and (max-width: 860px) {
-
     .input {
         padding: 0.75rem 0.5rem;
     }
@@ -101,9 +99,7 @@
 }
 
 @media (min-width: 860px) and (max-width: 1024px) {
-
-    .input{
+    .input {
         font-size: 0.9rem;
     }
 }
-

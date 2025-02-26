@@ -22,23 +22,17 @@ const portfolioData = [
         projects: [
             {
                 title: 'weebe',
-                shortDescription: 'marketing site design and build',
-                longDescription:
-                    'an 12 month long inquiry into italian design, history, and culture.',
+                description: 'marketing site design and build',
                 image: 'https://cdn.prod.website-files.com/63fbd08ddcf513deab3f9b05/63fbd08ddcf513190e3f9b0b_Thumb%25201%2520Large-p-2000.webp',
             },
             {
                 title: 'weebe',
-                shortDescription: 'marketing site design and build',
-                longDescription:
-                    'an 12 month long inquiry into italian design, history, and culture.',
+                description: 'marketing site design and build',
                 image: 'https://cdn.prod.website-files.com/63fbd08ddcf513deab3f9b05/63fbd08ddcf513190e3f9b0b_Thumb%25201%2520Large-p-2000.webp',
             },
             {
                 title: 'weebe',
-                shortDescription: 'marketing site design and build',
-                longDescription:
-                    'an 12 month long inquiry into italian design, history, and culture.',
+                description: 'marketing site design and build',
                 image: 'https://cdn.prod.website-files.com/63fbd08ddcf513deab3f9b05/63fbd08ddcf513190e3f9b0b_Thumb%25201%2520Large-p-2000.webp',
             },
         ],

@@ -19,16 +19,20 @@
     font-size: 1.875rem;
     font-weight: bold;
     color: white;
-  }
-  
-  .title_container{
+}
+
+.title_container {
     display: flex;
     flex-direction: column;
     color: white;
     justify-content: center;
     align-items: center;
     margin-bottom: 1.5rem;
-  }
+}
+
+.title_container p {
+    color: #adadad;
+}
 
 .input_field,
 .textarea_field {
@@ -68,13 +72,13 @@
     overflow-y: auto;
     height: 100px;
     max-height: 500px;
-  }
-  
-  .textarea:focus {
+}
+
+.textarea:focus {
     border-color: #4d4d57;
     outline: none;
     box-shadow: 0 0 0 1px #4d4d57;
-  }
+}
 
 .error_message {
     color: var(--red-primary);

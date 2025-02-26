@@ -97,6 +97,15 @@
     .view_profile_button {
         display: none;
     }
+    .edit_button_text {
+        display: none;
+    }
+    .edit_project_button {
+        color:white;
+        padding: 0.5rem;
+        border: 1px solid var(--gray-200);
+        background-color: var(--dark-gray);
+    }
 }
 
 @media (min-width: 320px) {

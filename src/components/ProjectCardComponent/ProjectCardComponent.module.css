@@ -161,6 +161,14 @@
     grid-column: 2;
 }
 
+.no_result_flex_center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
 @media (max-width: 1024px) {
     .project_display_container {
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

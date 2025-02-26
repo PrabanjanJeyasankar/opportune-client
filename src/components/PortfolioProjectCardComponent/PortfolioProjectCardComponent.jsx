@@ -18,12 +18,9 @@ function PortfolioProjectCardComponent() {
                                 <h2 className={styles.projectTitle}>
                                     {project.title}
                                 </h2>
-                                <p className={styles.projectShortDescription}>
-                                    {project.shortDescription}
+                                <p className={styles.projectDescription}>
+                                    {project.description}
                                 </p>
-                            </div>
-                            <div className={styles.projectLongDescription}>
-                                {project.longDescription}
                             </div>
                         </div>
                         <div className={styles.projectImageContainer}>

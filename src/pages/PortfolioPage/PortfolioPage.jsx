@@ -189,9 +189,6 @@ const PortfolioPage = () => {
                         </a>
                     ))}
                 </div>
-                {/* Two-Column Layout */}
-
-                {/* Bio Section */}
                 <div className={styles.bioContainer}>
                     <p className={styles.bioText}>
                         <span className={styles.firstHalf}>{firstHalf}</span>

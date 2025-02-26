@@ -26,7 +26,7 @@
     --glass-blur: blur(1px);
     --glass-webkit-blur: blur(1.5px);
     --glass-border: 1px solid rgba(255, 255, 255, 0);
-    
+
     --background-dark: rgba(0, 0, 0, 0.616);
     --background-light: rgba(255, 255, 255, 0.055);
     --background-medium: rgba(255, 255, 255, 0.07);
@@ -45,12 +45,14 @@
 
     --primary-gray: #ffffff50;
     --secondary-gray: #ffffff80;
-    --dark-gray:#1a1a1a;
-    --gray-100: #a1a1a1;
+    --dark-gray: #1a1a1a;
+    --gray-200: #2d2d2d;
     --gray-300: #333;
+    --gray-400: #444;
     --gray-500: #555;
     --gray-600: #666;
     --gray-800: #757575;
+    --gray-900: #a1a1a1;
     --gray-ccc: #ccc;
     --green-500: #7dff40;
     --red-primary: #ff0000;

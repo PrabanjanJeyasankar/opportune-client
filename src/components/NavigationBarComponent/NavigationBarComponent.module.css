@@ -228,6 +228,12 @@
     background-color: rgba(255, 255, 255, 0.1);
 }
 
+@media (min-width: 320px) {
+    .hamburger {
+        z-index: 100;
+    }
+}
+
 @media (max-width: 820px) {
     .header {
         padding: 0.5rem 0.6rem;
@@ -242,7 +248,7 @@
         background: rgba(0, 0, 0, 0.945);
         top: 0;
         right: 100%;
-        z-index: 10;
+        z-index: 100;
         padding: 4rem 2rem 2rem 2rem;
         gap: 12px;
         justify-content: center;
@@ -252,7 +258,7 @@
     }
 
     .authentication_links {
-        margin-top: 1.5rem;
+        /* margin-top: 1.5rem; */
         align-items: flex-end;
         flex-direction: column;
         gap: 1.5rem;
@@ -266,6 +272,7 @@
     .hamburger {
         display: flex;
         margin-right: 0.5rem;
+        z-index: 100;
     }
 
     .signup_button {
@@ -282,7 +289,10 @@
     }
 
     .profile_dropdown_container {
-        margin-top: 1rem;
+        /* margin-top: 1rem; */
+        display: flex;
+        flex-direction: column;
+        align-items: end;
     }
 
     .profile_text {
@@ -292,13 +302,18 @@
     .dropdown_menu {
         position: static;
         width: 100%;
-        margin-top: 10px;
+        /* margin-top: 10px; */
         right: 0;
+        background-color: black;
     }
 
     .dropdown_item {
+        color: var(--gray-900);
         font-size: 1.2rem;
-        padding: 12px 16px;
+        padding: 12px 0 12px 16px;
+        align-items: center;
+        justify-content: flex-end;
+        font-size: 1.4rem;
     }
 }
 
@@ -309,7 +324,6 @@
         position: absolute;
         background: rgba(0, 0, 0, 0.945);
         right: -100%;
-        z-index: 9000;
         padding: 4rem 2rem 2rem 2rem;
         align-items: flex-end;
         gap: 12px;

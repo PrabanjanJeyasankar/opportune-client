@@ -93,12 +93,12 @@ function ProjectDetailsPage() {
                         </div>
                     </div>
                     <div className={styles.user_profile_actions}>
-                        {userProfile?.name === username ? (
+                        {userProfile?.name !== username ? (
                             <ButtonComponent
                                 onClick={handleEditProject}
                                 className={styles.edit_project_button}>
                                 <EditPenSvg />
-                                <span>Edit Project</span>
+                                <span className={styles.edit_button_text} >Edit Project</span>
                             </ButtonComponent>
                         ) : (
                             <ButtonComponent

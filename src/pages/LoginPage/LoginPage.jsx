@@ -99,13 +99,13 @@ function LoginPage() {
     }
 
     const handleGoogleLogInAuth = async () => {
-        const baseUrl = import.meta.env.VITE_API_BASE_URL;
-        window.location.href = `${baseUrl}/auth/google/login`;
-    };
+        const baseUrl = import.meta.env.VITE_API_BASE_URL
+        window.location.href = `${baseUrl}/auth/google/login`
+    }
 
     const handleGithubLogInAuth = async () => {
-        const baseUrl = import.meta.env.VITE_API_BASE_URL;
-        window.location.href = `${baseUrl}/auth/github/login`; 
+        const baseUrl = import.meta.env.VITE_API_BASE_URL
+        window.location.href = `${baseUrl}/auth/github/login`
     }
 
     return (
