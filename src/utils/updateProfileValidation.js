@@ -5,6 +5,10 @@ const updateProfileValidation = (formData) => {
         return { general: "Form data is missing or invalid." }
     }
 
+    if(!formData.professionalTitle || !formData.resumeLink.trim()){
+        errors.professionalTitle = "Professional title is required"
+    }
+
     if (!formData.bio || !formData.bio.trim()) {
         errors.bio = "Bio is required."
     }
@@ -37,9 +41,9 @@ const updateProfileValidation = (formData) => {
             }
         })
     }
-    if (!formData.profilePicture) {
-        errors.profilePicture = "profilePicture is required."
-    }
+    // if (!formData.profilePicture) {
+    //     errors.profilePicture = "profilePicture is required."
+    // }
     return errors
 }
 

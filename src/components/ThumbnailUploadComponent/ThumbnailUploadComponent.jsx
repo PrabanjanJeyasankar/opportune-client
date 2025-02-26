@@ -12,7 +12,7 @@ const ThumbnailUploadComponent = ({
     thumbnail,
     handleInputChange,
     error,
-    placeholderText = "Upload Thumbnail",
+    placeholderText = "Upload image",
 }) => {
     const [isModalOpen, setModalOpen] = useState(false)
     const [previewURL, setPreviewURL] = useState(null)
