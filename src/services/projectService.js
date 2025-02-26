@@ -26,6 +26,10 @@ const projectService = {
         )
         return response
     },
+    retrieveProjectBySlug: async (username, slug) => {
+        const response = await axiosInstance.get(`/project/${username}/${slug}`)
+        return response
+    },
 }
 
 export default projectService

@@ -1,33 +1,40 @@
 import { useEffect, useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
 import ImageComponent from '../../elements/ImageComponent/ImageComponent'
 import styles from './ProjectDetailsPage.module.css'
 
 import MoreProjectsByUser from '@/components/MoreProjectsByUser/MoreProjectsByUser'
 import ProjectMetaComponent from '@/components/ProjectMetaComponent/ProjectMetaComponent'
+import MetaTagsComponent from '@/components/SupportingComponents/MetaTagsComponent/MetaTagsComponent'
 import { toast } from '@/hooks/use-toast'
 import useUserContext from '@/hooks/useUserContext'
+import projectService from '@/services/projectService'
 import EditPenSvg from '@/svg/EditPenSvg/EditPenSvg'
 import EyeShowSVG from '@/svg/EyeShowSVG/EyeShowSVG'
 
 function ProjectDetailsPage() {
     const location = useLocation()
     const navigate = useNavigate()
+    const params = useParams()
 
     const initialProject = location.state?.project
     const [currentProject, setCurrentProject] = useState(initialProject)
-    const [componentKey, setComponentKey] = useState(Date.now())
+
+    const { userProfile } = useUserContext()
 
     useEffect(() => {
-        if (currentProject) {
-            setComponentKey(Date.now())
+        if (!initialProject && params.username && params.projectSlug) {
+            projectService
+                .retrieveProjectBySlug(params.username, params.projectSlug)
+                .then((response) => {
+                    setCurrentProject(response.data.data)
+                })
+                .catch((error) => {
+                    console.error('Error fetching project data:', error)
+                })
         }
-    }, [currentProject?.slug])
-
-    const username = currentProject?.authorDetails?.name
-    const { userProfile } = useUserContext()
-    const slug = currentProject?.slug
+    }, [initialProject, params.username, params.projectSlug])
 
     const handleClick = () => {
         navigator.clipboard
@@ -40,37 +47,31 @@ function ProjectDetailsPage() {
             .catch((error) => console.error('Error copying link: ', error))
     }
 
-    const handleProjectSelect = (project) => {
-        if (project.slug === slug) return
-
-        setCurrentProject(null)
-
-        setTimeout(() => {
-            setCurrentProject(project)
-
-            navigate(`/${project.authorDetails.name}/${project.slug}`, {
-                state: { project },
-                replace: true,
-            })
-        }, 10)
-    }
-
     const handleEditProject = () => {
-        navigate(`/edit-project/${slug}`, {
+        navigate(`/edit-project/${currentProject.slug}`, {
             state: { project: currentProject },
         })
     }
 
     const handleViewProfile = () => {
-        navigate(`/${username}`)
+        navigate(`/${currentProject?.authorDetails?.name}`)
     }
 
     if (!currentProject) {
-        return <div className={styles.loading}>Loading project details...</div>
+        return <div className={styles.error}>Project not found</div>
     }
 
     return (
-        <div key={componentKey}>
+        <div>
+            <MetaTagsComponent
+                title={`${currentProject.title} by ${currentProject.authorDetails.name} | MyPlatform`}
+                description={
+                    currentProject.description ||
+                    'Check out this amazing project!'
+                }
+                image={currentProject.thumbnailUrl}
+                url={window.location.href}
+            />
             <section className={styles.project_details_container}>
                 <header className={styles.header}>
                     <div className={styles.profile_section}>
@@ -92,13 +93,17 @@ function ProjectDetailsPage() {
                             </span>
                         </div>
                     </div>
+
                     <div className={styles.user_profile_actions}>
-                        {userProfile?.name !== username ? (
+                        {userProfile?.name ===
+                        currentProject?.authorDetails.name ? (
                             <ButtonComponent
                                 onClick={handleEditProject}
                                 className={styles.edit_project_button}>
                                 <EditPenSvg />
-                                <span className={styles.edit_button_text} >Edit Project</span>
+                                <span className={styles.edit_button_text}>
+                                    Edit Project
+                                </span>
                             </ButtonComponent>
                         ) : (
                             <ButtonComponent
@@ -121,10 +126,10 @@ function ProjectDetailsPage() {
                 {currentProject && (
                     <div className={styles.more_projects_container}>
                         <MoreProjectsByUser
-                            key={`more-projects-${currentProject.slug}-${componentKey}`}
-                            username={username}
-                            slug={slug}
-                            onProjectSelect={handleProjectSelect}
+                            key={`more-projects-${currentProject.slug}`}
+                            username={currentProject?.authorDetails.name}
+                            slug={currentProject?.slug}
+                            onProjectSelect={() => {}}
                         />
                     </div>
                 )}

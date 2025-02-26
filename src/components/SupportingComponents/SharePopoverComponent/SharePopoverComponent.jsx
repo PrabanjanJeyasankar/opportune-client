@@ -66,16 +66,18 @@ function SharePopoverComponent({ isOpen, onClose, project }) {
     }
 
     const shareToSocialMedia = (platform) => {
-        let url = ''
         const text = `Check out this awesome project: ${project.title}`
+        const imageUrl = project.thumbnailUrl
+        let url = ''
 
         switch (platform) {
             case 'X':
                 url = `https://X.com/intent/tweet?text=${encodeURIComponent(
                     text
-                )}&url=${encodeURIComponent(shareUrl)}`
+                )}&url=${encodeURIComponent(
+                    shareUrl
+                )}&media=${encodeURIComponent(imageUrl)}`
                 break
-
             case 'whatsapp':
                 url = `https://wa.me/?text=${encodeURIComponent(
                     `${text} ${shareUrl}`
@@ -84,14 +86,15 @@ function SharePopoverComponent({ isOpen, onClose, project }) {
             case 'facebook':
                 url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
                     shareUrl
-                )}&quote=${encodeURIComponent(text)}`
+                )}&quote=${encodeURIComponent(
+                    text
+                )}&picture=${encodeURIComponent(imageUrl)}`
                 break
             case 'linkedin':
                 url = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
                     shareUrl
                 )}&summary=${encodeURIComponent(text)}`
                 break
-
             case 'reddit':
                 url = `https://www.reddit.com/submit?url=${encodeURIComponent(
                     shareUrl
