@@ -125,7 +125,7 @@
 .project_card_buttons {
     margin-top: 10px;
     display: flex;
-    gap: 1.1rem;
+    gap: 0.8rem;
     align-items: center;
 }
 
@@ -143,6 +143,10 @@
     transition: transform 0.2s ease, fill 0.2s ease;
     fill: none;
     stroke: var(--gray-secondary);
+}
+
+.share_icon_container {
+    padding: 0.2rem 0.6rem;
 }
 
 .upvote_icon:hover {

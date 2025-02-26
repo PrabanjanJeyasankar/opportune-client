@@ -11,6 +11,7 @@ import ShareIconSvg from '../../svg/ShareIconSvg/ShareIconSvg'
 import UpvoteIconSvg from '../../svg/UpvoteIconSvg/UpvoteIconSvg'
 import SkeletonCardComponent from '../SupportingComponents/SkeletonCardComponent/SkeletonCardComponent'
 import styles from './ProjectCardComponent.module.css'
+import SharePopoverComponent from '../SupportingComponents/SharePopoverComponent/SharePopoverComponent'
 
 const ProjectCardComponent = ({ filteredProjects, isLoading }) => {
     return (
@@ -46,6 +47,7 @@ const ProjectCardComponent = ({ filteredProjects, isLoading }) => {
 const ProjectCard = ({ project }) => {
     const [isUpvoted, setIsUpvoted] = useState(project.isUpvoted || false)
     const [upvoteCount, setUpvoteCount] = useState(project.upvoteCount)
+    const [isSharePopoverOpen, setIsSharePopoverOpen] = useState(false)
     const navigate = useNavigate()
     const { isUserLoggedIn } = useUserContext()
 
@@ -104,6 +106,11 @@ const ProjectCard = ({ project }) => {
             })
     }
 
+    const handleShareClick = (e) => {
+        e.stopPropagation()
+        setIsSharePopoverOpen(true)
+    }
+
     const handleCardClick = () => {
         console.log(project)
         navigate(`/${project.authorDetails.username}/${project.slug}`, {
@@ -157,9 +164,21 @@ const ProjectCard = ({ project }) => {
                         </span>
                     </div>
 
-                    <ShareIconSvg className={styles.share_icon} />
+                    <div
+                        onClick={handleShareClick}
+                        className={styles.share_icon_container}>
+                        <ShareIconSvg className={styles.share_icon} />
+                    </div>
                 </div>
             </div>
+
+            {isSharePopoverOpen && (
+                <SharePopoverComponent
+                    isOpen={isSharePopoverOpen}
+                    onClose={() => setIsSharePopoverOpen(false)}
+                    project={project}
+                />
+            )}
         </div>
     )
 }
@@ -172,6 +191,11 @@ ProjectCard.propTypes = {
         description: PropTypes.string,
         upvoteCount: PropTypes.number,
         projectTitle: PropTypes.string,
+        slug: PropTypes.string,
+        authorDetails: PropTypes.shape({
+            username: PropTypes.string,
+        }),
+        isUpvoted: PropTypes.bool,
     }).isRequired,
 }
 
