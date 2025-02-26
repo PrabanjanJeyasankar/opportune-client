@@ -5,6 +5,9 @@
     text-align: center;
     position: relative;
     overflow-x: visible;
+    background: transparent;
+    background-color: transparent;
+    z-index: 2;
 }
 
 .hero_title {

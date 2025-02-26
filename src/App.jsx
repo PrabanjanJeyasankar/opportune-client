@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { BrowserRouter as Router } from 'react-router-dom'
 import './App.css'
-import StarryMotionComponent from './components/StarryMotionComponent/StarryMotionComponent'
+import ParticlesMotionComponent from './components/SupportingComponents/ParticlesMotionComponent/ParticlesMotionComponent'
 import ScrollToTopComponent from './components/SupportingComponents/ScrollToTopComponent/ScrollToTopComponent'
 import HomeFeedResetContextProvider from './context/HomeFeedResetContext'
 import { UserProvider } from './context/userContext'
@@ -35,7 +35,24 @@ function App() {
                 <UserProvider>
                     <AppRoutes />
                 </UserProvider>
-                <StarryMotionComponent />
+                <div
+                    style={{
+                        position: 'fixed',
+                        // width: '100%',
+                        // height: '100vh',
+                        // zIndex: 10000,
+                        top: '0',
+                        left: '0',
+                        width: '100%',
+                        height: '100%',
+                        zIndex: '1',
+                    }}>
+                    <ParticlesMotionComponent
+                        particleColors={['#666', '#666']}
+                        particleBaseSize={100}
+                        disableRotation={false}
+                    />
+                </div>
             </Router>
         </HomeFeedResetContextProvider>
     )
