@@ -8,7 +8,6 @@ import styles from './ProjectDetailsPage.module.css'
 import MoreProjectsByUser from '@/components/MoreProjectsByUser/MoreProjectsByUser'
 import ProjectMetaComponent from '@/components/ProjectMetaComponent/ProjectMetaComponent'
 import MetaTagsComponent from '@/components/SupportingComponents/MetaTagsComponent/MetaTagsComponent'
-import { toast } from '@/hooks/use-toast'
 import useUserContext from '@/hooks/useUserContext'
 import projectService from '@/services/projectService'
 import EditPenSvg from '@/svg/EditPenSvg/EditPenSvg'
@@ -59,17 +58,6 @@ function ProjectDetailsPage() {
                 })
         }
     }, [initialProject, params.username, params.projectSlug])
-
-    const handleClick = () => {
-        navigator.clipboard
-            .writeText(window.location.href)
-            .then(() =>
-                toast({
-                    description: 'Link Copied to Clipboard',
-                })
-            )
-            .catch((error) => console.error('Error copying link: ', error))
-    }
 
     const handleEditProject = () => {
         navigate(`/edit-project/${currentProject.slug}`, {
@@ -144,10 +132,7 @@ function ProjectDetailsPage() {
                 </motion.div>
 
                 <motion.div variants={itemVariants}>
-                    <ProjectMetaComponent
-                        project={currentProject}
-                        handleClick={handleClick}
-                    />
+                    <ProjectMetaComponent project={currentProject} />
                 </motion.div>
 
                 <motion.div variants={itemVariants}>

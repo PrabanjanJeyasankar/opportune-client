@@ -16,7 +16,6 @@ const projectService = {
         const response = await axiosInstance.post(
             `/project/${projectSlug}/upvote`
         )
-        console.log(response)
         return response
     },
 

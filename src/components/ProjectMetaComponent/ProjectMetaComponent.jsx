@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import { useState } from 'react'
 import ImageComponent from '../../elements/ImageComponent/ImageComponent'
 import ArrowUpRightSvg from '../../svg/ArrowUpRightSvg/ArrowUpRightSvg'
 import ChainLinkSvg from '../../svg/ChainLinkSvg/ChainLinkSvg'
@@ -7,8 +8,15 @@ import GithubSvg from '../../svg/GithubSvg/GithubSvg'
 import ShareIconSvg from '../../svg/ShareIconSvg/ShareIconSvg'
 import UpvoteComponent from '../UpvoteComponent/UpvoteComponent'
 import styles from './ProjectMetaComponent.module.css'
+import SharePopoverComponent from '../SupportingComponents/SharePopoverComponent/SharePopoverComponent'
 
-function ProjectMetaComponent({ project, handleClick }) {
+function ProjectMetaComponent({ project }) {
+    const [isSharePopoverOpen, setIsSharePopoverOpen] = useState(false)
+
+    const handleShareClick = (e) => {
+        e.stopPropagation()
+        setIsSharePopoverOpen(true)
+    }
     return (
         <div className={styles.project_meta}>
             <div className={styles.thumbnail}>
@@ -48,11 +56,18 @@ function ProjectMetaComponent({ project, handleClick }) {
                             {project?.viewsCount}
                         </span>
                     </div>
-                    <div className={styles.share} onClick={handleClick}>
-                        <ShareIconSvg />
+                    <div onClick={handleShareClick} className={styles.share}>
+                        <ShareIconSvg className={styles.share_icon} />
                     </div>
                 </div>
             </div>
+            {isSharePopoverOpen && (
+                <SharePopoverComponent
+                    isOpen={isSharePopoverOpen}
+                    onClose={() => setIsSharePopoverOpen(false)}
+                    project={project}
+                />
+            )}
             <div className={styles.project_tags}>
                 {project?.tags?.map((tag, tagIndex) => (
                     <span key={tagIndex} className={styles.project_tag}>
@@ -98,7 +113,6 @@ ProjectMetaComponent.propTypes = {
         githubLink: PropTypes.string,
         slug: PropTypes.string,
     }),
-    handleClick: PropTypes.func.isRequired,
 }
 
 export default ProjectMetaComponent
