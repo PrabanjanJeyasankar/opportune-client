@@ -1,10 +1,11 @@
 import ButtonComponent from "@/elements/ButtonComponent/ButtonComponent"
 import CloseXSvg from "@/svg/CloseXSvg/CloseXSvg"
 import EyeShowSVG from "@/svg/EyeShowSVG/EyeShowSVG"
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import ReactModal from "react-modal"
 import ImageComponent from "../../elements/ImageComponent/ImageComponent"
 import styles from "../ThumbnailUploadComponent/ThumbnailUploadComponent.module.css"
+import ReplaceSvg from "@/svg/ReplaceSvg/ReplaceSvg"
 
 ReactModal.setAppElement("#root")
 
@@ -13,27 +14,43 @@ const ThumbnailUploadComponent = ({
     handleInputChange,
     error,
     placeholderText = "Upload image",
+    existingImageUrl = null,
 }) => {
     const [isModalOpen, setModalOpen] = useState(false)
     const [previewURL, setPreviewURL] = useState(null)
+    const fileInputRef = useRef(null)
 
     useEffect(() => {
-        if (thumbnail) {
+        if (thumbnail instanceof File) {
             const objectURL = URL.createObjectURL(thumbnail)
             setPreviewURL(objectURL)
 
             return () => URL.revokeObjectURL(objectURL)
+        } else if (existingImageUrl) {
+            setPreviewURL(existingImageUrl)
         }
-    }, [thumbnail])
+    }, [thumbnail, existingImageUrl])
 
     const handlePreviewClick = (event) => {
         event.preventDefault()
         setModalOpen(true)
     }
 
+    const handleReplaceClick = (event) => {
+        event.preventDefault()
+        fileInputRef.current.click()
+    }
+
     const closeModal = () => {
         setModalOpen(false)
     }
+
+    const handleImageClick = (event) => {
+        event.preventDefault()
+        setModalOpen(true)
+    }
+
+    const hasImage = thumbnail instanceof File || existingImageUrl
 
     return (
         <div className={styles.thumbnail_upload}>
@@ -42,36 +59,53 @@ const ThumbnailUploadComponent = ({
                 accept="image/*"
                 id="thumbnail_upload"
                 type="file"
-                name="thumbnail"
+                name="profilePicture"
                 onChange={handleInputChange}
+                ref={fileInputRef}
             />
 
-            <label
-                htmlFor="thumbnail_upload"
-                className={styles.thumbnail_label}
-            >
-                {thumbnail ? (
+            {hasImage ? (
+                <div className={styles.thumbnail_label}>
                     <div className={styles.thumbnail_preview_container}>
-                        <ImageComponent
-                            src={previewURL}
-                            alt="Thumbnail Preview"
-                            className={styles.thumbnail_preview}
-                        />
-                        <ButtonComponent
-                            type="button"
-                            className={`preview_button ${styles.preview_button}`}
-                            onClick={handlePreviewClick}
-                        >
-                            <EyeShowSVG />
-                            <span>Preview</span>
-                        </ButtonComponent>
+                        <div onClick={handleImageClick}>
+                            <ImageComponent
+                                src={previewURL}
+                                alt="Thumbnail Preview"
+                                className={styles.thumbnail_preview}
+                            />
+                        </div>
+                        <div className={styles.buttons_container}>
+                            <ButtonComponent
+                                type="button"
+                                className={`preview_button ${styles.preview_button}`}
+                                onClick={handlePreviewClick}
+                            >
+                                <EyeShowSVG />
+                                <span>Preview</span>
+                            </ButtonComponent>
+
+                            <ButtonComponent
+                                type="button"
+                                className={`replace_button ${styles.ReplaceSvg_button}`}
+                                onClick={handleReplaceClick}
+                            >
+                                <ReplaceSvg />
+                                <span>Replace</span>
+                            </ButtonComponent>
+                        </div>
                     </div>
-                ) : (
+                </div>
+            ) : (
+                <label
+                    htmlFor="thumbnail_upload"
+                    className={styles.thumbnail_label}
+                >
                     <span className={styles.thumbnail_placeholder}>
                         {placeholderText}
                     </span>
-                )}
-            </label>
+                </label>
+            )}
+
             {error && <p className={styles.error_message}>{error}</p>}
 
             {isModalOpen && (

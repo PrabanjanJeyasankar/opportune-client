@@ -1,15 +1,15 @@
-import axiosInstance from "../utils/axiosInstance";
+import axiosInstance from "../utils/axiosInstance"
 
 const userProfileService = {
+    getUserProfile: async () => {
+        const response = await axiosInstance.get("/user/profile")
+        return response
+    },
 
     updateProfile: async (formData) => {
-        try {
-          const response = await axiosInstance.patch("/user/profile", formData);
-          return response;
-        } catch (error) {
-          throw error;
-        }
-      }
-    };
+        const response = await axiosInstance.patch("/user/profile", formData)
+        return response
+    },
+}
 
-    export default userProfileService;
+export default userProfileService

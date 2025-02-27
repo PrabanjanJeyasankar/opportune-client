@@ -3,7 +3,7 @@ import InputComponent from "@/elements/InputComponent/InputComponent"
 import { toast } from "@/hooks/use-toast"
 import userProfileService from "@/services/userProfileservice"
 import updateProfileValidation from "@/utils/updateProfileValidation"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import ThumbnailUploadComponent from "../ThumbnailUploadComponent/ThumbnailUploadComponent"
 import styles from "../UpdateProfileComponent/UpdateProfileComponent.module.css"
 
@@ -30,8 +30,46 @@ const UpdateProfileComponent = () => {
             { domain: "geeksforgeeks", url: "" },
         ],
     })
+    const [existingProfilePictureUrl, setExistingProfilePictureUrl] =
+        useState(null)
     const [errors, setErrors] = useState({})
     const [loading, setLoading] = useState(false)
+
+    useEffect(() => {
+        userProfileService
+            .getUserProfile()
+            .then((response) => {
+                if (response.status === 200) {
+                    const userData = response.data.data[0]
+                    console.log(userData)
+
+                    if (userData.profilePicture) {
+                        setExistingProfilePictureUrl(userData.profilePicture)
+                    }
+
+                    setFormData((prevData) => ({
+                        ...prevData,
+                        professionalTitle: userData.professionalTitle || "",
+                        bio: userData.bio || "",
+                        portfolioLink: userData.portfolioLink || "",
+                        resumeLink: userData.resumeLink || "",
+                        passedOutYear: userData.passedOutYear || "",
+                        professionalExperience:
+                            userData.professionalExperience || "",
+                        accounts: prevData.accounts.map((acc) => ({
+                            domain: acc.domain,
+                            url:
+                                userData.accounts?.find(
+                                    (a) => a.domain === acc.domain
+                                )?.url || "",
+                        })),
+                    }))
+                }
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+    }, [])
 
     const handleInputChange = (event) => {
         const { name, type, files, value } = event.target
@@ -92,8 +130,14 @@ const UpdateProfileComponent = () => {
             "professionalExperience",
             formData.professionalExperience
         )
+
         if (formData.profilePicture) {
             formDataObj.append("profilePicture", formData.profilePicture)
+        } else if (existingProfilePictureUrl) {
+            formDataObj.append(
+                "existingProfilePicture",
+                existingProfilePictureUrl
+            )
         }
 
         const nonEmptyAccounts = formData.accounts.filter(
@@ -110,19 +154,16 @@ const UpdateProfileComponent = () => {
             if (response.status === 200) {
                 toast({ description: "Profile updated successfully." })
 
-                setFormData({
-                    professionalTitle: "",
-                    bio: "",
-                    portfolioLink: "",
-                    resumeLink: "",
-                    passedOutYear: "",
-                    professionalExperience: "",
+                if (response.data.data && response.data.data.profilePicture) {
+                    setExistingProfilePictureUrl(
+                        response.data.data.profilePicture
+                    )
+                }
+
+                setFormData((prev) => ({
+                    ...prev,
                     profilePicture: null,
-                    accounts: formData.accounts.map((acc) => ({
-                        ...acc,
-                        url: "",
-                    })),
-                })
+                }))
             } else {
                 setErrors(response.data.errors || {})
             }
@@ -241,6 +282,7 @@ const UpdateProfileComponent = () => {
                     </label>
                     <ThumbnailUploadComponent
                         thumbnail={formData.profilePicture}
+                        existingImageUrl={existingProfilePictureUrl}
                         handleInputChange={handleInputChange}
                         error={errors.profilePicture}
                         placeholderText="Upload profile picture"
@@ -312,7 +354,6 @@ const UpdateProfileComponent = () => {
                                         )
                                     }
                                 />
-                                {/* Display errors correctly */}
                                 {accountError && (
                                     <p className={styles.error_message}>
                                         {accountError.message}
