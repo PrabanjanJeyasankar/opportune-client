@@ -3,7 +3,7 @@
     grid-template-rows: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
     width: 100%;
-    padding-bottom: 6.7rem;
+    /* padding-bottom: 6.7rem; */
 }
 
 .cardWrapper {
@@ -41,7 +41,7 @@
 
 .projectDescription {
     font-size: 1.5rem;
-    color: #8a8a93;
+    color: var(--gray-850);
     letter-spacing: -0.01em;
     margin: 0;
 }
@@ -144,9 +144,17 @@
 }
 
 @media (max-width: 425px) {
+    .projectTitle {
+        font-size: 2rem;
+    }
+
+    .projectDescription {
+        font-size: 1.2rem;
+    }
+
     .projectImageContainer {
         width: 100%;
-        height: 350px;
+        height: 220px;
     }
 
     .projectInfo {
@@ -158,7 +166,7 @@
     .projectGrid {
         grid-template-columns: 1fr;
         padding: 1rem;
-        padding-bottom: 25rem;
+        /* padding-bottom: 25rem; */
     }
 
     .projectInfo {

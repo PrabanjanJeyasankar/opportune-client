@@ -48,7 +48,7 @@ const AppRoutes = () => {
                             element={<ChangePasswordPage />}
                         />
                         <Route
-                            path='/my-portfolio'
+                            path='/portfolio/:username'
                             element={<PortfolioPage />}
                         />
                         <Route

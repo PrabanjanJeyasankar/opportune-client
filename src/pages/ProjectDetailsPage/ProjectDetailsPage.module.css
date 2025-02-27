@@ -38,7 +38,7 @@
 .user_name {
     font-weight: 500;
     font-size: 1rem;
-    color: #ffffff;
+    color: white;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -60,7 +60,7 @@
     background: none;
     border: none;
     cursor: pointer;
-    color: #ffffff;
+    color: white;
 }
 
 .view_profile_button,
@@ -77,9 +77,6 @@
     cursor: pointer;
 }
 
-.edit_project_button {
-}
-
 .separator {
     margin: 4rem 0 6rem 0;
     width: 100%;
@@ -87,8 +84,8 @@
     background: linear-gradient(
         90deg,
         rgba(0, 0, 0, 1) 0%,
-        rgba(255, 255, 255, 0.5) 40%,
-        rgba(255, 255, 255, 0.5) 60%,
+        var(--white-opacity-medium) 40%,
+        var(--white-opacity-medium) 60%,
         rgba(0, 0, 0, 1) 100%
     );
 }
@@ -101,7 +98,7 @@
         display: none;
     }
     .edit_project_button {
-        color:white;
+        color: white;
         padding: 0.5rem;
         border: 1px solid var(--gray-200);
         background-color: var(--dark-gray);
@@ -161,13 +158,4 @@
     .user_name {
         max-width: 320px;
     }
-}
-
-@media (min-width: 768px) {
-}
-
-@media (min-width: 1024px) {
-}
-
-@media (min-width: 1440px) {
 }

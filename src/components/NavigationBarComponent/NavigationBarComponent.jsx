@@ -16,7 +16,7 @@ const NavigationBarComponent = () => {
     const navbarRef = useRef(null)
     const dropdownRef = useRef(null)
     const { setSearchTerm } = useHomeFeedResetContext()
-    const { isUserLoggedIn, setIsUserLoggedIn, setUserProfile } =
+    const { isUserLoggedIn, setIsUserLoggedIn, setUserProfile, userProfile } =
         useUserContext()
 
     const toggleMenu = () => setIsMenuOpen((prev) => !prev)
@@ -126,7 +126,7 @@ const NavigationBarComponent = () => {
                                 to='/project-input-form'
                                 className={navBarStyles.signup_button}
                                 onClick={handleCloseMenu}>
-                                Post a project!
+                                Post a project &#128640;
                             </NavLink>
                         </>
                     ) : (
@@ -171,7 +171,7 @@ const NavigationBarComponent = () => {
                                     <div
                                         className={`${navBarStyles.dropdown_menu} ${navBarStyles.show}`}>
                                         <NavLink
-                                            to='/my-portfolio'
+                                            to={`/portfolio/${userProfile.username}`}
                                             className={
                                                 navBarStyles.dropdown_item
                                             }
