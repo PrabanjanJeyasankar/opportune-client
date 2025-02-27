@@ -7,6 +7,7 @@ import HomeFeedResetContextProvider from './context/HomeFeedResetContext'
 import { UserProvider } from './context/userContext'
 import InitialLoadingAnimation from './loaders/InitialLoadingAnimation/InitialLoadingAnimation'
 import AppRoutes from './routes/AppRoutes'
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
 
 function App() {
     const [loading, setLoading] = useState(() => {
@@ -28,7 +29,7 @@ function App() {
         return <InitialLoadingAnimation />
     }
 
-    return (
+    const AppContent = (
         <HomeFeedResetContextProvider>
             <Router>
                 <ScrollToTopComponent />
@@ -38,6 +39,12 @@ function App() {
                 <StarryMotionComponent />
             </Router>
         </HomeFeedResetContextProvider>
+    )
+
+    return process.env.NODE_ENV === 'production' ? (
+        <ErrorBoundary>{AppContent}</ErrorBoundary>
+    ) : (
+        AppContent
     )
 }
 

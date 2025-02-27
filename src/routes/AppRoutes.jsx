@@ -1,18 +1,28 @@
+import ErrorBoundary from '@/components/ErrorBoundary/ErrorBoundary'
+import useUserContext from '@/hooks/useUserContext'
 import PortfolioPage from '@/pages/PortfolioPage/PortfolioPage'
 import React, { Suspense, lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout/MainLayout'
 import ScrollToTop from '../utils/scrollToTop'
 import AuthenticationFlowRoute from './AuthenticationFlowRoute'
-import ProtectedRoute from './ProtectedRoute' // ✅ Import protected route
-import useUserContext from '@/hooks/useUserContext'
+import ProtectedRoute from './ProtectedRoute'
 
-// Lazy load pages
-const LazyComponent = (Component) => (
-    <Suspense fallback={<div>Loading...</div>}>
-        <Component />
-    </Suspense>
-)
+const LazyComponent = (Component) => {
+    const WrappedComponent = () => <Component />
+
+    return (
+        <Suspense fallback={<div>Loading...</div>}>
+            {process.env.NODE_ENV === 'production' ? (
+                <ErrorBoundary>
+                    <WrappedComponent />
+                </ErrorBoundary>
+            ) : (
+                <WrappedComponent />
+            )}
+        </Suspense>
+    )
+}
 
 const HomePage = lazy(() => import('../pages/HomePage/HomePage'))
 const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'))
@@ -91,9 +101,10 @@ const AppRoutes = () => {
                     <Route
                         path='/update-profile'
                         element={
-                            <ProtectedRoute isAuthenticated={isAuthenticated}>
-                                {LazyComponent(UpdateProfileComponent)}
-                            </ProtectedRoute>
+                            // <ProtectedRoute isAuthenticated={isAuthenticated}>
+                            //     {LazyComponent(UpdateProfileComponent)}
+                            // </ProtectedRoute>
+                            <UpdateProfileComponent/>
                         }
                     />
                     <Route
