@@ -69,7 +69,7 @@
 .error_message {
   color: var(--red-primary);
   font-size: 0.875rem;
-  padding-bottom: 9px;
+  padding-bottom: 5px;
 }
 
 .textarea {

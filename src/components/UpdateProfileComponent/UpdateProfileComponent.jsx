@@ -1,20 +1,20 @@
-import React, { useState } from "react";
-import InputComponent from "@/elements/InputComponent/InputComponent";
-import ButtonComponent from "@/elements/ButtonComponent/ButtonComponent";
-import styles from "../UpdateProfileComponent/UpdateProfileComponent.module.css";
-import userProfileService from "@/services/userProfileservice";
-import { toast } from "@/hooks/use-toast";
-import updateProfileValidation from "@/utils/updateProfileValidation";
-import ThumbnailUploadComponent from "../ThumbnailUploadComponent/ThumbnailUploadComponent";
+import ButtonComponent from "@/elements/ButtonComponent/ButtonComponent"
+import InputComponent from "@/elements/InputComponent/InputComponent"
+import { toast } from "@/hooks/use-toast"
+import userProfileService from "@/services/userProfileservice"
+import updateProfileValidation from "@/utils/updateProfileValidation"
+import React, { useState } from "react"
+import ThumbnailUploadComponent from "../ThumbnailUploadComponent/ThumbnailUploadComponent"
+import styles from "../UpdateProfileComponent/UpdateProfileComponent.module.css"
 
 const UpdateProfileComponent = () => {
     const [formData, setFormData] = useState({
-        professionalTitle:"",
+        professionalTitle: "",
         bio: "",
         portfolioLink: "",
         resumeLink: "",
         passedOutYear: "",
-        experience: "",
+        professionalExperience: "",
         profilePicture: null,
         accounts: [
             { domain: "linkedin", url: "" },
@@ -29,109 +29,130 @@ const UpdateProfileComponent = () => {
             { domain: "dribble", url: "" },
             { domain: "geeksforgeeks", url: "" },
         ],
-    });
-    const [errors, setErrors] = useState({});
-    const [loading, setLoading] = useState(false);
+    })
+    const [errors, setErrors] = useState({})
+    const [loading, setLoading] = useState(false)
 
     const handleInputChange = (event) => {
-        const { name, type, files, value } = event.target;
+        const { name, type, files, value } = event.target
 
         if (type === "file") {
             if (files && files[0]) {
                 if (files[0].size > 2 * 1024 * 1024) {
-                    toast({ description: "File size should not exceed 2MB." });
+                    toast({ description: "File size should not exceed 2MB." })
                 } else {
                     setFormData((prevData) => ({
                         ...prevData,
                         profilePicture: files[0],
-                    }));
+                    }))
                 }
             }
         } else {
             setFormData((prevData) => ({
                 ...prevData,
                 [name]: value,
-            }));
+            }))
         }
-    };
+    }
 
     const handleAccountChange = (index, value) => {
         setFormData((prev) => {
-            const updatedAccounts = [...prev.accounts];
-            updatedAccounts[index].url = value;
-            return { ...prev, accounts: updatedAccounts };
-        });
-    };
+            const updatedAccounts = [...prev.accounts]
+            updatedAccounts[index].url = value
+            return { ...prev, accounts: updatedAccounts }
+        })
+    }
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         const cleanedFormData = {
             ...formData,
-            accounts: formData.accounts.filter(account => account.url.trim() !== "")
-        };
+            accounts: formData.accounts.filter(
+                (account) => account.url.trim() !== ""
+            ),
+        }
 
-        const validationErrors = updateProfileValidation(cleanedFormData);
+        const validationErrors = updateProfileValidation(cleanedFormData)
+
         if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors);
-            return;
+            setErrors(validationErrors)
+            return
         }
+        setLoading(true)
+        setErrors({})
 
-        setLoading(true);
-        setErrors({});
-
-        const formDataObj = new FormData();
+        const formDataObj = new FormData()
         formDataObj.append("professionalTitle", formData.professionalTitle)
-        formDataObj.append("bio", formData.bio);
-        formDataObj.append("portfolioLink", formData.portfolioLink);
-        formDataObj.append("resumeLink", formData.resumeLink);
-        formDataObj.append("passedOutYear", formData.passedOutYear);
-        formDataObj.append("experience", formData.experience);
+        formDataObj.append("bio", formData.bio)
+        formDataObj.append("portfolioLink", formData.portfolioLink)
+        formDataObj.append("resumeLink", formData.resumeLink)
+        formDataObj.append("passedOutYear", formData.passedOutYear)
+        formDataObj.append(
+            "professionalExperience",
+            formData.professionalExperience
+        )
         if (formData.profilePicture) {
-            formDataObj.append("profilePicture", formData.profilePicture);
+            formDataObj.append("profilePicture", formData.profilePicture)
         }
 
-        const nonEmptyAccounts = formData.accounts.filter(account => account.url.trim() !== "");
-        
-        nonEmptyAccounts.forEach((account, index) => {
-            formDataObj.append(`accounts[${index}][domain]`, account.domain);
-            formDataObj.append(`accounts[${index}][url]`, account.url);
-        });
+        const nonEmptyAccounts = formData.accounts.filter(
+            (account) => account.url.trim() !== ""
+        )
 
-        formDataObj.forEach((account) => {
-            console.log(account)
+        nonEmptyAccounts.forEach((account, index) => {
+            formDataObj.append(`accounts[${index}][domain]`, account.domain)
+            formDataObj.append(`accounts[${index}][url]`, account.url)
         })
-        
+
         try {
-            console.log("Submitting accounts:", nonEmptyAccounts);
-            
-            const response = await userProfileService.updateProfile(formDataObj);
+            const response = await userProfileService.updateProfile(formDataObj)
             if (response.status === 200) {
-                toast({ description: "Profile updated successfully." });
-                
+                toast({ description: "Profile updated successfully." })
+
                 setFormData({
-                    professionalTitle:"",
+                    professionalTitle: "",
                     bio: "",
                     portfolioLink: "",
                     resumeLink: "",
                     passedOutYear: "",
-                    experience: "",
+                    professionalExperience: "",
                     profilePicture: null,
                     accounts: formData.accounts.map((acc) => ({
                         ...acc,
                         url: "",
                     })),
-                });
+                })
             } else {
-                setErrors(response.data.errors || {});
+                setErrors(response.data.errors || {})
             }
         } catch (error) {
-            console.error(error);
-            setErrors({ general: "Something went wrong." });
+            if (!navigator.onLine) {
+                toast({
+                    description:
+                        "No internet connection. Please check your network.",
+                })
+            }
+            if (!error.response) {
+                toast({
+                    description:
+                        "No internet connection. Please check your network.",
+                })
+            } else if (error.response.status === 500) {
+                toast({ description: "Server error. Please try again later." })
+            } else if (error.response.status === 401) {
+                toast({ description: "Unauthorized access" })
+            } else if (error.response.status === 503) {
+                toast({ description: "Server error. Please try again later." })
+            } else {
+                toast({
+                    description: "Something went wrong. Please try again.",
+                })
+            }
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
-    };
+    }
 
     return (
         <div className={styles.container}>
@@ -141,15 +162,23 @@ const UpdateProfileComponent = () => {
                     <p>( * are required field)</p>
                 </div>
                 <form onSubmit={handleSubmit} encType="multipart/form-data">
-                <label htmlFor="professionalTitle" className={styles.label}>Professional title</label>
+                    <label htmlFor="professionalTitle" className={styles.label}>
+                        Professional title *
+                    </label>
                     <InputComponent
-                     id="professionalTitle"
-                     className={styles.input_field}
-                     placeholder="Enter your professional title"
-                     name="professionalTitle"
-                     value={formData.professionalTitle}
-                     onChange={handleInputChange}
+                        id="professionalTitle"
+                        className={styles.input_field}
+                        placeholder="Enter your professional title"
+                        name="professionalTitle"
+                        value={formData.professionalTitle}
+                        onChange={handleInputChange}
                     />
+                    {errors.professionalTitle && (
+                        <p className={styles.error_message}>
+                            {errors.professionalTitle}
+                        </p>
+                    )}
+
                     <label htmlFor="bio" className={styles.label}>
                         <div className={styles.label_singleLine_instruction}>
                             Bio *{" "}
@@ -169,9 +198,13 @@ const UpdateProfileComponent = () => {
                         rows={8}
                         maxLength={300}
                     />
-                    {errors.bio && <p className={styles.error_message}>{errors.bio}</p>}
+                    {errors.bio && (
+                        <p className={styles.error_message}>{errors.bio}</p>
+                    )}
 
-                    <label htmlFor="portfolioLink" className={styles.label}>Portfolio Link</label>
+                    <label htmlFor="portfolioLink" className={styles.label}>
+                        Portfolio Link
+                    </label>
                     <InputComponent
                         id="portfolioLink"
                         className={styles.input_field}
@@ -180,8 +213,15 @@ const UpdateProfileComponent = () => {
                         value={formData.portfolioLink}
                         onChange={handleInputChange}
                     />
+                    {errors.portfolioLink && (
+                        <p className={styles.error_message}>
+                            {errors.portfolioLink}
+                        </p>
+                    )}
 
-                    <label htmlFor="resumeLink" className={styles.label}>Resume Link *</label>
+                    <label htmlFor="resumeLink" className={styles.label}>
+                        Resume Link *
+                    </label>
                     <InputComponent
                         id="resumeLink"
                         className={styles.input_field}
@@ -190,9 +230,15 @@ const UpdateProfileComponent = () => {
                         value={formData.resumeLink}
                         onChange={handleInputChange}
                     />
-                    {errors.resumeLink && <p className={styles.error_message}>{errors.resumeLink}</p>}
+                    {errors.resumeLink && (
+                        <p className={styles.error_message}>
+                            {errors.resumeLink}
+                        </p>
+                    )}
 
-                    <label htmlFor="profilePicture" className={styles.label}>Profile Picture *</label>
+                    <label htmlFor="profilePicture" className={styles.label}>
+                        Profile Picture
+                    </label>
                     <ThumbnailUploadComponent
                         thumbnail={formData.profilePicture}
                         handleInputChange={handleInputChange}
@@ -200,7 +246,9 @@ const UpdateProfileComponent = () => {
                         placeholderText="Upload profile picture"
                     />
 
-                    <label htmlFor="passedOutYear" className={styles.label}>Passed Out Year *</label>
+                    <label htmlFor="passedOutYear" className={styles.label}>
+                        Passed Out Year *
+                    </label>
                     <InputComponent
                         id="passedOutYear"
                         className={styles.input_field}
@@ -209,33 +257,74 @@ const UpdateProfileComponent = () => {
                         value={formData.passedOutYear}
                         onChange={handleInputChange}
                     />
-
-                    <label htmlFor="experience" className={styles.label}>Professional Experience * (in years)</label>
+                    {errors.passedOutYear && (
+                        <p className={styles.error_message}>
+                            {errors.passedOutYear}
+                        </p>
+                    )}
+                    <label
+                        htmlFor="professionalExperience"
+                        className={styles.label}
+                    >
+                        Professional Experience * (in years)
+                    </label>
                     <InputComponent
-                        id="experience"
+                        id="professionalExperience"
                         className={styles.input_field}
                         placeholder="Enter your experience in years"
-                        name="experience"
-                        value={formData.experience}
+                        name="professionalExperience"
+                        value={formData.professionalExperience}
                         onChange={handleInputChange}
                     />
+                    {errors.professionalExperience && (
+                        <p className={styles.error_message}>
+                            {errors.professionalExperience}
+                        </p>
+                    )}
 
                     <label className={styles.label_Heading}>Accounts</label>
-                    {formData.accounts.map((account, index) => (
-                        <div key={index} className={styles.account_field}>
-                            <label htmlFor={`account_${index}`} className={styles.label}>
-                                {account.domain.charAt(0).toUpperCase() + account.domain.slice(1)}
-                                {(account.domain === "linkedin" || account.domain === "leetcode") && " *"}
-                            </label>
-                            <InputComponent
-                                id={`account_${index}`}
-                                className={styles.input_field}
-                                placeholder={`Enter ${account.domain} URL`}
-                                value={account.url}
-                                onChange={(e) => handleAccountChange(index, e.target.value)}
-                            />
-                        </div>
-                    ))}
+                    {formData.accounts.map((account, index) => {
+                        const accountError = errors.accounts?.find(
+                            (err) => err.domain === account.domain
+                        )
+
+                        return (
+                            <div key={index} className={styles.account_field}>
+                                <label
+                                    htmlFor={`account_${index}`}
+                                    className={styles.label}
+                                >
+                                    {account.domain.charAt(0).toUpperCase() +
+                                        account.domain.slice(1)}
+                                    {(account.domain === "linkedin" ||
+                                        account.domain === "leetcode") &&
+                                        " *"}
+                                </label>
+                                <InputComponent
+                                    id={`account_${index}`}
+                                    className={styles.input_field}
+                                    placeholder={`Enter ${account.domain} URL`}
+                                    value={account.url}
+                                    onChange={(e) =>
+                                        handleAccountChange(
+                                            index,
+                                            e.target.value
+                                        )
+                                    }
+                                />
+                                {/* Display errors correctly */}
+                                {accountError && (
+                                    <p className={styles.error_message}>
+                                        {accountError.message}
+                                    </p>
+                                )}
+                            </div>
+                        )
+                    })}
+
+                    {errors.general && (
+                        <p className={styles.error_message}>{errors.general}</p>
+                    )}
 
                     <ButtonComponent
                         type="submit"
@@ -247,7 +336,7 @@ const UpdateProfileComponent = () => {
                 </form>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default UpdateProfileComponent;
+export default UpdateProfileComponent
