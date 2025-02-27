@@ -39,7 +39,7 @@ const HomeFeedProjectsComponent = () => {
         ],
         queryFn: ({ pageParam = 1 }) =>
             fetchHomeFeedProjectsService(
-                10,
+                12,
                 pageParam,
                 debouncedSearchTerm,
                 selectedTag

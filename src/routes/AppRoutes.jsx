@@ -3,7 +3,11 @@ import React, { Suspense, lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout/MainLayout'
 import ScrollToTop from '../utils/scrollToTop'
+import AuthenticationFlowRoute from './AuthenticationFlowRoute'
+import ProtectedRoute from './ProtectedRoute' // ✅ Import protected route
+import useUserContext from '@/hooks/useUserContext'
 
+// Lazy load pages
 const LazyComponent = (Component) => (
     <Suspense fallback={<div>Loading...</div>}>
         <Component />
@@ -34,6 +38,8 @@ const UpdateProfileComponent = lazy(() =>
 )
 
 const AppRoutes = () => {
+    const { isAuthenticated } = useUserContext()
+
     return (
         <>
             <ScrollToTop />
@@ -42,14 +48,72 @@ const AppRoutes = () => {
                     <Route exact path='/' element={LazyComponent(HomePage)} />
                     <Route path='/login' element={LazyComponent(LoginPage)} />
                     <Route path='/signup' element={LazyComponent(SignupPage)} />
-                    <Route path='/feedback' element={LazyComponent(FeedbackPage)} />
-                    <Route path='/request-otp' element={LazyComponent(RequestOtpPage)} />
-                    <Route path='/verify-otp' element={LazyComponent(VerifyOTPPage)} />
-                    <Route path='/change-password' element={LazyComponent(ChangePasswordPage)} />
-                    <Route path='/portfolio/:username' element={LazyComponent(PortfolioPage)} />
-                    <Route path='/project-input-form' element={LazyComponent(ProjectDetailsInputFormComponent)} />
-                    <Route path='/:username/:projectSlug' element={LazyComponent(ProjectDetailsPage)} />
-                    <Route path='/update-profile' element={LazyComponent(UpdateProfileComponent)} />
+                    <Route
+                        path='/feedback'
+                        element={LazyComponent(FeedbackPage)}
+                    />
+
+                    {/* OTP Authentication Flow */}
+                    <Route
+                        path='/request-otp'
+                        element={LazyComponent(RequestOtpPage)}
+                    />
+                    <Route
+                        path='/verify-otp'
+                        element={
+                            <AuthenticationFlowRoute
+                                requiredState={{ email: true }}
+                                redirectPath='/request-otp'>
+                                {LazyComponent(VerifyOTPPage)}
+                            </AuthenticationFlowRoute>
+                        }
+                    />
+                    <Route
+                        path='/change-password'
+                        element={
+                            <AuthenticationFlowRoute
+                                requiredState={{ email: true }}
+                                redirectPath='/verify-otp'>
+                                {LazyComponent(ChangePasswordPage)}
+                            </AuthenticationFlowRoute>
+                        }
+                    />
+
+                    {/* Protected Routes (Require Authentication) */}
+                    <Route
+                        path='/portfolio/:username'
+                        element={
+                            <ProtectedRoute isAuthenticated={isAuthenticated}>
+                                {LazyComponent(PortfolioPage)}
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path='/update-profile'
+                        element={
+                            <ProtectedRoute isAuthenticated={isAuthenticated}>
+                                {LazyComponent(UpdateProfileComponent)}
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path='/project-input-form'
+                        element={
+                            <ProtectedRoute isAuthenticated={isAuthenticated}>
+                                {LazyComponent(
+                                    ProjectDetailsInputFormComponent
+                                )}
+                            </ProtectedRoute>
+                        }
+                    />
+                    <Route
+                        path='/:username/:projectSlug'
+                        element={
+                            <ProtectedRoute isAuthenticated={isAuthenticated}>
+                                {LazyComponent(ProjectDetailsPage)}
+                            </ProtectedRoute>
+                        }
+                    />
                 </Route>
 
                 <Route path='/*' element={<div>Error Page</div>} />

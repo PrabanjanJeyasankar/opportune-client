@@ -1,12 +1,12 @@
 import axiosInstance from '../utils/axiosInstance'
 
 const fetchHomeFeedProjectsService = async (
-    limit = 10,
+    limit = 12,
     page = 1,
     searchTerm = '',
     selectedTag = 'All'
 ) => {
-    const validLimit = Number.isInteger(limit) && limit > 0 ? limit : 10
+    const validLimit = Number.isInteger(limit) && limit > 0 ? limit : 12
     const validPage = Number.isInteger(page) && page > 0 ? page : 1
 
     try {
