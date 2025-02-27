@@ -1,18 +1,20 @@
-import PropTypes from "prop-types"
-import { useEffect, useMemo, useState } from "react"
-import { useQuery,useQueryClient } from "@tanstack/react-query"
-import fetchHomeFeedProjectsService from "../../services/fetchHomeFeedProjects"
-import ProjectCardComponent from "../ProjectCardComponent/ProjectCardComponent"
-import styles from "./HomeFeedProjectsComponent.module.css"
-import useHomeFeedResetContext from "@/hooks/useHomeFeedResetContext"
-import useUserContext from "@/hooks/useUserContext"
+import useHomeFeedResetContext from '@/hooks/useHomeFeedResetContext'
+import useUserContext from '@/hooks/useUserContext'
+import InfiniteLoadingAnimation from '@/loaders/InfiniteLoadingAnimation/InfiniteLoadingAnimation'
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
+import PropTypes from 'prop-types'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import fetchHomeFeedProjectsService from '../../services/fetchHomeFeedProjects'
+import ProjectCardComponent from '../ProjectCardComponent/ProjectCardComponent'
+import styles from './HomeFeedProjectsComponent.module.css'
 
 const HomeFeedProjectsComponent = () => {
-    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("")
+    const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
     const { searchTerm, selectedTag } = useHomeFeedResetContext()
     const { isUserLoggedIn } = useUserContext()
     const queryClient = useQueryClient()
-    // console.log(isUserLoggedIn)
+    const observerRef = useRef(null)
+    const loadingRef = useRef(null)
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -24,43 +26,99 @@ const HomeFeedProjectsComponent = () => {
     }, [searchTerm])
 
     const {
-        data: fetchedProjects,
+        data,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
         isLoading: queryLoading,
         error: queryError,
-    } = useQuery({
+    } = useInfiniteQuery({
         queryKey: [
-            "homeFeedProjects",
+            'homeFeedProjects',
             { searchTerm: debouncedSearchTerm, selectedTag },
         ],
-        queryFn: fetchHomeFeedProjectsService,
+        queryFn: ({ pageParam = 1 }) =>
+            fetchHomeFeedProjectsService(
+                10,
+                pageParam,
+                debouncedSearchTerm,
+                selectedTag
+            ),
+        getNextPageParam: (lastPage, allPages) => {
+            if (!lastPage || !Array.isArray(lastPage)) {
+                return undefined
+            }
+
+            const isValidArray = Array.isArray(lastPage) && lastPage.length >= 0
+
+            return isValidArray && lastPage.length < 10
+                ? undefined
+                : allPages.length + 1
+        },
         staleTime: 60 * 1000,
         cacheTime: 60 * 1000,
         retry: 2,
     })
 
-    useEffect(()=>{
-      if(isUserLoggedIn){
-        queryClient.invalidateQueries({ queryKey: ["homeFeedProjects"] })
-      }
-    },[isUserLoggedIn,queryClient])
+    useEffect(() => {
+        if (isUserLoggedIn) {
+            queryClient.invalidateQueries({ queryKey: ['homeFeedProjects'] })
+        }
+    }, [isUserLoggedIn, queryClient])
 
+    const observerCallback = useCallback(
+        (entries) => {
+            const [entry] = entries
+            if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
+                fetchNextPage()
+            }
+        },
+        [fetchNextPage, hasNextPage, isFetchingNextPage]
+    )
+
+    useEffect(() => {
+        const currentLoadingRef = loadingRef.current
+
+        if (currentLoadingRef) {
+            const observer = new IntersectionObserver(observerCallback, {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1,
+            })
+
+            observer.observe(currentLoadingRef)
+            observerRef.current = observer
+
+            return () => {
+                if (currentLoadingRef && observerRef.current) {
+                    observerRef.current.unobserve(currentLoadingRef)
+                }
+            }
+        }
+    }, [loadingRef, observerCallback])
+
+    const allProjects = useMemo(() => {
+        if (!data || !data.pages) return []
+        return data.pages.flat()
+    }, [data])
 
     const filteredProjects = useMemo(() => {
-        if (!fetchedProjects) return []
-        const lowercasedSearchTerm = debouncedSearchTerm?.toLowerCase()
-        return fetchedProjects.filter((project) => {
-            const matchesSearchTerm = project.title
-                ?.toLowerCase()
-                .includes(lowercasedSearchTerm)
+        if (!allProjects.length) return []
+        const lowercasedSearchTerm = debouncedSearchTerm?.toLowerCase() || ''
+        return allProjects.filter((project) => {
+            const matchesSearchTerm =
+                !debouncedSearchTerm ||
+                project.title?.toLowerCase().includes(lowercasedSearchTerm)
             const matchesSelectedTag =
-                selectedTag === "All" ||
+                !selectedTag ||
+                selectedTag === 'All' ||
                 (project.tags &&
                     project.tags.some(
                         (tag) => tag.toLowerCase() === selectedTag.toLowerCase()
                     ))
             return matchesSearchTerm && matchesSelectedTag
         })
-    }, [debouncedSearchTerm, selectedTag, fetchedProjects])
+    }, [debouncedSearchTerm, selectedTag, allProjects])
 
     if (queryError) {
         return <div>Failed to fetch projects. Please try again.</div>
@@ -71,7 +129,22 @@ const HomeFeedProjectsComponent = () => {
             <ProjectCardComponent
                 filteredProjects={filteredProjects}
                 isLoading={queryLoading}
+                searchTerm={debouncedSearchTerm}
             />
+
+            {filteredProjects.length > 0 ? (
+                hasNextPage && !queryLoading ? (
+                    <div ref={loadingRef} className={styles.loading_container}>
+                        <InfiniteLoadingAnimation />
+                    </div>
+                ) : (
+                    <div className={styles.divider_container}>
+                        <div className={styles.divider_stripe_left}></div>
+                        <p className={styles.end_of_results}>End of results</p>
+                        <div className={styles.divider_stripe_right}></div>
+                    </div>
+                )
+            ) : null}
         </div>
     )
 }

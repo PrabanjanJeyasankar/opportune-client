@@ -1,27 +1,27 @@
-import { toast } from "@/hooks/use-toast"
-import useUserContext from "@/hooks/useUserContext"
-import FloatingAstronautAnimation from "@/loaders/FloatingAstronautAnimation/FloatingAstronautAnimation"
-import projectService from "@/services/projectService"
-import NumberFlow from "@number-flow/react"
-import PropTypes from "prop-types"
-import { useState, useEffect, useCallback } from "react"
-import { useNavigate } from "react-router-dom"
-import ImageComponent from "../../elements/ImageComponent/ImageComponent"
-import ShareIconSvg from "../../svg/ShareIconSvg/ShareIconSvg"
-import UpvoteIconSvg from "../../svg/UpvoteIconSvg/UpvoteIconSvg"
-import SkeletonCardComponent from "../SupportingComponents/SkeletonCardComponent/SkeletonCardComponent"
-import styles from "./ProjectCardComponent.module.css"
-import { useQueryClient } from "@tanstack/react-query"
-import SharePopoverComponent from "../SupportingComponents/SharePopoverComponent/SharePopoverComponent"
+import { toast } from '@/hooks/use-toast'
+import useUserContext from '@/hooks/useUserContext'
+import FloatingAstronautAnimation from '@/loaders/FloatingAstronautAnimation/FloatingAstronautAnimation'
+import projectService from '@/services/projectService'
+import NumberFlow from '@number-flow/react'
+import { useQueryClient } from '@tanstack/react-query'
+import PropTypes from 'prop-types'
+import { useCallback, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import ImageComponent from '../../elements/ImageComponent/ImageComponent'
+import ShareIconSvg from '../../svg/ShareIconSvg/ShareIconSvg'
+import UpvoteIconSvg from '../../svg/UpvoteIconSvg/UpvoteIconSvg'
+import SharePopoverComponent from '../SupportingComponents/SharePopoverComponent/SharePopoverComponent'
+import SkeletonCardComponent from '../SupportingComponents/SkeletonCardComponent/SkeletonCardComponent'
+import styles from './ProjectCardComponent.module.css'
 
 // Constants
-const PROJECT_QUERY_PREFIXES = ["projects", "project"]
+const PROJECT_QUERY_PREFIXES = ['projects', 'project']
 const PREDEFINED_QUERY_KEYS = [
-    ["projects"],
-    ["projects", "all"],
-    ["projects", "featured"],
-    ["projects", "trending"],
-    ["user", "projects"],
+    ['projects'],
+    ['projects', 'all'],
+    ['projects', 'featured'],
+    ['projects', 'trending'],
+    ['user', 'projects'],
 ]
 
 const updateProjectInData = (data, projectSlug, liked) => {
@@ -71,7 +71,7 @@ const updateProjectInData = (data, projectSlug, liked) => {
     return newData
 }
 
-const ProjectCardComponent = ({ filteredProjects, isLoading }) => {
+const ProjectCardComponent = ({ filteredProjects, isLoading, searchTerm }) => {
     if (isLoading) {
         return (
             <div className={styles.initial_project_whole_container}>
@@ -86,27 +86,35 @@ const ProjectCardComponent = ({ filteredProjects, isLoading }) => {
 
     return (
         <div className={styles.initial_project_whole_container}>
-            <div className={styles.project_display_container}>
-                {filteredProjects.length > 0 ? (
-                    filteredProjects.map((project, index) => (
+            {isLoading ? (
+                <div className={styles.project_display_container}>
+                    {Array.from({ length: 15 }).map((_, index) => (
+                        <SkeletonCardComponent key={index} />
+                    ))}
+                </div>
+            ) : filteredProjects.length > 0 ? (
+                <div className={styles.project_display_container}>
+                    {filteredProjects.map((project, index) => (
                         <ProjectCard
                             key={`${project.slug}-${index}`}
                             project={project}
                         />
-                    ))
-                ) : (
-                    <EmptyState />
-                )}
-            </div>
+                    ))}
+                </div>
+            ) : (
+                <EmptyState searchTerm={searchTerm} />
+            )}
         </div>
     )
 }
 
-const EmptyState = () => (
+const EmptyState = ({ searchTerm }) => (
     <div className={styles.no_results}>
         <FloatingAstronautAnimation />
         <p className={styles.no_tag_result_text}>
-            This tag is feeling lonely! Be the first to add a project.
+            {searchTerm
+                ? `Sorry, no projects fit '${searchTerm}'. Maybe try another search?`
+                : 'This tag is feeling lonely! Be the first to add a project.'}
         </p>
     </div>
 )
@@ -151,7 +159,7 @@ const ProjectCard = ({ project }) => {
                 }
             })
 
-            queryClient.invalidateQueries(["project", projectSlug])
+            queryClient.invalidateQueries(['project', projectSlug])
         },
         [queryClient]
     )
@@ -161,8 +169,8 @@ const ProjectCard = ({ project }) => {
             e.stopPropagation()
 
             if (!isUserLoggedIn) {
-                toast({ description: "Please login to upvote." })
-                navigate("/login")
+                toast({ description: 'Please login to upvote.' })
+                navigate('/login')
                 return
             }
 
@@ -180,11 +188,10 @@ const ProjectCard = ({ project }) => {
             upvoteAction
                 .then((response) => {
                     if (response.status !== 200) {
-                        throw new Error("Failed to update upvote")
+                        throw new Error('Failed to update upvote')
                     }
 
                     updateProjectInCache(project.slug, newUpvoteState)
-
                 })
                 .catch((error) => {
                     setIsUpvoted(!newUpvoteState)
@@ -211,15 +218,14 @@ const ProjectCard = ({ project }) => {
     }, [navigate, project])
 
     const handleShareClick = (e) => {
-      e.stopPropagation()
-      setIsSharePopoverOpen(true)
-  }
+        e.stopPropagation()
+        setIsSharePopoverOpen(true)
+    }
 
     return (
         <div
             className={styles.project_card_container}
-            onClick={handleCardClick}
-        >
+            onClick={handleCardClick}>
             <div className={styles.project_card_image}>
                 <ImageComponent
                     className={styles.image_template}
@@ -233,8 +239,7 @@ const ProjectCard = ({ project }) => {
                     {project.tags.map((tag, tagIndex) => (
                         <span
                             key={tagIndex}
-                            className={styles.project_card_tag}
-                        >
+                            className={styles.project_card_tag}>
                             {tag}
                         </span>
                     ))}
@@ -245,28 +250,26 @@ const ProjectCard = ({ project }) => {
                 <div className={styles.project_card_buttons}>
                     <div
                         className={`${styles.upvotes} ${
-                            isUpvoted ? styles.upvoted : ""
+                            isUpvoted ? styles.upvoted : ''
                         }`}
-                        onClick={handleUpvoteClick}
-                    >
+                        onClick={handleUpvoteClick}>
                         <UpvoteIconSvg
                             className={styles.upvote_icon}
                             style={{
-                                stroke: isUpvoted ? "#7DFF40" : "white",
-                                fill: isUpvoted ? "#7DFF40" : "none",
+                                stroke: isUpvoted ? '#7DFF40' : 'white',
+                                fill: isUpvoted ? '#7DFF40' : 'none',
                             }}
                         />
                         <span>
                             <NumberFlow
                                 value={upvoteCount}
-                                format={{ notation: "compact" }}
+                                format={{ notation: 'compact' }}
                             />
                         </span>
                     </div>
                     <div
                         onClick={handleShareClick}
-                        className={styles.share_icon_container}
-                    >
+                        className={styles.share_icon_container}>
                         <ShareIconSvg className={styles.share_icon} />
                     </div>
                 </div>
@@ -283,27 +286,27 @@ const ProjectCard = ({ project }) => {
 }
 
 const handleUpvoteError = (error, navigate) => {
-    console.error("Upvote error:", error)
+    console.error('Upvote error:', error)
 
     if (error.response) {
         const status = error.response.status
         if (status === 401) {
             toast({
-                description: "Please login to upvote.",
+                description: 'Please login to upvote.',
             })
-            navigate("/login")
+            navigate('/login')
         } else if (status === 500) {
             toast({
-                description: "Server error, please try again later",
+                description: 'Server error, please try again later',
             })
         }
     } else if (error.request) {
         toast({
-            description: "Network error. Check your connection.",
+            description: 'Network error. Check your connection.',
         })
     } else {
         toast({
-            description: "Unexpected error. Please try again later.",
+            description: 'Unexpected error. Please try again later.',
         })
     }
 }
