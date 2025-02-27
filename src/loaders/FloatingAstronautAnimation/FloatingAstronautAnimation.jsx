@@ -1,5 +1,6 @@
 import animationData from '@/assets/animations/astronaut_animation_lottie.json'
-import Lottie from 'lottie-react'
+import Lottie from 'lottie-web'
+
 import React from 'react'
 
 function FloatingAstronautAnimation() {

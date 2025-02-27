@@ -1,6 +1,11 @@
 import { toast } from '@/hooks/use-toast'
 import useUserContext from '@/hooks/useUserContext'
-import FloatingAstronautAnimation from '@/loaders/FloatingAstronautAnimation/FloatingAstronautAnimation'
+import { Suspense, lazy } from 'react'
+const FloatingAstronautAnimation = lazy(() =>
+    import('@/loaders/FloatingAstronautAnimation/FloatingAstronautAnimation')
+)
+
+// import FloatingAstronautAnimation from '@/loaders/FloatingAstronautAnimation/FloatingAstronautAnimation'
 import projectService from '@/services/projectService'
 import NumberFlow from '@number-flow/react'
 import { useQueryClient } from '@tanstack/react-query'
@@ -110,7 +115,12 @@ const ProjectCardComponent = ({ filteredProjects, isLoading, searchTerm }) => {
 
 const EmptyState = ({ searchTerm }) => (
     <div className={styles.no_results}>
-        <FloatingAstronautAnimation />
+        <Suspense
+            fallback={
+                <div className={styles.loader_placeholder}>Loading...</div>
+            }>
+            <FloatingAstronautAnimation />
+        </Suspense>
         <p className={styles.no_tag_result_text}>
             {searchTerm
                 ? `Sorry, no projects fit '${searchTerm}'. Maybe try another search?`
