@@ -3,7 +3,7 @@ import InfiniteLoadingAnimation from '@/loaders/InfiniteLoadingAnimation/Infinit
 import userProfileService from '@/services/userProfileservice'
 import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import PortfolioProjectCardComponent from '../../components/PortfolioProjectCardComponent/PortfolioProjectCardComponent'
+import PortfolioProjectCardComponent from './PortfolioProjectCardComponent/PortfolioProjectCardComponent'
 import ContactSectionComponent from './ContactSectionComponent/ContactSectionComponent'
 import PortfolioNavbarComponent from './PortfolioNavbarComponent/PortfolioNavbarComponent'
 import styles from './PortfolioPage.module.css'

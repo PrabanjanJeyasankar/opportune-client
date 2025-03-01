@@ -44,10 +44,9 @@
     text-overflow: ellipsis;
 }
 
-.status {
+.professional_title {
     font-size: 0.9rem;
-    color: var(--green-500);
-    opacity: 0.7;
+    opacity: 0.6;
 }
 
 .user_profile_actions {

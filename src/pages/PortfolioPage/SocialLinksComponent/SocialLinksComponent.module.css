@@ -5,6 +5,7 @@
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
+    
 }
 
 .social_item {
@@ -19,6 +20,12 @@
     padding: 1rem 3rem;
     gap: 0.5rem;
     transition: background-color 0.3s ease;
+
+    background: var(--glass-bg);
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-webkit-blur);
+    border: var(--glass-border);
 }
 
 .social_item:hover svg {

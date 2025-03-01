@@ -102,8 +102,8 @@ function ProjectDetailsPage() {
                                 <span className={styles.user_name}>
                                     {currentProject?.authorDetails.name}
                                 </span>
-                                <span className={styles.status}>
-                                    Available for work
+                                <span className={styles.professional_title}>
+                                    Professional title
                                 </span>
                             </div>
                         </div>

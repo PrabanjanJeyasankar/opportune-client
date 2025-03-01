@@ -2,6 +2,41 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+}
+
+.more_projects_title {
+    font-size: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.more_project_username {
+    position: relative;
+    cursor: pointer;
+}
+
+.more_project_username::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background-color: white;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.more_project_username:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+.more_projects_title span {
+    color: var(--secondary-gray) !important;
+    font-weight: 400 !important;
 }
 
 .image_gallery {
@@ -15,7 +50,7 @@
     border-radius: 8px;
     flex: 1 0 20rem;
     overflow: hidden;
-    padding: 1rem ;
+    padding: 1rem;
 }
 
 .image {
@@ -30,13 +65,11 @@
 }
 
 .view_profile_link {
-    display: flex;
-    align-items: center;
+    font-size: 1rem;
     gap: 0.1rem;
-    line-height: 1.4rem;
     position: relative;
-    margin-bottom: 1.5rem;
     cursor: pointer;
+    color: var(--secondary-gray);
 }
 
 .view_profile_link::after {
@@ -46,7 +79,7 @@
     left: 50%;
     width: 0;
     height: 1px;
-    background-color: white;
+    background-color: var(--secondary-gray);
     transition: width 0.3s ease, left 0.3s ease;
 }
 
@@ -64,22 +97,8 @@
     font-size: 1.1rem;
 }
 
-@media (min-width: 320px) {
-    .more_projects_title {
-        font-weight: 600;
-        font-size: 0.9rem;
-    }
+@media (max-width: 426px) {
     .view_profile_link {
-        font-size: 0.9rem;
-    }
-}
-
-@media (min-width: 425px) {
-    .more_projects_title {
-        font-weight: 600;
-        font-size: 1rem;
-    }
-    .view_profile_link {
-        font-size: 1rem;
+        display: none;
     }
 }

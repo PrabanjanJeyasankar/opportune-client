@@ -160,8 +160,9 @@
 .rock8 {
     width: 40%;
     top: 50%;
-    left: -46%;
+    left: -55%;
     z-index: -1;
+    transform: rotate(90deg) !important;
 }
 
 @media (min-width: 320px) {
@@ -240,7 +241,7 @@
     }
     .rock7 {
         width: 100%;
-        top: 5%;
+        top: 40% !important;
         left: 70%;
     }
     .rock8 {
@@ -257,7 +258,7 @@
     }
     .rock7 {
         width: 100%;
-        top: 5%;
+        top: 40% !important;
         left: 70%;
     }
     .rock8 {
@@ -291,13 +292,14 @@
 
     .rock7 {
         width: 100%;
-        top: 30%;
+        top: 40% !important;
         left: 70%;
     }
     .rock8 {
         width: 50%;
-        top: 50%;
-        left: -30%;
+        top: 120% !important;
+        left: -45% !important;
+        z-index: -1;
     }
 }
 
@@ -325,15 +327,14 @@
     .rock8 {
         width: 50%;
         top: 80%;
-        left: -66%;
+        left: -56%;
         z-index: -1;
     }
 }
 
 @media (max-width: 2560px) {
     .rock7 {
-        top: 12%;
-        left: 85%;
+        top: 14%;
+        left: 80%;
     }
-    
 }

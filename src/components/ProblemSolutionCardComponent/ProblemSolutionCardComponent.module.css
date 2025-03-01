@@ -1,0 +1,15 @@
+.problem_solution_card_container {
+    margin-top: 3rem;
+}
+
+.problem_solution_card_title {
+    font-size: clamp(2rem, 2vw + 0.1rem, 2.4rem);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.problem_solution_card_description {
+    margin-bottom: 3rem;
+    font-size: clamp(1rem, 2vw + 0.1rem, 1.15rem);
+    opacity: 0.7;
+}

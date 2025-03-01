@@ -6,9 +6,10 @@ import ChainLinkSvg from '../../svg/ChainLinkSvg/ChainLinkSvg'
 import EyeShowSVG from '../../svg/EyeShowSVG/EyeShowSVG'
 import GithubSvg from '../../svg/GithubSvg/GithubSvg'
 import ShareIconSvg from '../../svg/ShareIconSvg/ShareIconSvg'
+import ProblemSolutionCardComponent from '../ProblemSolutionCardComponent/ProblemSolutionCardComponent'
+import SharePopoverComponent from '../SupportingComponents/SharePopoverComponent/SharePopoverComponent'
 import UpvoteComponent from '../UpvoteComponent/UpvoteComponent'
 import styles from './ProjectMetaComponent.module.css'
-import SharePopoverComponent from '../SupportingComponents/SharePopoverComponent/SharePopoverComponent'
 
 function ProjectMetaComponent({ project }) {
     const [isSharePopoverOpen, setIsSharePopoverOpen] = useState(false)
@@ -77,6 +78,11 @@ function ProjectMetaComponent({ project }) {
             </div>
 
             <p className={styles.project_description}>{project?.description}</p>
+            <ProblemSolutionCardComponent
+                problemStatement={project?.problemStatement}
+                problemSolution={project?.problemSolution}
+            />
+
             <div className={styles.external_links}>
                 <a
                     href={project?.hostedLink}

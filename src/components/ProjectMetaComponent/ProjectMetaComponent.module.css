@@ -1,7 +1,7 @@
 .project_meta_header {
     display: flex;
     justify-content: space-between;
-    margin: 3rem 0 0 0;
+    margin: 2rem 0 0 0;
 }
 .thumbnail {
     display: flex;
@@ -15,14 +15,15 @@
 
 .title_and_docs {
     display: flex;
-    align-items: baseline;
+    align-items: flex-end;
     gap: 1rem;
 }
 
 .project_title {
-    font-size: 2rem;
+    font-size: clamp(2rem, 2vw + 0.1rem, 2.4rem);
     font-weight: 600;
     flex-wrap: wrap;
+    line-height: 2.5rem;
 }
 
 .project_documentation_link {
@@ -101,8 +102,7 @@
 }
 
 .project_description {
-    margin: 1.8rem 0 0 0;
-    font-size: clamp(1rem, 2vw + 0.5rem, 1.2rem);
+    font-size: clamp(1rem, 2vw + 0.1rem, 1.15rem);
     font-weight: 400;
     opacity: 0.7;
     max-width: 100%;
@@ -162,7 +162,7 @@
         gap: 0.5rem;
     }
     .project_tags {
-        margin: 1rem 0 2rem 0;
+        margin: 1rem 0 1rem 0;
     }
 }
 
@@ -172,9 +172,6 @@
         gap: 0.5rem;
         margin: 1.5rem 0 0 0;
     }
-    .project_tags {
-        margin: 1rem 0 2rem 0;
-    }
 }
 
 @media (min-width: 425px) {
@@ -183,12 +180,8 @@
         gap: 0.5rem;
     }
     .project_title {
-        font-size: 1.7rem;
         font-weight: 600;
         flex-wrap: wrap;
-    }
-    .project_tags {
-        margin: 1rem 0 2rem 0;
     }
 }
 

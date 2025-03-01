@@ -23,6 +23,11 @@
     align-items: center;
     justify-content: center;
     background-color: var(--black-900);
+    background: var(--glass-bg);
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-webkit-blur);
+    border: var(--glass-border);
 }
 
 .total_upvote_count,
@@ -69,6 +74,11 @@
     font-weight: 500;
     display: inline-block;
     transition: background-color 0.2s ease-in-out;
+    background: var(--glass-bg);
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-webkit-blur);
+    border: var(--glass-border);
 }
 
 .skill_item:hover {

@@ -3,11 +3,16 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: var(--black-900);
     color: white;
     padding: 2.5rem 0;
     border-radius: 1.5rem;
     text-align: center;
+
+    background: var(--glass-bg);
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-webkit-blur);
+    border: var(--glass-border);
 }
 
 .bio_text {

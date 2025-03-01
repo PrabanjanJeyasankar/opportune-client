@@ -2,6 +2,7 @@ import ImageComponent from '@/elements/ImageComponent/ImageComponent'
 import fetchMoreProjectsByUser from '@/services/fetchMoreProjectsByUser'
 import { useEffect, useState } from 'react'
 import styles from './MoreProjectsByUser.module.css'
+import { Link } from 'react-router-dom'
 
 function MoreProjectsByUser({ username, slug, onProjectSelect }) {
     const [moreProjectsByUser, setMoreProjectsByUser] = useState([])
@@ -51,9 +52,12 @@ function MoreProjectsByUser({ username, slug, onProjectSelect }) {
         <div className={styles.more_projects_by_user} key={projectKey}>
             <div className={styles.more_projects_header}>
                 <h1 className={styles.more_projects_title}>
-                    More by {username}
+                    <span>More by</span>
+                    <Link to={`/portfolio/${username}`} className={styles.more_project_username}>
+                        {username}
+                    </Link>
                 </h1>
-                <p className={styles.view_profile_link}>View Profile</p>
+                {/* <p className={styles.view_profile_link}>View Profile</p> */}
             </div>
 
             {moreProjectsByUser && moreProjectsByUser.length > 0 ? (

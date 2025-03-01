@@ -10,6 +10,12 @@
     gap: 2rem;
     min-height: 100%;
     transition: color 2s ease-in-out;
+
+    background: var(--glass-bg);
+    box-shadow: var(--glass-shadow);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-webkit-blur);
+    border: var(--glass-border);
 }
 
 .resume_container svg {
