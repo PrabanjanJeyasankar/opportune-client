@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from './PortfolioNavbarComponent.module.css'
 
-function PortfolioNavbarComponent({ logoText }) {
+function PortfolioNavbarComponent({ name, portfolioLink }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     const toggleMenu = () => {
@@ -19,7 +19,7 @@ function PortfolioNavbarComponent({ logoText }) {
         <nav className={styles.navbar}>
             <div className={styles.logo}>
                 <a href='/' className={styles.logo_link}>
-                    {logoText}
+                    {name}
                 </a>
             </div>
 
@@ -39,14 +39,21 @@ function PortfolioNavbarComponent({ logoText }) {
                 className={`${styles.menu_items} ${
                     isMenuOpen ? styles.show : ''
                 }`}>
-                <a href='/' className={`${styles.menu_item} ${styles.active}`}>
+                <a href='#home' className={`${styles.menu_item} ${styles.active}`}>
                     home.
                 </a>
-                <a href='/works' className={styles.menu_item}>
+                <a href='#works' className={styles.menu_item}>
                     works.
                 </a>
-                <a href='/contact' className={styles.menu_item}>
+                <a href='#contact' className={styles.menu_item}>
                     contact.
+                </a>
+                <a
+                    href={portfolioLink}
+                    className={styles.menu_item}
+                    target='_blank'
+                    rel='noopener noreferrer'>
+                    ext portfolio.
                 </a>
             </div>
         </nav>

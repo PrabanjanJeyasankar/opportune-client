@@ -11,6 +11,8 @@ import XSvg from '@/svg/SocialIconsSvg/XSvg/XSvg'
 import styles from './SocialLinksComponent.module.css'
 
 function SocialLinksComponent({ socialPlatforms = [] }) {
+    if (socialPlatforms.length === 0) return null
+
     const defaultSocialPlatforms = {
         github: <GithubSvg />,
         linkedin: <LinkedinSvg />,
@@ -25,9 +27,9 @@ function SocialLinksComponent({ socialPlatforms = [] }) {
     }
 
     const matchedPlatforms = socialPlatforms.map((platform) => ({
-        name: platform.name,
+        name: platform.domain,
         url: platform.url,
-        icon: defaultSocialPlatforms[platform.name],
+        icon: defaultSocialPlatforms[platform.domain.toLowerCase()] || null,
     }))
 
     return (
@@ -36,19 +38,21 @@ function SocialLinksComponent({ socialPlatforms = [] }) {
             style={{
                 gridTemplateColumns: `repeat(${matchedPlatforms.length}, 1fr)`,
             }}>
-            {matchedPlatforms.map((platform, index) => (
-                <a
-                    key={index}
-                    href={platform.url}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className={styles.social_item}>
-                    {platform.icon}
-                    <span className={styles.social_platform_name}>
-                        {platform.name}
-                    </span>
-                </a>
-            ))}
+            {matchedPlatforms.map((platform, index) =>
+                platform.icon ? (
+                    <a
+                        key={index}
+                        href={platform.url}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                        className={styles.social_item}>
+                        {platform.icon}
+                        <span className={styles.social_platform_name}>
+                            {platform.name}
+                        </span>
+                    </a>
+                ) : null
+            )}
         </div>
     )
 }

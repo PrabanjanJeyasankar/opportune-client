@@ -3,6 +3,7 @@ import useHomeFeedResetContext from '@/hooks/useHomeFeedResetContext'
 import useUserContext from '@/hooks/useUserContext'
 import authService from '@/services/authService'
 import CheveronArrowDownSvg from '@/svg/ChevronArrowDownSvg/CheveronArrowDownSvg'
+import EditPenSvg from '@/svg/EditPenSvg/EditPenSvg'
 import LogoutSvg from '@/svg/LogoutSvg/LogoutSvg'
 import UserRoundSvg from '@/svg/UserRoundSvg/UserRoundSvg'
 import { useEffect, useRef, useState } from 'react'
@@ -171,7 +172,9 @@ const NavigationBarComponent = () => {
                                     <div
                                         className={`${navBarStyles.dropdown_menu} ${navBarStyles.show}`}>
                                         <NavLink
-                                            to={`/portfolio/${userProfile.username}`}
+                                            to={`/portfolio/${
+                                                userProfile?.username || ''
+                                            }`}
                                             className={
                                                 navBarStyles.dropdown_item
                                             }
@@ -179,7 +182,18 @@ const NavigationBarComponent = () => {
                                                 setIsDropdownOpen(false)
                                             }>
                                             <UserRoundSvg />
-                                            <span>My Profile</span>
+                                            <span>My Portfolio</span>
+                                        </NavLink>
+                                        <NavLink
+                                            to={'/update-profile'}
+                                            className={
+                                                navBarStyles.dropdown_item
+                                            }
+                                            onClick={() =>
+                                                setIsDropdownOpen(false)
+                                            }>
+                                            <EditPenSvg />
+                                            <span>Edit Portfolio</span>
                                         </NavLink>
                                         <ButtonComponent
                                             className={

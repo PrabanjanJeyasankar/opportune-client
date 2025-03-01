@@ -21,19 +21,23 @@
     transition: background-color 0.3s ease;
 }
 
-.social_item:hover {
-    fill: var(--orange-primary) !important;
+.social_item:hover svg {
+    color: var(--orange-primary) !important;
 }
 
 .social_item svg {
     width: 30px;
     height: 30px;
+    color: white;
 }
 
 .social_platform_name {
     color: white;
 }
 
+.social_item:hover .social_platform_name {
+    color: var(--orange-primary) !important;
+}
 @media (max-width: 768px) {
     .social_container {
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));

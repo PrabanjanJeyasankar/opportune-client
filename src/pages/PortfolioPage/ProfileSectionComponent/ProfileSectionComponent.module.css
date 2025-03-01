@@ -19,6 +19,7 @@
     width: 100%;
     padding: 2.5rem 3rem;
     border-radius: 1.5rem;
+    position: relative;
 }
 
 .profile_image_container {
@@ -59,12 +60,16 @@
     .profile_header {
         flex-direction: row;
         gap: 2rem;
+        align-items: center;
     }
 
     .profile_text {
         font-size: 3rem;
+        margin-top: 0;
         line-height: 1.25;
     }
+
+    
 }
 
 @media (max-width: 768px) {

@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
-import { createPortal } from 'react-dom'
+import { toast } from '@/hooks/use-toast'
+import InfiniteLoadingAnimation from '@/loaders/InfiniteLoadingAnimation/InfiniteLoadingAnimation'
+import userProfileService from '@/services/userProfileservice'
+import React, { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import PortfolioProjectCardComponent from '../../components/PortfolioProjectCardComponent/PortfolioProjectCardComponent'
-import data from '../../data/portfolioData'
 import ContactSectionComponent from './ContactSectionComponent/ContactSectionComponent'
 import PortfolioNavbarComponent from './PortfolioNavbarComponent/PortfolioNavbarComponent'
 import styles from './PortfolioPage.module.css'
@@ -12,67 +14,103 @@ import StatisticGridComponent from './StatisticGridComponent/StatisticGridCompon
 import UserBioComponent from './UserBioComponent/UserBioComponent'
 
 function PortfolioPage() {
-    const {
-        personalInfo,
-        skills,
-        socialPlatforms = [],
-        totalUpvoteCount,
-        totalProjectCount,
-        professionalExperience,
-    } = data[0] || {}
+    const [userProfileData, setUserProfileData] = useState(null)
+    const [loading, setLoading] = useState(true)
+    const navigate = useNavigate()
 
-    const [copied, setCopied] = useState(false)
+    useEffect(() => {
+        userProfileService
+            .getUserProfile()
+            .then((response) => {
+                const profileData = response.data.data[0] || {}
+                if (!profileData.authorDetails) {
+                    toast({
+                        description:
+                            'Please fill out your complete details to complete your portfolio',
+                    })
+                    navigate('/update-profile', { replace: true })
+                    return
+                }
+
+                setUserProfileData(profileData)
+            })
+            .catch((error) => {
+                console.error('Error fetching user profile:', error)
+            })
+            .finally(() => setLoading(false))
+    }, [navigate])
 
     const copyEmailToClipboard = () => {
-        navigator.clipboard
-            .writeText(personalInfo.email)
-            .then(() => {
-                setCopied(true)
-                setTimeout(() => setCopied(false), 2000)
-            })
-            .catch((err) => console.error('Failed to copy email:', err))
+        if (userProfileData?.email) {
+            navigator.clipboard.writeText(userProfileData.email)
+            toast({ description: 'Email copied to clipboard!' })
+        }
+    }
+
+    if (loading) {
+        return (
+            <div className={styles.loading_animation}>
+                <InfiniteLoadingAnimation />
+            </div>
+        )
+    }
+
+    if (!userProfileData) {
+        return (
+            <div className={styles.error_message}>User profile not found</div>
+        )
     }
 
     return (
         <>
             <div className={styles.parent_container}>
-                <PortfolioNavbarComponent logoText='jenny wilson.' />
+                <PortfolioNavbarComponent
+                    name={userProfileData.authorDetails?.name}
+                    portfolioLink={userProfileData?.portfolioLink}
+                />
 
                 <div className={styles.main_container}>
                     <ProfileSectionComponent
-                        name={personalInfo.name}
-                        title={personalInfo.title}
+                        id='home'
+                        name={userProfileData?.authorDetails.name}
+                        title={userProfileData?.professionalTitle}
                     />
+
                     <ContactSectionComponent
                         onCopyEmail={copyEmailToClipboard}
                     />
                 </div>
 
-                <SocialLinksComponent socialPlatforms={socialPlatforms} />
+                {userProfileData.accounts && (
+                    <SocialLinksComponent
+                        socialPlatforms={userProfileData?.accounts}
+                    />
+                )}
 
-                <UserBioComponent portfolioBio={personalInfo.bio} />
+                {userProfileData.bio && (
+                    <UserBioComponent portfolioBio={userProfileData?.bio} />
+                )}
 
                 <div className={styles.resume_stats_container}>
-                    <ResumeComponent />
+                    <ResumeComponent resumeLink={userProfileData.resumeLink} />
                     <div className={styles.stats_skills_container}>
                         <StatisticGridComponent
-                            totalUpvoteCount={totalUpvoteCount}
-                            totalProjectCount={totalProjectCount}
-                            professionalExperience={professionalExperience}
-                            skills={skills}
+                            professionalExperience={
+                                userProfileData?.professionalExperience || 0
+                            }
                         />
                     </div>
                 </div>
             </div>
 
-            <PortfolioProjectCardComponent />
-            <ContactSectionComponent onCopyEmail={copyEmailToClipboard} />
-
-            {copied &&
-                createPortal(
-                    <div className={styles.copy_message}>Copied!</div>,
-                    document.body
-                )}
+            <PortfolioProjectCardComponent
+                id='works'
+                username={userProfileData?.authorDetails?.username}
+            />
+            <ContactSectionComponent
+                id='contact'
+                onCopyEmail={copyEmailToClipboard}
+            />
         </>
     )
 }

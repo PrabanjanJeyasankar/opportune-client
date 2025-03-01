@@ -1,10 +1,10 @@
 import styles from './StatisticGridComponent.module.css'
 
 function StatisticGridComponent({
-    totalUpvoteCount,
-    totalProjectCount,
+    totalUpvoteCount = 0,
+    totalProjectCount = 0,
     professionalExperience,
-    skills,
+    skills = ['HTML', 'CSS', 'Java Script'],
 }) {
     return (
         <div className={styles.resume_social_container}>

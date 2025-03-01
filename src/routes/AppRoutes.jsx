@@ -48,7 +48,7 @@ const UpdateProfileComponent = lazy(() =>
 )
 
 const AppRoutes = () => {
-    const { isAuthenticated } = useUserContext()
+    const { isUserLoggedIn } = useUserContext()
 
     return (
         <>
@@ -93,7 +93,7 @@ const AppRoutes = () => {
                     <Route
                         path='/portfolio/:username'
                         element={
-                            <ProtectedRoute isAuthenticated={isAuthenticated}>
+                            <ProtectedRoute isAuthenticated={isUserLoggedIn}>
                                 {LazyComponent(PortfolioPage)}
                             </ProtectedRoute>
                         }
@@ -101,16 +101,16 @@ const AppRoutes = () => {
                     <Route
                         path='/update-profile'
                         element={
-                            // <ProtectedRoute isAuthenticated={isAuthenticated}>
+                            // <ProtectedRoute isAuthenticated={isUserLoggedIn}>
                             //     {LazyComponent(UpdateProfileComponent)}
                             // </ProtectedRoute>
-                            <UpdateProfileComponent/>
+                            <UpdateProfileComponent />
                         }
                     />
                     <Route
                         path='/project-input-form'
                         element={
-                            <ProtectedRoute isAuthenticated={isAuthenticated}>
+                            <ProtectedRoute isAuthenticated={isUserLoggedIn}>
                                 {LazyComponent(
                                     ProjectDetailsInputFormComponent
                                 )}
@@ -119,11 +119,7 @@ const AppRoutes = () => {
                     />
                     <Route
                         path='/:username/:projectSlug'
-                        element={
-                            <ProtectedRoute isAuthenticated={isAuthenticated}>
-                                {LazyComponent(ProjectDetailsPage)}
-                            </ProtectedRoute>
-                        }
+                        element={LazyComponent(ProjectDetailsPage)}
                     />
                 </Route>
 

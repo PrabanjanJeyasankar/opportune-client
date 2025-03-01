@@ -25,6 +25,12 @@ const projectService = {
         )
         return response
     },
+
+    retrieveAllProjectByUsername: async (username) => {
+        const response = await axiosInstance.get(`/project/${username}`)
+        return response
+    },
+
     retrieveProjectBySlug: async (username, slug) => {
         const response = await axiosInstance.get(`/project/${username}/${slug}`)
         return response

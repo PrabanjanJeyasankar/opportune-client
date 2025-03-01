@@ -75,7 +75,7 @@
     background-color: var(--dark-gray);
 }
 
-@media (max-width: 526px) {
+@media (max-width: 900px) {
     .total_upvote_count,
     .total_project_count,
     .professional_experience_count {

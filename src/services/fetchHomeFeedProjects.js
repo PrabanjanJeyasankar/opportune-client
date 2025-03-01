@@ -20,6 +20,7 @@ const fetchHomeFeedProjectsService = async (
         })
 
         if (response.status === 200) {
+            console.log(response.data.data)
             return Array.isArray(response.data.data) ? response.data.data : []
         } else {
             console.error('Unexpected response status:', response.status)

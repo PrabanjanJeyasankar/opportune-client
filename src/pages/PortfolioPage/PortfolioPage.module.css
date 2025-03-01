@@ -25,7 +25,13 @@
     flex: 2;
 }
 
-.copy_message {
+.loading_animation {
+    display: flex;
+    justify-content: center;
+    margin: 25rem auto;
+}
+
+/* .copy_message {
     position: fixed;
     bottom: 50px;
     left: 50%;
@@ -44,7 +50,7 @@
 
 .copy_message.hide {
     opacity: 0;
-}
+} */
 
 @media (max-width: 998px) {
     .main_container {

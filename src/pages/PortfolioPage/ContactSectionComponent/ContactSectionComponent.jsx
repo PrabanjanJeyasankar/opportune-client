@@ -1,9 +1,15 @@
+import ButtonComponent from '@/elements/ButtonComponent/ButtonComponent'
+import { toast } from '@/hooks/use-toast'
 import PaperClipSvg from '@/svg/PaperClipSvg/PaperClipSvg'
 import RingStyleSvg from '@/svg/RingStyleSvg/RingStyleSvg'
-import React from 'react'
 import styles from './ContactSectionComponent.module.css'
 
 function ContactSectionComponent({ onCopyEmail }) {
+    const handleCopyEmail = () => {
+        onCopyEmail()
+        toast({ description: 'Email copied to clipboard!' })
+    }
+
     return (
         <div className={styles.contact_section}>
             <div className={styles.contact_container}>
@@ -13,9 +19,11 @@ function ContactSectionComponent({ onCopyEmail }) {
                     <br />
                     in mind?
                 </h2>
-                <button onClick={onCopyEmail} className={styles.contact_button}>
+                <ButtonComponent
+                    onClick={handleCopyEmail}
+                    className={styles.contact_button}>
                     <PaperClipSvg /> <span>Copy Email</span>
-                </button>
+                </ButtonComponent>
             </div>
         </div>
     )

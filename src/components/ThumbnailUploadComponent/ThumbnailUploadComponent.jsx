@@ -68,7 +68,7 @@ const ThumbnailUploadComponent = ({
                 <div className={styles.thumbnail_label}>
                     <div className={styles.thumbnail_preview_container}>
                         <div onClick={handleImageClick}>
-                            <ImageComponent
+                            <img
                                 src={previewURL}
                                 alt="Thumbnail Preview"
                                 className={styles.thumbnail_preview}
@@ -86,11 +86,11 @@ const ThumbnailUploadComponent = ({
 
                             <ButtonComponent
                                 type="button"
-                                className={`replace_button ${styles.ReplaceSvg_button}`}
+                                className={`replace_button ${styles.replace_svg_button}`}
                                 onClick={handleReplaceClick}
                             >
                                 <ReplaceSvg />
-                                <span>Replace</span>
+                                {/* <span>Replace</span> */}
                             </ButtonComponent>
                         </div>
                     </div>
