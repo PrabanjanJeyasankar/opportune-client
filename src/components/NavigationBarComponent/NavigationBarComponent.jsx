@@ -124,7 +124,7 @@ const NavigationBarComponent = () => {
                                 Login
                             </NavLink>
                             <NavLink
-                                to='/project-input-form'
+                                to='/new'
                                 className={navBarStyles.signup_button}
                                 onClick={handleCloseMenu}>
                                 Post a project &#128640;
@@ -210,7 +210,7 @@ const NavigationBarComponent = () => {
                                 )}
                             </div>
                             <NavLink
-                                to='/project-input-form'
+                                to='/new'
                                 className={navBarStyles.signup_button}
                                 onClick={handleCloseMenu}>
                                 <span>Post a project &#128640;</span>

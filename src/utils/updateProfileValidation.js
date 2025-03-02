@@ -29,15 +29,15 @@ const updateProfileValidation = (formData) => {
         errors.resumeLink = '*Invalid resume link format.'
     }
 
-    if (!formData.passedOutYear || !formData.passedOutYear.trim()) {
+    if (!formData.passedOutYear) {
         errors.passedOutYear = '*Passed out year is required.'
     } else if (!yearRegex.test(formData.passedOutYear)) {
         errors.passedOutYear = '*Invalid year format. Example: 2024'
     }
 
     if (
-        !formData.professionalExperience ||
-        !formData.professionalExperience.trim()
+        isNaN(formData.professionalExperience)
+       
     ) {
         errors.professionalExperience = '*Experience is required.'
     } else if (!experienceRegex.test(formData.professionalExperience)) {

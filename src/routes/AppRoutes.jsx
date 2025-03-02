@@ -108,7 +108,7 @@ const AppRoutes = () => {
                         }
                     />
                     <Route
-                        path='/project-input-form'
+                        path='/new'
                         element={
                             <ProtectedRoute isAuthenticated={isUserLoggedIn}>
                                 {LazyComponent(
