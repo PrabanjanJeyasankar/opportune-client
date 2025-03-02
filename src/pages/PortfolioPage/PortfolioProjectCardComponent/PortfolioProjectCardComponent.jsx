@@ -1,52 +1,7 @@
-import { toast } from '@/hooks/use-toast'
-import InfiniteLoadingAnimation from '@/loaders/InfiniteLoadingAnimation/InfiniteLoadingAnimation'
-import projectService from '@/services/projectService'
-import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React from 'react'
 import styles from './PortfolioProjectCardComponent.module.css'
 
-function PortfolioProjectCardComponent({ username }) {
-    const navigate = useNavigate()
-    const [projects, setProjects] = useState([])
-    const [loading, setLoading] = useState(true)
-    const [error, setError] = useState(null)
-
-    useEffect(() => {
-        projectService
-            .retrieveAllProjectByUsername(username)
-            .then((response) => {
-                setProjects(response.data.data || [])
-            })
-            .catch((error) => {
-                if (error.response?.status === 401) {
-                    toast({
-                        description: 'Unauthorized! Redirecting to login.',
-                    })
-                    navigate('/login', { replace: true })
-                } else {
-                    setError('Failed to load projects.')
-                    console.error('Error fetching projects:', error)
-                }
-            })
-            .finally(() => setLoading(false))
-    }, [username, navigate])
-
-    if (loading) {
-        return (
-            <div className={styles.loading_animation}>
-                <InfiniteLoadingAnimation />
-            </div>
-        )
-    }
-
-    if (error) {
-        return <div className={styles.error_message}>{error}</div>
-    }
-
-    if (!projects.length) {
-        return <div className={styles.error_message}>No projects found</div>
-    }
-
+function PortfolioProjectCardComponent({ projects }) {
     return (
         <div className={styles.projectGrid}>
             {projects.map((project, index) => (
@@ -64,9 +19,7 @@ function PortfolioProjectCardComponent({ username }) {
                         </div>
                         <div className={styles.projectImageContainer}>
                             <img
-                                src={
-                                    project.thumbnailUrl || '/default-image.jpg'
-                                }
+                                src={project.thumbnail.s3Url}
                                 alt={project.title}
                                 className={styles.projectImage}
                             />

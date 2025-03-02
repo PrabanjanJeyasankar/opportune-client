@@ -66,7 +66,7 @@ function ProjectDetailsPage() {
     }
 
     const handleViewProfile = () => {
-        navigate(`/${currentProject?.authorDetails?.name}`)
+        navigate(`/portfolio/${currentProject?.authorDetails?.name}`)
     }
 
     if (!currentProject) {
@@ -90,7 +90,9 @@ function ProjectDetailsPage() {
             <section className={styles.project_details_container}>
                 <motion.div variants={itemVariants}>
                     <header className={styles.header}>
-                        <div className={styles.profile_section}>
+                        <div
+                            className={styles.profile_section}
+                            onClick={handleViewProfile}>
                             <ImageComponent
                                 src={
                                     currentProject?.authorDetails.profilePicture

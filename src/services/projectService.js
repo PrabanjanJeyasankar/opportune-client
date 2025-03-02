@@ -26,6 +26,13 @@ const projectService = {
         return response
     },
 
+    retirevePortfolioDataByUsername: async (username) => {
+        const response = await axiosInstance.get(
+            `/project/portfolio/${username}`
+        )
+        return response
+    },
+
     retrieveAllProjectByUsername: async (username) => {
         const response = await axiosInstance.get(`/project/${username}`)
         return response

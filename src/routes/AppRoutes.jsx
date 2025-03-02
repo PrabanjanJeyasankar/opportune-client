@@ -89,14 +89,9 @@ const AppRoutes = () => {
                         }
                     />
 
-                    {/* Protected Routes (Require Authentication) */}
                     <Route
                         path='/portfolio/:username'
-                        element={
-                            <ProtectedRoute isAuthenticated={isUserLoggedIn}>
-                                {LazyComponent(PortfolioPage)}
-                            </ProtectedRoute>
-                        }
+                        element={LazyComponent(PortfolioPage)}
                     />
                     <Route
                         path='/update-profile'

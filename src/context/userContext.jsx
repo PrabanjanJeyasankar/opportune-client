@@ -3,24 +3,25 @@ import React, { createContext, useEffect, useState } from 'react'
 const UserContext = createContext()
 
 const UserProvider = ({ children }) => {
-    const [isUserLoggedIn, setIsUserLoggedIn] = useState(
-        localStorage.getItem('isUserLoggedIn') === 'true'
-    )
+    const storedUser = localStorage.getItem('userData')
     const [userProfile, setUserProfile] = useState(
-        JSON.parse(localStorage.getItem('userData')) || {}
+        storedUser ? JSON.parse(storedUser) : {}
     )
+    const [isUserLoggedIn, setIsUserLoggedIn] = useState(!!storedUser)
 
     useEffect(() => {
-        const userData = localStorage.getItem('userData')
-        if (userData) {
+        if (
+            userProfile &&
+            Object.keys(userProfile).length > 0 &&
+            userProfile.username
+        ) {
+            localStorage.setItem('userData', JSON.stringify(userProfile))
             setIsUserLoggedIn(true)
-            setUserProfile(JSON.parse(userData))
+        } else {
+            localStorage.removeItem('userData')
+            setIsUserLoggedIn(false)
         }
-    }, [])
-
-    useEffect(() => {
-        localStorage.setItem('isUserLoggedIn', isUserLoggedIn)
-    }, [isUserLoggedIn])
+    }, [userProfile])
 
     return (
         <UserContext.Provider

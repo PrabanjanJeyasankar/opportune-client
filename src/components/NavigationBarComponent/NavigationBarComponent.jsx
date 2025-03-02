@@ -172,15 +172,14 @@ const NavigationBarComponent = () => {
                                     <div
                                         className={`${navBarStyles.dropdown_menu} ${navBarStyles.show}`}>
                                         <NavLink
-                                            to={`/portfolio/${
-                                                userProfile?.username || ''
-                                            }`}
+                                            to={`/portfolio/${userProfile?.username}`}
                                             className={
                                                 navBarStyles.dropdown_item
                                             }
-                                            onClick={() =>
+                                            onClick={() => {
                                                 setIsDropdownOpen(false)
-                                            }>
+                                                setIsMenuOpen(false) 
+                                            }}>
                                             <UserRoundSvg />
                                             <span>My Portfolio</span>
                                         </NavLink>
@@ -189,9 +188,10 @@ const NavigationBarComponent = () => {
                                             className={
                                                 navBarStyles.dropdown_item
                                             }
-                                            onClick={() =>
+                                            onClick={() => {
                                                 setIsDropdownOpen(false)
-                                            }>
+                                                setIsMenuOpen(false) 
+                                            }}>
                                             <EditPenSvg />
                                             <span>Edit Portfolio</span>
                                         </NavLink>
@@ -202,6 +202,7 @@ const NavigationBarComponent = () => {
                                             onClick={() => {
                                                 logout()
                                                 setIsDropdownOpen(false)
+                                                setIsMenuOpen(false) 
                                             }}>
                                             <LogoutSvg />
                                             <span>Logout</span>
