@@ -1,10 +1,21 @@
 const ProjectDetailsValidationFrom = (formData) => {
   const errors = {};
-
   if (!formData.title?.trim()) {
     errors.title = "Title is required.";
   } else if (formData.title.trim().length < 3) {
     errors.title = "Title must be at least 3 characters long.";
+  }
+
+  if (!formData.problemStatement?.trim()) {
+    errors.problemStatement = "problem statement is required.";
+  } else if (formData.problemStatement.trim().length < 3) {
+    errors.problemStatement = "problem statement is a mandatory field.";
+  }
+
+  if (!formData.problemSolution?.trim()) {
+    errors.problemSolution = "problem solution is required.";
+  } else if (formData.problemSolution.trim().length < 3) {
+    errors.problemSolution = "problem solution is a mandatory field.";
   }
 
   if (!formData.description?.trim()) {
