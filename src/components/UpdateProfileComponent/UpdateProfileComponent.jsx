@@ -248,7 +248,7 @@ const UpdateProfileComponent = () => {
 
     return (
         <div className={styles.container}>
-            <div className={styles.form_wrapperr}>
+            <div className={styles.form_wrapper}>
                 <div className={styles.title_container}>
                     <h2 className={styles.form_title}>Update Your Portfolio</h2>
                     <h3 className={styles.form_subtitle}>
