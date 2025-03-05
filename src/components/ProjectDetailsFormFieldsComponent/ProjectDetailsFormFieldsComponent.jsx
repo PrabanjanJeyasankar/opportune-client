@@ -13,12 +13,14 @@ const ProjectDetailsFormFieldsComponent = ({
     handleSubmit,
     loading,
     buttonLabel = "Submit Project",
+    existingThumbnailUrl = null,
+    headingTitle = "Submit your project",
 }) => {
     return (
         <div className={styles.container}>
             <div className={styles.form_wrapper}>
                 <div className={styles.title_container}>
-                    <h2 className={styles.form_title}>Submit Your Project</h2>
+                    <h2 className={styles.form_title}>{headingTitle}</h2>
                     <h3 className={styles.form_subtitle}>
                         ( * are required field)
                     </h3>
@@ -96,6 +98,7 @@ const ProjectDetailsFormFieldsComponent = ({
                         <div className={styles.label}>Thumbnail *</div>
                         <ThumbnailUploadComponent
                             thumbnail={formData.thumbnail}
+                            existingImageUrl={existingThumbnailUrl}
                             handleInputChange={handleInputChange}
                             error={errors.thumbnail}
                             placeholderText="Upload thumbnail (max 2MB)"

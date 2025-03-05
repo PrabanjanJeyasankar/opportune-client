@@ -1,12 +1,12 @@
-import ButtonComponent from "@/elements/ButtonComponent/ButtonComponent"
-import InputComponent from "@/elements/InputComponent/InputComponent"
-import { toast } from "@/hooks/use-toast"
-import userProfileService from "@/services/userProfileservice"
-import updateProfileValidation from "@/utils/updateProfileValidation"
-import React, { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import ThumbnailUploadComponent from "../ThumbnailUploadComponent/ThumbnailUploadComponent"
-import styles from "../UpdateProfileComponent/UpdateProfileComponent.module.css"
+import ButtonComponent from "@/elements/ButtonComponent/ButtonComponent";
+import InputComponent from "@/elements/InputComponent/InputComponent";
+import { toast } from "@/hooks/use-toast";
+import userProfileService from "@/services/userProfileservice";
+import updateProfileValidation from "@/utils/updateProfileValidation";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import ThumbnailUploadComponent from "../ThumbnailUploadComponent/ThumbnailUploadComponent";
+import styles from "../UpdateProfileComponent/UpdateProfileComponent.module.css";
 
 const UpdateProfileComponent = () => {
     const [formData, setFormData] = useState({
@@ -30,23 +30,22 @@ const UpdateProfileComponent = () => {
             { domain: "codechef", url: "" },
             { domain: "geeksforgeeks", url: "" },
         ],
-    })
+    });
     const [existingProfilePictureUrl, setExistingProfilePictureUrl] =
-        useState(null)
-    const [errors, setErrors] = useState({})
-    const [loading, setLoading] = useState(false)
-    const navigate = useNavigate()
-    const [originalData, setOriginalData] = useState(null)
+        useState(null);
+    const [errors, setErrors] = useState({});
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
+    const [originalData, setOriginalData] = useState(null);
 
     useEffect(() => {
         userProfileService
             .getUserProfile()
             .then((response) => {
                 if (response.status === 200) {
-                    const userData = response.data.data[0]
-
+                    const userData = response.data.data[0];
                     if (userData.profilePicture) {
-                        setExistingProfilePictureUrl(userData.profilePicture)
+                        setExistingProfilePictureUrl(userData.profilePicture);
                     }
 
                     const formattedData = {
@@ -68,47 +67,48 @@ const UpdateProfileComponent = () => {
                                     (a) => a.domain === acc.domain
                                 )?.url || "",
                         })),
-                    }
-                    setFormData(formattedData)
-                    setOriginalData(JSON.parse(JSON.stringify(formattedData)))
+                    };
+                    setFormData(formattedData);
+                    toast({ description: "Restored your previous work" });
+                    setOriginalData(JSON.parse(JSON.stringify(formattedData)));
                 }
             })
             .catch((error) => {
-                console.error(error)
-            })
-    }, [])
+                console.error(error);
+            });
+    }, []);
 
     const handleInputChange = (event) => {
-        const { name, type, files, value } = event.target
+        const { name, type, files, value } = event.target;
         if (type === "file") {
             if (files && files[0]) {
                 if (files[0].size > 2 * 1024 * 1024) {
-                    toast({ description: "File size should not exceed 2MB." })
+                    toast({ description: "File size should not exceed 2MB." });
                 } else {
                     setFormData((prevData) => ({
                         ...prevData,
                         profilePicture: files[0],
-                    }))
+                    }));
                 }
             }
         } else {
             setFormData((prevData) => ({
                 ...prevData,
                 [name]: value,
-            }))
+            }));
         }
-    }
+    };
 
     const handleAccountChange = (index, value) => {
         setFormData((prev) => {
-            const updatedAccounts = [...prev.accounts]
-            updatedAccounts[index].url = value
-            return { ...prev, accounts: updatedAccounts }
-        })
-    }
+            const updatedAccounts = [...prev.accounts];
+            updatedAccounts[index].url = value;
+            return { ...prev, accounts: updatedAccounts };
+        });
+    };
 
     const isFormUnchanged = () => {
-        if (!originalData) return false
+        if (!originalData) return false;
 
         if (
             formData.professionalTitle !== originalData.professionalTitle ||
@@ -120,135 +120,144 @@ const UpdateProfileComponent = () => {
                 originalData.professionalExperience ||
             formData.profilePicture !== null
         ) {
-            return false
+            return false;
         }
 
-        const formDataNonEmptyAccounts = formData.accounts.filter(account => account.url.trim() !== "")
-        const originalDataNonEmptyAccounts = originalData.accounts.filter(account => account.url.trim() !== "")
-        
-        if (formDataNonEmptyAccounts.length !== originalDataNonEmptyAccounts.length) {
-            return false
+        const formDataNonEmptyAccounts = formData.accounts.filter(
+            (account) => account.url.trim() !== ""
+        );
+        const originalDataNonEmptyAccounts = originalData.accounts.filter(
+            (account) => account.url.trim() !== ""
+        );
+
+        if (
+            formDataNonEmptyAccounts.length !==
+            originalDataNonEmptyAccounts.length
+        ) {
+            return false;
         }
-        
+
         for (const formAccount of formDataNonEmptyAccounts) {
             const originalAccount = originalDataNonEmptyAccounts.find(
-                acc => acc.domain === formAccount.domain
-            )
-            
+                (acc) => acc.domain === formAccount.domain
+            );
+
             if (!originalAccount || originalAccount.url !== formAccount.url) {
-                return false
+                return false;
             }
         }
 
-        return true
-    }
+        return true;
+    };
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
 
         if (originalData && isFormUnchanged()) {
             toast({
                 description:
                     "No changes detected. Please edit the form before submitting.",
-            })
-            return
+            });
+            return;
         }
         const cleanedFormData = {
             ...formData,
             accounts: formData.accounts.filter(
                 (account) => account.url.trim() !== ""
             ),
-        }
+        };
 
-        const validationErrors = updateProfileValidation(cleanedFormData)
+        const validationErrors = updateProfileValidation(cleanedFormData);
 
         if (Object.keys(validationErrors).length > 0) {
-            setErrors(validationErrors)
-            return
+            setErrors(validationErrors);
+            return;
         }
-        setLoading(true)
-        setErrors({})
+        setLoading(true);
+        setErrors({});
 
-        const formDataObj = new FormData()
-        formDataObj.append("professionalTitle", formData.professionalTitle)
-        formDataObj.append("bio", formData.bio)
-        formDataObj.append("portfolioLink", formData.portfolioLink)
-        formDataObj.append("resumeLink", formData.resumeLink)
-        formDataObj.append("passedOutYear", formData.passedOutYear)
+        const formDataObj = new FormData();
+        formDataObj.append("professionalTitle", formData.professionalTitle);
+        formDataObj.append("bio", formData.bio);
+        formDataObj.append("portfolioLink", formData.portfolioLink);
+        formDataObj.append("resumeLink", formData.resumeLink);
+        formDataObj.append("passedOutYear", formData.passedOutYear);
         formDataObj.append(
             "professionalExperience",
             formData.professionalExperience
-        )
+        );
 
         if (formData.profilePicture) {
-            formDataObj.append("profilePicture", formData.profilePicture)
+            formDataObj.append("profilePicture", formData.profilePicture);
         } else if (existingProfilePictureUrl) {
             formDataObj.append(
                 "existingProfilePicture",
                 existingProfilePictureUrl
-            )
+            );
         }
 
         const nonEmptyAccounts = formData.accounts.filter(
             (account) => account.url.trim() !== ""
-        )
+        );
 
         nonEmptyAccounts.forEach((account, index) => {
-            formDataObj.append(`accounts[${index}][domain]`, account.domain)
-            formDataObj.append(`accounts[${index}][url]`, account.url)
-        })
+            formDataObj.append(`accounts[${index}][domain]`, account.domain);
+            formDataObj.append(`accounts[${index}][url]`, account.url);
+        });
 
         try {
-            const response = await userProfileService.updateProfile(formDataObj)
+            const response = await userProfileService.updateProfile(
+                formDataObj
+            );
             if (response.status === 200) {
-                toast({ description: "Profile updated successfully." })
+                toast({ description: "Profile updated successfully." });
 
-                const username = response.data.data.username
-                navigate(`/portfolio/${username}`)
+                const username = response.data.data.username;
+                navigate(`/portfolio/${username}`);
                 if (response.data.data && response.data.data.profilePicture) {
                     setExistingProfilePictureUrl(
                         response.data.data.profilePicture
-                    )
+                    );
                 }
 
                 setFormData((prev) => ({
                     ...prev,
                     profilePicture: null,
-                }))
+                }));
             } else {
-                setErrors(response.data.errors || {})
+                setErrors(response.data.errors || {});
             }
         } catch (error) {
             if (!navigator.onLine) {
                 toast({
                     description:
                         "No internet connection. Please check your network.",
-                })
+                });
             }
             if (!error.response) {
                 toast({
                     description:
                         "No internet connection. Please check your network.",
-                })
+                });
             } else if (error.response.status === 500) {
-                toast({ description: "Server error. Please try again later." })
+                toast({ description: "Server error. Please try again later." });
             } else if (error.response.status === 401) {
-                toast({ description: "Unauthorized access" })
+                toast({ description: "Unauthorized access" });
             } else if (error.response.status === 503) {
-                toast({ description: "Server error. Please try again later." })
+                toast({ description: "Server error. Please try again later." });
             } else {
                 toast({
                     description: "Something went wrong. Please try again.",
-                })
+                });
             }
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
-    }
+    };
 
     return (
         <div className={styles.container}>
-            <div className={styles.form_wrapper}>
+            <div className={styles.form_wrapperr}>
                 <div className={styles.title_container}>
                     <h2 className={styles.form_title}>Update Your Portfolio</h2>
                     <h3 className={styles.form_subtitle}>
@@ -404,7 +413,7 @@ const UpdateProfileComponent = () => {
                         {formData.accounts.map((account, index) => {
                             const accountError = errors.accounts?.find(
                                 (err) => err.domain === account.domain
-                            )
+                            );
 
                             return (
                                 <div
@@ -441,7 +450,7 @@ const UpdateProfileComponent = () => {
                                         </p>
                                     )}
                                 </div>
-                            )
+                            );
                         })}
 
                         {errors.general && (
@@ -460,7 +469,7 @@ const UpdateProfileComponent = () => {
                 </form>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default UpdateProfileComponent
+export default UpdateProfileComponent;

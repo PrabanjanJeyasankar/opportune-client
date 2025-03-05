@@ -1,47 +1,58 @@
-import axiosInstance from '../utils/axiosInstance'
+import axiosInstance from "../utils/axiosInstance";
 
 const projectService = {
     postProjectData: async (formData) => {
-        const response = await axiosInstance.post('/project', formData)
-        return response
+        const response = await axiosInstance.post("/project", formData);
+        return response;
     },
 
     tagSelectionGetMethod: async (term) => {
-        const response = await axiosInstance.get('/project/tag', {
+        const response = await axiosInstance.get("/project/tag", {
             params: { keyword: term },
-        })
-        return response
+        });
+        return response;
     },
     upvoteProject: async (projectSlug) => {
         const response = await axiosInstance.post(
             `/project/${projectSlug}/upvote`
-        )
-        return response
+        );
+        return response;
     },
 
     deleteUpvoteProject: async (projectSlug) => {
         const response = await axiosInstance.delete(
             `/project/${projectSlug}/upvote`
-        )
-        return response
+        );
+        return response;
     },
 
     retirevePortfolioDataByUsername: async (username) => {
         const response = await axiosInstance.get(
             `/project/portfolio/${username}`
-        )
-        return response
+        );
+        return response;
     },
 
     retrieveAllProjectByUsername: async (username) => {
-        const response = await axiosInstance.get(`/project/${username}`)
-        return response
+        const response = await axiosInstance.get(`/project/${username}`);
+        return response;
     },
 
     retrieveProjectBySlug: async (username, slug) => {
-        const response = await axiosInstance.get(`/project/${username}/${slug}`)
-        return response
+        const response = await axiosInstance.get(
+            `/project/${username}/${slug}`
+        );
+        return response;
     },
-}
 
-export default projectService
+    editProjectBySlug: async (slug, formData) => {
+        console.log("hii"+slug)
+        const response = await axiosInstance.patch(
+            `/project/${slug}`,
+            formData
+        );
+        return response;
+    },  
+};
+
+export default projectService;

@@ -1,5 +1,6 @@
 const ProjectDetailsValidationFrom = (formData) => {
   const errors = {};
+
   if (!formData.title?.trim()) {
     errors.title = "Title is required.";
   } else if (formData.title.trim().length < 3) {
@@ -7,15 +8,15 @@ const ProjectDetailsValidationFrom = (formData) => {
   }
 
   if (!formData.problemStatement?.trim()) {
-    errors.problemStatement = "problem statement is required.";
+    errors.problemStatement = "Problem statement is required.";
   } else if (formData.problemStatement.trim().length < 3) {
-    errors.problemStatement = "problem statement is a mandatory field.";
+    errors.problemStatement = "Problem statement is a mandatory field.";
   }
 
   if (!formData.problemSolution?.trim()) {
-    errors.problemSolution = "problem solution is required.";
+    errors.problemSolution = "Problem solution is required.";
   } else if (formData.problemSolution.trim().length < 3) {
-    errors.problemSolution = "problem solution is a mandatory field.";
+    errors.problemSolution = "Problem solution is a mandatory field.";
   }
 
   if (!formData.description?.trim()) {
@@ -24,9 +25,9 @@ const ProjectDetailsValidationFrom = (formData) => {
     errors.description = "Description must be at least 10 characters long.";
   }
 
-  if (!formData.thumbnail) {
+  if (!formData.thumbnail && !formData.thumbnailUrl) {
     errors.thumbnail = "Thumbnail is required.";
-  } else if (formData.thumbnail.size > 2 * 1024 * 1024) {
+  } else if (formData.thumbnail && formData.thumbnail.size > 2 * 1024 * 1024) {
     errors.thumbnail = "Thumbnail size must not exceed 2MB.";
   }
 
