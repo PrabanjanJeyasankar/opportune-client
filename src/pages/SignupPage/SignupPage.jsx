@@ -131,7 +131,6 @@ function SignupPage() {
         //         console.log(error)
         //         console.log(error?.response?.data)
         //     })
-        console.log('something obn the way')
         window.location.href = 'http://localhost:3500/api/v1/auth/github/login'
     }
 

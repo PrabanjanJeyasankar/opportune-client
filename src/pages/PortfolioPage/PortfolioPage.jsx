@@ -3,7 +3,7 @@ import { toast } from '@/hooks/use-toast'
 import useUserContext from '@/hooks/useUserContext'
 import FloatingAstronautAnimation from '@/loaders/FloatingAstronautAnimation/FloatingAstronautAnimation'
 import InfiniteLoadingAnimation from '@/loaders/InfiniteLoadingAnimation/InfiniteLoadingAnimation'
-import projectService from '@/services/projectService'
+import userProfileService from '@/services/userProfileservice'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import ContactSectionComponent from './ContactSectionComponent/ContactSectionComponent'
@@ -24,7 +24,7 @@ function PortfolioPage() {
     const { isUserLoggedIn, userProfile } = useUserContext()
 
     useEffect(() => {
-        projectService
+        userProfileService
             .retirevePortfolioDataByUsername(username)
             .then((response) => {
                 const portfolioData = response.data.data

@@ -49,7 +49,6 @@ function LoginPage() {
                         'userData',
                         JSON.stringify(response.data.data)
                     )
-                    console.log(response.data.data)
                     navigate('/')
                 }
             } catch (error) {

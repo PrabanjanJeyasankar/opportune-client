@@ -1,6 +1,5 @@
 const updateProfileValidation = (formData) => {
     const errors = {}
-    console.log('Starting validation with full form data:', formData)
 
     if (!formData) {
         return { general: 'Form data is missing or invalid.' }
@@ -17,7 +16,6 @@ const updateProfileValidation = (formData) => {
     if (!formData.professionalTitle || !formData.professionalTitle.trim()) {
         errors.professionalTitle = '*Professional title is required.'
     }
-    console.log(formData.professionalTitle)
 
     if (!formData.bio || !formData.bio.trim()) {
         errors.bio = 'Let this world know what you are really made of'
@@ -47,17 +45,12 @@ const updateProfileValidation = (formData) => {
 
     const accountErrors = []
 
-    console.log('Checking all accounts:', formData.accounts)
-
     const linkedinAccount = formData.accounts.find(
         (acc) => acc.domain === 'linkedin'
     )
     const leetcodeAccount = formData.accounts.find(
         (acc) => acc.domain === 'leetcode'
     )
-
-    console.log('LinkedIn account:', linkedinAccount)
-    console.log('LeetCode account:', leetcodeAccount)
 
     if (!linkedinAccount?.url?.trim()) {
         accountErrors.push({
@@ -83,11 +76,9 @@ const updateProfileValidation = (formData) => {
     })
 
     if (accountErrors.length > 0) {
-        console.log('Account validation errors found:', accountErrors)
         errors.accounts = accountErrors
     }
 
-    console.log('Final validation errors:', errors)
     return errors
 }
 

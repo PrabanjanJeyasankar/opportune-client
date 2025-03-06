@@ -60,7 +60,6 @@ function ProjectDetailsPage() {
     }, [initialProject, params.username, params.projectSlug]);
 
     const handleEditProject = () => {
-        console.log(currentProject)
         navigate(`/edit-project/${currentProject.slug}`, {
             state: { project: currentProject },
         });
