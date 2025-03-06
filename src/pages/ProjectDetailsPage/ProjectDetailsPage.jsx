@@ -63,7 +63,6 @@ function ProjectDetailsPage() {
         navigate(`/edit-project/${currentProject.slug}`, {
             state: { project: currentProject },
         });
-        
     };
 
     const handleViewProfile = () => {

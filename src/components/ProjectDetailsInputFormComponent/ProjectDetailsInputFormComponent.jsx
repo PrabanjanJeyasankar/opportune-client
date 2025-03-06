@@ -3,6 +3,8 @@ import projectService from "../../services/projectService";
 import ProjectDetailsValidationFrom from "../../utils/ProjectDetailsValidationFrom";
 import ProjectDetailsFormFieldsComponent from "../ProjectDetailsFormFieldsComponent/ProjectDetailsFormFieldsComponent";
 import { toast } from "@/hooks/use-toast";
+import useUserContext from "@/hooks/useUserContext";
+import { useNavigate } from "react-router-dom";
 
 const ProjectDetailsInputFormComponent = () => {
     const [formData, setFormData] = useState({
@@ -18,7 +20,10 @@ const ProjectDetailsInputFormComponent = () => {
     });
 
     const [errors, setErrors] = useState({});
+    const [beError, setBeError] = useState(""); // Backend error state
     const [loading, setLoading] = useState(false);
+    const { userProfile } = useUserContext();
+    const navigate = useNavigate();
 
     const handleInputChange = (event) => {
         const { name, type, value, files } = event.target;
@@ -62,6 +67,7 @@ const ProjectDetailsInputFormComponent = () => {
         event.preventDefault();
         const validationErrors = ProjectDetailsValidationFrom(formData);
         setErrors(validationErrors);
+        setBeError(""); // Reset backend error on new submission
 
         if (Object.keys(validationErrors).length === 0) {
             setLoading(true);
@@ -70,24 +76,15 @@ const ProjectDetailsInputFormComponent = () => {
 
                 formDataObj.append("title", formData.title);
                 formDataObj.append("description", formData.description);
-                formDataObj.append(
-                    "problemStatement",
-                    formData.problemStatement
-                );
+                formDataObj.append("problemStatement", formData.problemStatement);
                 formDataObj.append("problemSolution", formData.problemSolution);
                 formDataObj.append("githubLink", formData.githubLink);
 
                 if (formData.hostedLink.trim()) {
-                    formDataObj.append(
-                        "hostedLink",
-                        formData.hostedLink.trim()
-                    );
+                    formDataObj.append("hostedLink", formData.hostedLink.trim());
                 }
                 if (formData.documentation.trim()) {
-                    formDataObj.append(
-                        "documentation",
-                        formData.documentation.trim()
-                    );
+                    formDataObj.append("documentation", formData.documentation.trim());
                 }
 
                 if (formData.thumbnail) {
@@ -98,9 +95,7 @@ const ProjectDetailsInputFormComponent = () => {
                     formDataObj.append("tags[]", tag);
                 });
 
-                const response = await projectService.postProjectData(
-                    formDataObj
-                );
+                const response = await projectService.postProjectData(formDataObj);
 
                 if (response.status === 201) {
                     toast({
@@ -118,6 +113,9 @@ const ProjectDetailsInputFormComponent = () => {
                         hostedLink: "",
                         documentation: "",
                     });
+
+                    const slug = response.data.data.slug;
+                    navigate(`/${userProfile.username}/${slug}`);
                 }
             } catch (error) {
                 console.error("Error submitting project", error);
@@ -131,11 +129,10 @@ const ProjectDetailsInputFormComponent = () => {
                         ...prevErrors,
                         title: "This project title already exists. Please choose another one.",
                     }));
+                } else if (error.response) {
+                    setBeError(error.response.data.message || "An unexpected error occurred.");
                 } else {
-                    toast({
-                        description:
-                            "Failed to submit the project. Please try again!",
-                    });
+                    setBeError("Failed to submit the project. Please try again!");
                 }
             } finally {
                 setLoading(false);
@@ -147,6 +144,7 @@ const ProjectDetailsInputFormComponent = () => {
         <ProjectDetailsFormFieldsComponent
             formData={formData}
             errors={errors}
+            beError={beError} // Passing backend error as prop
             handleInputChange={handleInputChange}
             handleTagClick={handleTagClick}
             handleSubmit={handleSubmit}
