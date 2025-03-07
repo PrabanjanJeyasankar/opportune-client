@@ -1,144 +1,157 @@
-import React, { useState } from "react";
-import projectService from "../../services/projectService";
-import ProjectDetailsValidationFrom from "../../utils/ProjectDetailsValidationFrom";
-import ProjectDetailsFormFieldsComponent from "../ProjectDetailsFormFieldsComponent/ProjectDetailsFormFieldsComponent";
-import { toast } from "@/hooks/use-toast";
-import useUserContext from "@/hooks/useUserContext";
-import { useNavigate } from "react-router-dom";
+import { toast } from '@/hooks/use-toast'
+import useUserContext from '@/hooks/useUserContext'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import projectService from '../../services/projectService'
+import ProjectDetailsValidationFrom from '../../utils/ProjectDetailsValidationFrom'
+import ProjectDetailsFormFieldsComponent from '../ProjectDetailsFormFieldsComponent/ProjectDetailsFormFieldsComponent'
 
 const ProjectDetailsInputFormComponent = () => {
     const [formData, setFormData] = useState({
-        title: "",
-        description: "",
-        problemStatement: "",
-        problemSolution: "",
+        title: '',
+        description: '',
+        problemStatement: '',
+        problemSolution: '',
         thumbnail: null,
         tags: [],
-        githubLink: "",
-        hostedLink: "",
-        documentation: "",
-    });
+        githubLink: '',
+        hostedLink: '',
+        documentation: '',
+    })
 
-    const [errors, setErrors] = useState({});
-    const [beError, setBeError] = useState(""); // Backend error state
-    const [loading, setLoading] = useState(false);
-    const { userProfile } = useUserContext();
-    const navigate = useNavigate();
+    const [errors, setErrors] = useState({})
+    const [beError, setBeError] = useState('') // Backend error state
+    const [loading, setLoading] = useState(false)
+    const { userProfile } = useUserContext()
+    const navigate = useNavigate()
 
     const handleInputChange = (event) => {
-        const { name, type, value, files } = event.target;
+        const { name, type, value, files } = event.target
 
-        if (type === "file") {
+        if (type === 'file') {
             if (files && files[0]) {
-                const file = files[0];
+                const file = files[0]
                 if (file.size > 2 * 1024 * 1024) {
-                    toast({ description: "File size should not exceed 2MB." });
-                    return;
+                    toast({ description: 'File size should not exceed 2MB.' })
+                    return
                 }
 
                 setFormData((prevData) => ({
                     ...prevData,
                     thumbnail: file,
-                }));
+                }))
             }
         } else {
             setFormData((prevData) => ({
                 ...prevData,
                 [name]: value,
-            }));
+            }))
         }
-    };
+    }
 
     const handleTagClick = (tag) => {
         setFormData((prevData) => {
-            let newTags = [...prevData.tags];
+            let newTags = [...prevData.tags]
 
             if (newTags.includes(tag)) {
-                newTags = newTags.filter((t) => t !== tag);
+                newTags = newTags.filter((t) => t !== tag)
             } else if (newTags.length < 3) {
-                newTags.push(tag);
+                newTags.push(tag)
             }
 
-            return { ...prevData, tags: newTags };
-        });
-    };
+            return { ...prevData, tags: newTags }
+        })
+    }
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
-        const validationErrors = ProjectDetailsValidationFrom(formData);
-        setErrors(validationErrors);
-        setBeError(""); // Reset backend error on new submission
+        event.preventDefault()
+        const validationErrors = ProjectDetailsValidationFrom(formData)
+        setErrors(validationErrors)
+        setBeError('') // Reset backend error on new submission
 
         if (Object.keys(validationErrors).length === 0) {
-            setLoading(true);
+            setLoading(true)
             try {
-                const formDataObj = new FormData();
+                const formDataObj = new FormData()
 
-                formDataObj.append("title", formData.title);
-                formDataObj.append("description", formData.description);
-                formDataObj.append("problemStatement", formData.problemStatement);
-                formDataObj.append("problemSolution", formData.problemSolution);
-                formDataObj.append("githubLink", formData.githubLink);
+                formDataObj.append('title', formData.title)
+                formDataObj.append('description', formData.description)
+                formDataObj.append(
+                    'problemStatement',
+                    formData.problemStatement
+                )
+                formDataObj.append('problemSolution', formData.problemSolution)
+                formDataObj.append('githubLink', formData.githubLink)
 
                 if (formData.hostedLink.trim()) {
-                    formDataObj.append("hostedLink", formData.hostedLink.trim());
+                    formDataObj.append('hostedLink', formData.hostedLink.trim())
                 }
                 if (formData.documentation.trim()) {
-                    formDataObj.append("documentation", formData.documentation.trim());
+                    formDataObj.append(
+                        'documentation',
+                        formData.documentation.trim()
+                    )
                 }
 
                 if (formData.thumbnail) {
-                    formDataObj.append("thumbnail", formData.thumbnail);
+                    formDataObj.append('thumbnail', formData.thumbnail)
                 }
 
                 formData.tags.forEach((tag) => {
-                    formDataObj.append("tags[]", tag);
-                });
+                    formDataObj.append('tags[]', tag)
+                })
 
-                const response = await projectService.postProjectData(formDataObj);
+                const response = await projectService.postProjectData(
+                    formDataObj
+                )
 
                 if (response.status === 201) {
                     toast({
-                        description: "🎉 Project submitted successfully!",
-                    });
+                        description: '🎉 Project submitted successfully!',
+                    })
 
                     setFormData({
-                        title: "",
-                        description: "",
-                        problemStatement: "",
-                        problemSolution: "",
+                        title: '',
+                        description: '',
+                        problemStatement: '',
+                        problemSolution: '',
                         thumbnail: null,
                         tags: [],
-                        githubLink: "",
-                        hostedLink: "",
-                        documentation: "",
-                    });
+                        githubLink: '',
+                        hostedLink: '',
+                        documentation: '',
+                    })
 
-                    const slug = response.data.data.slug;
-                    navigate(`/${userProfile.username}/${slug}`);
+                    const slug = response.data.data.slug
+                    navigate(`/${userProfile.username}/${slug}`)
                 }
             } catch (error) {
-                console.error("Error submitting project", error);
+                console.error('Error submitting project', error)
 
                 if (
                     error.response &&
                     error.response.status === 409 &&
-                    error.response.data.error === "existing_project_title"
+                    error.response.data.error === 'existing_project_title'
                 ) {
                     setErrors((prevErrors) => ({
                         ...prevErrors,
-                        title: "This project title already exists. Please choose another one.",
-                    }));
+                        title: 'This project title already exists. Please choose another one.',
+                    }))
                 } else if (error.response) {
-                    setBeError(error.response.data.message || "An unexpected error occurred.");
+                    setBeError(
+                        error.response.data.message ||
+                            'An unexpected error occurred.'
+                    )
                 } else {
-                    setBeError("Failed to submit the project. Please try again!");
+                    setBeError(
+                        'Failed to submit the project. Please try again!'
+                    )
                 }
             } finally {
-                setLoading(false);
+                setLoading(false)
             }
         }
-    };
+    }
 
     return (
         <ProjectDetailsFormFieldsComponent
@@ -150,7 +163,7 @@ const ProjectDetailsInputFormComponent = () => {
             handleSubmit={handleSubmit}
             loading={loading}
         />
-    );
-};
+    )
+}
 
-export default ProjectDetailsInputFormComponent;
+export default ProjectDetailsInputFormComponent

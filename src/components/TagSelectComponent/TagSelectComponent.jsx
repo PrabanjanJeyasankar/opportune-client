@@ -6,7 +6,6 @@ import styles from '../TagSelectComponent/TagSelectComponent.module.css'
 const TagSelectComponent = ({ handleTagClick, selectedTags, error }) => {
     const [searchTerm, setSearchTerm] = useState('')
     const [suggestedTags, setSuggestedTags] = useState([])
-    const [loading, setLoading] = useState(false)
     const [warning, setWarning] = useState('')
 
     useEffect(() => {
@@ -21,20 +20,17 @@ const TagSelectComponent = ({ handleTagClick, selectedTags, error }) => {
         return () => clearTimeout(delayDebounceFn)
     }, [searchTerm])
 
-    const fetchSuggestedTags = async (term) => {
-        setLoading(true)
-        try {
-            const response = await projectService.tagSelectionGetMethod(
-                term
-            )
-            const tags = response.data.data.map((item) => item.tag)
-            setSuggestedTags(tags)
-        } catch (error) {
-            console.error('Error fetching tags:', error)
-            setSuggestedTags([])
-        } finally {
-            setLoading(false)
-        }
+    const fetchSuggestedTags = (term) => {
+        projectService
+            .tagSelectionGetMethod(term)
+            .then((response) => {
+                const tags = response.data.data.map((item) => item.tag)
+                setSuggestedTags(tags)
+            })
+            .catch((error) => {
+                console.error('Error fetching tags:', error)
+                setSuggestedTags([])
+            })
     }
 
     const handleAddTag = (tag) => {
@@ -69,6 +65,7 @@ const TagSelectComponent = ({ handleTagClick, selectedTags, error }) => {
                     onChange={(event) => setSearchTerm(event.target.value)}
                     className={styles.search_input}
                 />
+
                 {suggestedTags.length > 0 && (
                     <div className={styles.suggestions}>
                         {suggestedTags.map((tag) => (

@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './ProfileSectionComponent.module.css'
 
 function ProfileSectionComponent({ name, title }) {

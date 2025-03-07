@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './UserBioComponent.module.css'
 
 function UserBioComponent({ portfolioBio }) {

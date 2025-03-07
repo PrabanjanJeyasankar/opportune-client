@@ -1,4 +1,3 @@
-import React from 'react'
 import styles from './PortfolioProjectCardComponent.module.css'
 
 function PortfolioProjectCardComponent({ projects }) {

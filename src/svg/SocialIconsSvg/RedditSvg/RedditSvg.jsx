@@ -1,5 +1,3 @@
-import React from 'react'
-
 function RedditSvg() {
     return (
         <svg
