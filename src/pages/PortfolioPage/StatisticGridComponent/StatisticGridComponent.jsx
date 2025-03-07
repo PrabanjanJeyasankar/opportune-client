@@ -4,8 +4,9 @@ function StatisticGridComponent({
     totalUpvoteCount = 0,
     totalProjectCount = 0,
     professionalExperience,
-    skills = ['HTML', 'CSS', 'Java Script'],
+    skills,
 }) {
+    console.log(skills)
     return (
         <div className={styles.resume_social_container}>
             <div className={styles.count_and_skills_container}>

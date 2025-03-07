@@ -28,6 +28,7 @@ function PortfolioPage() {
             .retirevePortfolioDataByUsername(username)
             .then((response) => {
                 const portfolioData = response.data.data
+                console.log(portfolioData)
                 setUserProfileData(portfolioData)
             })
             .catch((error) => {
@@ -134,8 +135,11 @@ function PortfolioPage() {
                     <div className={styles.stats_skills_container}>
                         <StatisticGridComponent
                             professionalExperience={
-                                userProfileData?.professionalExperience || 0
+                                userProfileData?.professionalExperience
                             }
+                            totalUpvoteCount={userProfileData?.totalUpvoteCount}
+                            totalProjects={userProfileData?.totalProjects}
+                            skills={userProfileData?.skills}
                         />
                     </div>
                 </div>
