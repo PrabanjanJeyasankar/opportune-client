@@ -75,9 +75,7 @@ function StarryMotionComponent() {
         }
     }, [])
 
-    return (
-        <canvas ref={canvasRef} id={starryMotionStyles.universeCanvas}></canvas>
-    )
+    return <canvas ref={canvasRef} id={starryMotionStyles.universeCanvas} />
 }
 
 export default StarryMotionComponent

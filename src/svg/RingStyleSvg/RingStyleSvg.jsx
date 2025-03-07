@@ -10,7 +10,8 @@ const RingStyleSvg = () => {
                 stroke='white'
                 strokeWidth='4'
                 strokeLinecap='round'
-                strokeLinejoin='round'></path>
+                strokeLinejoin='round'
+            />
         </svg>
     )
 }

@@ -139,9 +139,9 @@ const HomeFeedProjectsComponent = () => {
                     </div>
                 ) : (
                     <div className={styles.divider_container}>
-                        <div className={styles.divider_stripe_left}></div>
+                        <div className={styles.divider_stripe_left} />
                         <p className={styles.end_of_results}>End of results</p>
-                        <div className={styles.divider_stripe_right}></div>
+                        <div className={styles.divider_stripe_right} />
                     </div>
                 )
             ) : null}

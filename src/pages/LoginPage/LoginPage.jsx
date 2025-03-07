@@ -173,7 +173,7 @@ function LoginPage() {
                 </PrimaryButtonComponent>
 
                 <div className={loginStyles.continue_with_container}>
-                    <div className={loginStyles.continue_with_stripe}></div>
+                    <div className={loginStyles.continue_with_stripe} />
                     <p className={loginStyles.continue_with_text}>
                         or continue with
                     </p>

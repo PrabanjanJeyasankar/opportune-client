@@ -1,16 +1,10 @@
 import { toast } from '@/hooks/use-toast'
 import useUserContext from '@/hooks/useUserContext'
-import { Suspense, lazy } from 'react'
-const FloatingAstronautAnimation = lazy(() =>
-    import('@/loaders/FloatingAstronautAnimation/FloatingAstronautAnimation')
-)
-
-// import FloatingAstronautAnimation from '@/loaders/FloatingAstronautAnimation/FloatingAstronautAnimation'
 import projectService from '@/services/projectService'
 import NumberFlow from '@number-flow/react'
 import { useQueryClient } from '@tanstack/react-query'
 import PropTypes from 'prop-types'
-import { useCallback, useEffect, useState } from 'react'
+import { Suspense, lazy, useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ImageComponent from '../../elements/ImageComponent/ImageComponent'
 import ShareIconSvg from '../../svg/ShareIconSvg/ShareIconSvg'
@@ -18,9 +12,10 @@ import UpvoteIconSvg from '../../svg/UpvoteIconSvg/UpvoteIconSvg'
 import SharePopoverComponent from '../SupportingComponents/SharePopoverComponent/SharePopoverComponent'
 import SkeletonCardComponent from '../SupportingComponents/SkeletonCardComponent/SkeletonCardComponent'
 import styles from './ProjectCardComponent.module.css'
+const FloatingAstronautAnimation = lazy(() =>
+    import('@/loaders/FloatingAstronautAnimation/FloatingAstronautAnimation')
+)
 
-// Constants
-const PROJECT_QUERY_PREFIXES = ['projects', 'project']
 const PREDEFINED_QUERY_KEYS = [
     ['projects'],
     ['projects', 'all'],

@@ -1,17 +1,17 @@
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import ButtonComponent from "../../elements/ButtonComponent/ButtonComponent";
-import ImageComponent from "../../elements/ImageComponent/ImageComponent";
-import styles from "./ProjectDetailsPage.module.css";
+import { motion } from 'framer-motion'
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import ButtonComponent from '../../elements/ButtonComponent/ButtonComponent'
+import ImageComponent from '../../elements/ImageComponent/ImageComponent'
+import styles from './ProjectDetailsPage.module.css'
 
-import MoreProjectsByUser from "@/components/MoreProjectsByUser/MoreProjectsByUser";
-import ProjectMetaComponent from "@/components/ProjectMetaComponent/ProjectMetaComponent";
-import MetaTagsComponent from "@/components/SupportingComponents/MetaTagsComponent/MetaTagsComponent";
-import useUserContext from "@/hooks/useUserContext";
-import projectService from "@/services/projectService";
-import EditPenSvg from "@/svg/EditPenSvg/EditPenSvg";
-import EyeShowSVG from "@/svg/EyeShowSVG/EyeShowSVG";
+import MoreProjectsByUser from '@/components/MoreProjectsByUser/MoreProjectsByUser'
+import ProjectMetaComponent from '@/components/ProjectMetaComponent/ProjectMetaComponent'
+import MetaTagsComponent from '@/components/SupportingComponents/MetaTagsComponent/MetaTagsComponent'
+import useUserContext from '@/hooks/useUserContext'
+import projectService from '@/services/projectService'
+import EditPenSvg from '@/svg/EditPenSvg/EditPenSvg'
+import EyeShowSVG from '@/svg/EyeShowSVG/EyeShowSVG'
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -22,7 +22,7 @@ const containerVariants = {
             delayChildren: 0.1,
         },
     },
-};
+}
 
 const itemVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -31,59 +31,58 @@ const itemVariants = {
         y: 0,
         transition: {
             duration: 0.6,
-            ease: "easeOut",
+            ease: 'easeOut',
         },
     },
-};
+}
 
 function ProjectDetailsPage() {
-    const location = useLocation();
-    const navigate = useNavigate();
-    const params = useParams();
+    const location = useLocation()
+    const navigate = useNavigate()
+    const params = useParams()
 
-    const initialProject = location.state?.project;
-    const [currentProject, setCurrentProject] = useState(initialProject);
+    const initialProject = location.state?.project
+    const [currentProject, setCurrentProject] = useState(initialProject)
 
-    const { userProfile } = useUserContext();
+    const { userProfile } = useUserContext()
 
     useEffect(() => {
         if (!initialProject && params.username && params.projectSlug) {
             projectService
                 .retrieveProjectBySlug(params.username, params.projectSlug)
                 .then((response) => {
-                    setCurrentProject(response.data.data);
+                    setCurrentProject(response.data.data)
                 })
                 .catch((error) => {
-                    console.error("Error fetching project data:", error);
-                });
+                    console.error('Error fetching project data:', error)
+                })
         }
-    }, [initialProject, params.username, params.projectSlug]);
+    }, [initialProject, params.username, params.projectSlug])
 
     const handleEditProject = () => {
         navigate(`/edit-project/${currentProject.slug}`, {
             state: { project: currentProject },
-        });
-    };
+        })
+    }
 
     const handleViewProfile = () => {
-        navigate(`/portfolio/${currentProject?.authorDetails?.name}`);
-    };
+        navigate(`/portfolio/${currentProject?.authorDetails?.name}`)
+    }
 
     if (!currentProject) {
-        return <div className={styles.error}>Project not found</div>;
+        return <div className={styles.error}>Project not found</div>
     }
 
     return (
         <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={containerVariants}
-        >
+            initial='hidden'
+            animate='visible'
+            variants={containerVariants}>
             <MetaTagsComponent
                 title={`${currentProject.title} by ${currentProject.authorDetails.name} | MyPlatform`}
                 description={
                     currentProject.description ||
-                    "Check out this amazing project!"
+                    'Check out this amazing project!'
                 }
                 image={currentProject.thumbnailUrl}
                 url={window.location.href}
@@ -93,13 +92,12 @@ function ProjectDetailsPage() {
                     <header className={styles.header}>
                         <div
                             className={styles.profile_section}
-                            onClick={handleViewProfile}
-                        >
+                            onClick={handleViewProfile}>
                             <ImageComponent
                                 src={
                                     currentProject?.authorDetails.profilePicture
                                 }
-                                alt="Profile"
+                                alt='Profile'
                                 className={styles.avatar}
                             />
                             <div className={styles.info}>
@@ -117,8 +115,7 @@ function ProjectDetailsPage() {
                             currentProject?.authorDetails.name ? (
                                 <ButtonComponent
                                     onClick={handleEditProject}
-                                    className={styles.edit_project_button}
-                                >
+                                    className={styles.edit_project_button}>
                                     <EditPenSvg />
                                     <span className={styles.edit_button_text}>
                                         Edit Project
@@ -127,8 +124,7 @@ function ProjectDetailsPage() {
                             ) : (
                                 <ButtonComponent
                                     onClick={handleViewProfile}
-                                    className={styles.view_profile_button}
-                                >
+                                    className={styles.view_profile_button}>
                                     <EyeShowSVG />
                                     View Profile
                                 </ButtonComponent>
@@ -142,7 +138,7 @@ function ProjectDetailsPage() {
                 </motion.div>
 
                 <motion.div variants={itemVariants}>
-                    <div className={styles.separator}></div>
+                    <div className={styles.separator} />
                     {currentProject && (
                         <div className={styles.more_projects_container}>
                             <MoreProjectsByUser
@@ -156,7 +152,7 @@ function ProjectDetailsPage() {
                 </motion.div>
             </section>
         </motion.div>
-    );
+    )
 }
 
-export default ProjectDetailsPage;
+export default ProjectDetailsPage

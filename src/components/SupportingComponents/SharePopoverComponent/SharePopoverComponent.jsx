@@ -226,9 +226,9 @@ function SharePopoverComponent({ isOpen, onClose, project }) {
                         </div>
                     )}
                     <div className={styles.divider_container}>
-                        <div className={styles.divider_stripe_left}></div>
+                        <div className={styles.divider_stripe_left} />
                         <p className={styles.divider_text}>or</p>
-                        <div className={styles.divider_stripe_right}></div>
+                        <div className={styles.divider_stripe_right} />
                     </div>
                     <div className={styles.social_icons}>
                         <ButtonComponent
