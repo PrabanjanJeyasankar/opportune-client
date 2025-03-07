@@ -124,6 +124,32 @@ const EmptyState = ({ searchTerm }) => (
     </div>
 )
 
+const handleUpvoteError = (error, navigate) => {
+    console.error('Upvote error:', error)
+
+    if (error.response) {
+        const status = error.response.status
+        if (status === 401) {
+            toast({
+                description: 'Please login to upvote.',
+            })
+            navigate('/login')
+        } else if (status === 500) {
+            toast({
+                description: 'Server error, please try again later',
+            })
+        }
+    } else if (error.request) {
+        toast({
+            description: 'Network error. Check your connection.',
+        })
+    } else {
+        toast({
+            description: 'Unexpected error. Please try again later.',
+        })
+    }
+}
+
 const ProjectCard = ({ project }) => {
     const [isUpvoted, setIsUpvoted] = useState(project.isUserLiked || false)
     const [upvoteCount, setUpvoteCount] = useState(project.upvoteCount || 0)
@@ -288,32 +314,6 @@ const ProjectCard = ({ project }) => {
             )}
         </div>
     )
-}
-
-const handleUpvoteError = (error, navigate) => {
-    console.error('Upvote error:', error)
-
-    if (error.response) {
-        const status = error.response.status
-        if (status === 401) {
-            toast({
-                description: 'Please login to upvote.',
-            })
-            navigate('/login')
-        } else if (status === 500) {
-            toast({
-                description: 'Server error, please try again later',
-            })
-        }
-    } else if (error.request) {
-        toast({
-            description: 'Network error. Check your connection.',
-        })
-    } else {
-        toast({
-            description: 'Unexpected error. Please try again later.',
-        })
-    }
 }
 
 // PropTypes
