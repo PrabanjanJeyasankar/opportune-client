@@ -7,7 +7,6 @@ import HomeFeedResetContextProvider from './context/HomeFeedResetContext'
 import { UserProvider } from './context/userContext'
 import InitialLoadingAnimation from './loaders/InitialLoadingAnimation/InitialLoadingAnimation'
 import AppRoutes from './routes/AppRoutes'
-import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary'
 
 function App() {
     const [loading, setLoading] = useState(() => {
@@ -41,11 +40,10 @@ function App() {
         </HomeFeedResetContextProvider>
     )
 
-    return process.env.NODE_ENV === 'production' ? (
-        <ErrorBoundary>{AppContent}</ErrorBoundary>
-    ) : (
-        AppContent
-    )
+    return process.env.NODE_ENV === 'production'
+        ? // <ErrorBoundary>{AppContent}</ErrorBoundary>
+          AppContent
+        : AppContent
 }
 
 export default App

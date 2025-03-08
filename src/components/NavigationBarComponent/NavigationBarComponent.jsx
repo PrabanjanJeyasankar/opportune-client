@@ -30,6 +30,7 @@ const NavigationBarComponent = () => {
             .logout()
             .then(() => {
                 localStorage.removeItem('userData')
+                localStorage.removeItem('isUserLoggedIn')
 
                 setIsUserLoggedIn(false)
                 setUserProfile({})
@@ -178,7 +179,7 @@ const NavigationBarComponent = () => {
                                             }
                                             onClick={() => {
                                                 setIsDropdownOpen(false)
-                                                setIsMenuOpen(false) 
+                                                setIsMenuOpen(false)
                                             }}>
                                             <UserRoundSvg />
                                             <span>My Portfolio</span>
@@ -190,7 +191,7 @@ const NavigationBarComponent = () => {
                                             }
                                             onClick={() => {
                                                 setIsDropdownOpen(false)
-                                                setIsMenuOpen(false) 
+                                                setIsMenuOpen(false)
                                             }}>
                                             <EditPenSvg />
                                             <span>Edit Portfolio</span>
@@ -202,7 +203,7 @@ const NavigationBarComponent = () => {
                                             onClick={() => {
                                                 logout()
                                                 setIsDropdownOpen(false)
-                                                setIsMenuOpen(false) 
+                                                setIsMenuOpen(false)
                                             }}>
                                             <LogoutSvg />
                                             <span>Logout</span>
