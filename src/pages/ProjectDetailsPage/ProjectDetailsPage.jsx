@@ -12,6 +12,7 @@ import useUserContext from '@/hooks/useUserContext'
 import projectService from '@/services/projectService'
 import EditPenSvg from '@/svg/EditPenSvg/EditPenSvg'
 import EyeShowSVG from '@/svg/EyeShowSVG/EyeShowSVG'
+import useIncrementProjectView from '@/hooks/useIncrementProjectView'
 
 const containerVariants = {
     hidden: { opacity: 0 },
@@ -46,6 +47,8 @@ function ProjectDetailsPage() {
 
     const { userProfile } = useUserContext()
 
+    useIncrementProjectView(`${initialProject.authorDetails.username}/${initialProject.slug}`)
+
     useEffect(() => {
         if (!initialProject && params.username && params.projectSlug) {
             projectService
@@ -56,6 +59,10 @@ function ProjectDetailsPage() {
                 .catch((error) => {
                     console.error('Error fetching project data:', error)
                 })
+        }
+
+        return () => {
+            console.log("component unmount detected broo")
         }
     }, [initialProject, params.username, params.projectSlug])
 

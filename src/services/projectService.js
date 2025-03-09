@@ -37,10 +37,14 @@ const projectService = {
     },
 
     editProjectBySlug: async (slug, formData) => {
-        console.log('hii' + slug)
         const response = await axiosInstance.patch(`/project/${slug}`, formData)
         return response
     },
+
+    incrementProjectViews: async (slug) => {
+        const response = await axiosInstance.post(`/project/${slug}/view`)
+        return response
+    }
 }
 
 export default projectService
