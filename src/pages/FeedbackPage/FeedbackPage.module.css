@@ -1,8 +1,10 @@
 .feedback_container {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 480px;
     padding: 1rem;
 }
 
@@ -16,13 +18,13 @@
     width: 100%;
     max-width: 480px;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-    animation: modalFadeIn 0.3s ease-out;
+    animation: modalFadeIn 0.8s ease-out;
 }
 
 @keyframes modalFadeIn {
     from {
         opacity: 0;
-        transform: translateY(20px);
+        transform: translateY(40px);
     }
     to {
         opacity: 1;

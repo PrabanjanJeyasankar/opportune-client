@@ -29,7 +29,6 @@ function PortfolioPage() {
             .retirevePortfolioDataByUsername(username)
             .then((response) => {
                 const portfolioData = response.data.data
-                console.log(portfolioData)
                 setUserProfileData(portfolioData)
             })
             .catch((error) => {
@@ -66,6 +65,10 @@ function PortfolioPage() {
         }
     }
 
+    const handleGoHome = () => {
+        navigate('/')
+    }
+
     if (loading) {
         return (
             <motion.div
@@ -98,7 +101,7 @@ function PortfolioPage() {
                 </p>
                 <ButtonComponent
                     className={styles.home_button}
-                    onClick={() => navigate('/')}>
+                    onClick={handleGoHome}>
                     Go Home
                 </ButtonComponent>
             </motion.div>
@@ -193,7 +196,7 @@ function PortfolioPage() {
                 viewport={{ once: true, amount: 0.2 }}>
                 <PortfolioProjectCardComponent
                     id='works'
-                    projects={userProfileData?.projects}
+                    userProfileData={userProfileData}
                 />
                 <ContactSectionComponent
                     id='contact'

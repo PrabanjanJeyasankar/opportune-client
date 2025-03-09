@@ -3,23 +3,18 @@ import useUserContext from '@/hooks/useUserContext'
 import projectService from '@/services/projectService'
 import handleUpvoteError from '@/utils/handleUpvoteError'
 import { useCallback, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
-function useUpvote(project, navigate) {
+function useUpvote(project) {
     const [isUpvoted, setIsUpvoted] = useState(project.isUserLiked || false)
     const [upvoteCount, setUpvoteCount] = useState(project.upvoteCount || 0)
-
+    const navigate = useNavigate()
     const { isUserLoggedIn } = useUserContext()
 
     useEffect(() => {
         setIsUpvoted(project.isUserLiked || false)
         setUpvoteCount(project.upvoteCount || 0)
     }, [project.isUserLiked, project.upvoteCount])
-
-    function handleCardClick() {
-        navigate(`/${project.authorDetails.username}/${project.slug}`, {
-            state: { project },
-        })
-    }
 
     const handleUpvoteClick = useCallback(
         (e) => {
@@ -52,7 +47,7 @@ function useUpvote(project, navigate) {
         [isUpvoted, isUserLoggedIn, navigate, project.slug]
     )
 
-    return { isUpvoted, upvoteCount, handleCardClick, handleUpvoteClick }
+    return { isUpvoted, upvoteCount, handleUpvoteClick }
 }
 
 export default useUpvote

@@ -1,7 +1,5 @@
 import useUserContext from '@/hooks/useUserContext'
-import AboutusPage from '@/pages/AboutusPage/AboutusPage'
-import PortfolioPage from '@/pages/PortfolioPage/PortfolioPage'
-import React, { Suspense, lazy } from 'react'
+import { Suspense, lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import MainLayout from '../layouts/MainLayout/MainLayout'
 import ScrollToTop from '../utils/scrollToTop'
@@ -27,6 +25,8 @@ const LazyComponent = (Component) => {
 const HomePage = lazy(() => import('../pages/HomePage/HomePage'))
 const LoginPage = lazy(() => import('../pages/LoginPage/LoginPage'))
 const SignupPage = lazy(() => import('../pages/SignupPage/SignupPage'))
+const AboutusPage = lazy(() => import('@/pages/AboutusPage/AboutusPage'))
+const PortfolioPage = lazy(() => import('@/pages/PortfolioPage/PortfolioPage'))
 const FeedbackPage = lazy(() => import('@/pages/FeedbackPage/FeedbackPage'))
 const RequestOtpPage = lazy(() =>
     import('../pages/RequestOtpPage/RequestOtpPage')

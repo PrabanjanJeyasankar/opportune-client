@@ -18,14 +18,14 @@ const containerVariants = {
     visible: {
         opacity: 1,
         transition: {
-            staggerChildren: 0.3,
+            staggerChildren: 0.1,
             delayChildren: 0.1,
         },
     },
 }
 
 const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
         opacity: 1,
         y: 0,
@@ -79,7 +79,7 @@ function ProjectDetailsPage() {
             animate='visible'
             variants={containerVariants}>
             <MetaTagsComponent
-                title={`${currentProject.title} by ${currentProject.authorDetails.name} | MyPlatform`}
+                title={`${currentProject.title} by ${currentProject.authorDetails.name} `}
                 description={
                     currentProject.description ||
                     'Check out this amazing project!'

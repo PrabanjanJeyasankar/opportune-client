@@ -6,7 +6,7 @@ function StatisticGridComponent({
     professionalExperience,
     skills,
 }) {
-    console.log(skills)
+    // console.log(skills)
     return (
         <div className={styles.resume_social_container}>
             <div className={styles.count_and_skills_container}>

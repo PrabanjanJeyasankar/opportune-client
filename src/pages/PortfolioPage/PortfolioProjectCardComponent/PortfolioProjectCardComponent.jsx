@@ -1,9 +1,43 @@
+import ButtonComponent from '@/elements/ButtonComponent/ButtonComponent'
+import { useNavigate } from 'react-router-dom'
 import styles from './PortfolioProjectCardComponent.module.css'
 
-function PortfolioProjectCardComponent({ projects }) {
+function PortfolioProjectCardComponent({ userProfileData }) {
+    const navigate = useNavigate()
+
+    const handleNavigate = (projectData) => {
+        const transformedProject = {
+            authorDetails: {
+                email: userProfileData.email,
+                githubId: userProfileData.githubId,
+                googleId: userProfileData.googleId,
+                name: userProfileData.name,
+                profilePicture: userProfileData.profilePicture,
+                username: userProfileData.username,
+            },
+            description: projectData.description,
+            documentation: projectData.documentation || null,
+            githubLink: projectData.githubLink,
+            hostedLink: projectData.hostedLink,
+            isUserLiked: projectData.isUserLiked || false,
+            problemSolution: projectData.problemSolution,
+            problemStatement: projectData.problemStatement,
+            slug: projectData.slug,
+            tags: projectData.tags || [],
+            thumbnailUrl: projectData.thumbnail?.s3Url || '',
+            title: projectData.title,
+            updatedAt: projectData.updatedAt,
+            upvoteCount: projectData.upvoteCount || 0,
+            viewsCount: projectData.viewsCount || 0,
+        }
+        navigate(`/${userProfileData.username}/${projectData.slug}`, {
+            state: { project: transformedProject },
+        })
+    }
+
     return (
         <div className={styles.projectGrid}>
-            {projects.map((project, index) => (
+            {userProfileData.projects.map((project, index) => (
                 <div
                     key={project._id || `project-${index}`}
                     className={styles.cardWrapper}>
@@ -23,7 +57,9 @@ function PortfolioProjectCardComponent({ projects }) {
                                 className={styles.projectImage}
                             />
                         </div>
-                        <button className={styles.button}>
+                        <ButtonComponent
+                            className={styles.button}
+                            onClick={() => handleNavigate(project)}>
                             <div className={styles.buttonCircle}>
                                 <svg
                                     width='14'
@@ -46,10 +82,11 @@ function PortfolioProjectCardComponent({ projects }) {
                                     <path
                                         fill='currentColor'
                                         strokeWidth='0.5'
-                                        d='M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z' />
+                                        d='M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z'
+                                    />
                                 </svg>
                             </div>
-                        </button>
+                        </ButtonComponent>
                     </div>
                 </div>
             ))}

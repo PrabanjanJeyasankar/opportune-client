@@ -11,14 +11,18 @@ function ProjectCard({ project }) {
     const [isSharePopoverOpen, setIsSharePopoverOpen] = useState(false)
     const navigate = useNavigate()
 
-    const { isUpvoted, upvoteCount, handleCardClick, handleUpvoteClick } =
-        useUpvote(project, navigate)
+    const { isUpvoted, upvoteCount, handleUpvoteClick } = useUpvote(project)
+
+    function handleCardClick() {
+        navigate(`/${project.authorDetails.username}/${project.slug}`, {
+            state: { project },
+        })
+    }
 
     function handleShareClick(e) {
         e.stopPropagation()
         setIsSharePopoverOpen(true)
     }
-    console.log(project)
 
     return (
         <div
