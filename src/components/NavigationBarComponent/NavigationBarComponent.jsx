@@ -35,7 +35,7 @@ const NavigationBarComponent = () => {
 
                 setIsUserLoggedIn(false)
                 setUserProfile({})
-                
+
                 window.location.href = '/'
             })
             .catch((error) => {
@@ -149,6 +149,14 @@ const NavigationBarComponent = () => {
                                     }`}
                                     onClick={toggleDropdown}>
                                     <div className={navBarStyles.link}>
+                                        <span
+                                            className={
+                                                isDropdownOpen
+                                                    ? navBarStyles.text_active
+                                                    : ''
+                                            }>
+                                            Profile
+                                        </span>
                                         <div
                                             className={`${
                                                 navBarStyles.arrow_icon
@@ -159,14 +167,6 @@ const NavigationBarComponent = () => {
                                             }`}>
                                             <CheveronArrowDownSvg />
                                         </div>
-                                        <span
-                                            className={
-                                                isDropdownOpen
-                                                    ? navBarStyles.text_active
-                                                    : ''
-                                            }>
-                                            Profile
-                                        </span>
                                     </div>
                                 </ButtonComponent>
 

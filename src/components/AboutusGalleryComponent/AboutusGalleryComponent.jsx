@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react'
 import styles from './AboutusGalleryComponent.module.css'
 
 function AboutusGalleryComponent({ images }) {
+    const imagesArray = Object.values(images)
     const galleryRef = useRef(null)
     const columnsRef = useRef([])
 
@@ -24,10 +25,10 @@ function AboutusGalleryComponent({ images }) {
 
             columnsRef.current.forEach((column, index) => {
                 if (!column) return
-                const speed = 0.4 - index * 0.05
-                const yMove = -scrollProgress * 100 * speed
+                const speed = 1 - index * 1
+                const yMove = -scrollProgress * 150 * speed
 
-                const unevenMargin = index % 2 === 0 ? index * 20 : index * -15
+                const unevenMargin = index % 2 === 0 ? index * 40 : index * 20
                 column.style.transform = `translateY(${yMove}px)`
                 column.style.marginTop = `${unevenMargin}px`
             })
@@ -39,6 +40,13 @@ function AboutusGalleryComponent({ images }) {
         return () => window.removeEventListener('scroll', handleScroll)
     }, [])
 
+    const availableCount = imagesArray.length
+
+    const getImageAtIndex = (index) => {
+        const actualIndex = index % availableCount
+        return imagesArray[actualIndex]
+    }
+
     return (
         <div className={styles.gallery_container}>
             <div className={styles.gallery_grid} ref={galleryRef}>
@@ -46,77 +54,112 @@ function AboutusGalleryComponent({ images }) {
                     <div
                         className={styles.gallery_column}
                         ref={(el) => (columnsRef.current[0] = el)}>
-                        {images.slice(0, 5).map((image, index) => (
-                            <div
-                                key={`col1-${index}`}
-                                className={styles.gallery_item}>
-                                <img
-                                    src={image.src}
-                                    alt={image.alt || ''}
-                                    className={styles.gallery_image}
-                                />
-                            </div>
-                        ))}
+                        {[0, 1, 2, 3, 4].map((offset) => {
+                            const image = getImageAtIndex(offset)
+                            return (
+                                <div
+                                    key={`col1-${offset}`}
+                                    className={styles.gallery_item}>
+                                    <img
+                                        src={image.imageUrl}
+                                        alt={
+                                            image.title ||
+                                            image.description ||
+                                            ''
+                                        }
+                                        className={styles.gallery_image}
+                                    />
+                                </div>
+                            )
+                        })}
                     </div>
                     <div
                         className={styles.gallery_column}
                         ref={(el) => (columnsRef.current[1] = el)}>
-                        {images.slice(5, 10).map((image, index) => (
-                            <div
-                                key={`col2-${index}`}
-                                className={styles.gallery_item}>
-                                <img
-                                    src={image.src}
-                                    alt={image.alt || ''}
-                                    className={styles.gallery_image}
-                                />
-                            </div>
-                        ))}
+                        {[5, 6, 7, 8, 9].map((offset) => {
+                            const image = getImageAtIndex(offset)
+                            return (
+                                <div
+                                    key={`col2-${offset}`}
+                                    className={styles.gallery_item}>
+                                    <img
+                                        src={image.imageUrl}
+                                        alt={
+                                            image.title ||
+                                            image.description ||
+                                            ''
+                                        }
+                                        className={styles.gallery_image}
+                                    />
+                                </div>
+                            )
+                        })}
                     </div>
                     <div
                         className={styles.gallery_column}
                         ref={(el) => (columnsRef.current[2] = el)}>
-                        {images.slice(10, 15).map((image, index) => (
-                            <div
-                                key={`col3-${index}`}
-                                className={styles.gallery_item}>
-                                <img
-                                    src={image.src}
-                                    alt={image.alt || ''}
-                                    className={styles.gallery_image}
-                                />
-                            </div>
-                        ))}
+                        {[10, 11, 12, 13, 14].map((offset) => {
+                            const image = getImageAtIndex(offset)
+                            return (
+                                <div
+                                    key={`col3-${offset}`}
+                                    className={styles.gallery_item}>
+                                    <img
+                                        src={image.imageUrl}
+                                        alt={
+                                            image.title ||
+                                            image.description ||
+                                            ''
+                                        }
+                                        className={styles.gallery_image}
+                                    />
+                                </div>
+                            )
+                        })}
                     </div>
                     <div
                         className={styles.gallery_column}
                         ref={(el) => (columnsRef.current[3] = el)}>
-                        {images.slice(15, 20).map((image, index) => (
-                            <div
-                                key={`col4-${index}`}
-                                className={styles.gallery_item}>
-                                <img
-                                    src={image.src}
-                                    alt={image.alt || ''}
-                                    className={styles.gallery_image}
-                                />
-                            </div>
-                        ))}
+                        {[15, 16, 17, 18, 19].map((offset) => {
+                            const image = getImageAtIndex(offset)
+                            return (
+                                <div
+                                    key={`col4-${offset}`}
+                                    className={styles.gallery_item}>
+                                    <img
+                                        src={image.imageUrl}
+                                        alt={
+                                            image.title ||
+                                            image.description ||
+                                            ''
+                                        }
+                                        className={styles.gallery_image}
+                                    />
+                                </div>
+                            )
+                        })}
                     </div>
                     <div
                         className={styles.gallery_column}
                         ref={(el) => (columnsRef.current[4] = el)}>
-                        {images.slice(20, 25).map((image, index) => (
-                            <div
-                                key={`col5-${index}`}
-                                className={styles.gallery_item}>
-                                <img
-                                    src={image.src}
-                                    alt={image.alt || ''}
-                                    className={styles.gallery_image}
-                                />
-                            </div>
-                        ))}
+                        {[20, 21, 22, 23, 24].map((offset) => {
+                            const image = getImageAtIndex(offset)
+                            return (
+                                <div
+                                    key={`col5-${offset}`}
+                                    className={styles.gallery_item}>
+                                    <img
+                                        src={image.imageUrl}
+                                        alt={
+                                            image.title ||
+                                            image.description ||
+                                            ''
+                                        }
+                                        className={styles.gallery_image}
+                                    />
+                                </div>
+                            )
+                        })}
                     </div>
                 </div>
             </div>

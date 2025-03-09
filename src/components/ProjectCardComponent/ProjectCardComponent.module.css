@@ -74,7 +74,7 @@
 }
 
 .project_card_image::after {
-    content: "";
+    content: '';
     position: absolute;
     bottom: 0;
     left: 0;
@@ -135,8 +135,7 @@
 
 .project_card_header p {
     font-size: 0.9rem;
-    opacity: 0.7;
-    font-weight: 300;
+    color: var(--text-secondary);
 }
 
 .project_card_title {

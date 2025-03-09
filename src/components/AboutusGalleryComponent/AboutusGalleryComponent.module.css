@@ -3,13 +3,13 @@
     position: relative;
     overflow: hidden;
     padding: 0 0 6rem 0;
-    min-height: 80vh;
+    min-height: 60vh;
 }
 
 .gallery_grid {
     column-gap: 0.5em;
     row-gap: 0.5em;
-    perspective: 1000px;
+    perspective:900px;
     width: calc(100% + 2 * var(--gap-large, 2rem));
     margin-left: calc(-1 * var(--gap-large, 2rem));
     height: 100%;
