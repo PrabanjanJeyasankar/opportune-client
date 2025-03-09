@@ -31,10 +31,11 @@ const NavigationBarComponent = () => {
             .then(() => {
                 localStorage.removeItem('userData')
                 localStorage.removeItem('isUserLoggedIn')
+                localStorage.removeItem('REACT_QUERY_OFFLINE_CACHE')
 
                 setIsUserLoggedIn(false)
                 setUserProfile({})
-
+                
                 window.location.href = '/'
             })
             .catch((error) => {

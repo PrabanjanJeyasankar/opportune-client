@@ -1,9 +1,7 @@
 import { toast } from '@/hooks/use-toast'
 import useUserContext from '@/hooks/useUserContext'
 import projectService from '@/services/projectService'
-import { updateProjectInCache } from '@/utils/cacheUtils'
 import handleUpvoteError from '@/utils/handleUpvoteError'
-import { useQueryClient } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
 
 function useUpvote(project, navigate) {
@@ -11,7 +9,6 @@ function useUpvote(project, navigate) {
     const [upvoteCount, setUpvoteCount] = useState(project.upvoteCount || 0)
 
     const { isUserLoggedIn } = useUserContext()
-    const queryClient = useQueryClient()
 
     useEffect(() => {
         setIsUpvoted(project.isUserLiked || false)
@@ -44,17 +41,15 @@ function useUpvote(project, navigate) {
                 ? projectService.upvoteProject(project.slug)
                 : projectService.deleteUpvoteProject(project.slug)
 
-            upvoteAction
-                .then(() =>
-                    updateProjectInCache(
-                        queryClient,
-                        project.slug,
-                        newUpvoteState
-                    )
+            upvoteAction.catch((error) => {
+                setIsUpvoted(!newUpvoteState) // Revert state on error
+                setUpvoteCount((prev) =>
+                    newUpvoteState ? Math.max(prev - 1, 0) : prev + 1
                 )
-                .catch((error) => handleUpvoteError(error, navigate))
+                handleUpvoteError(error, navigate)
+            })
         },
-        [isUpvoted, isUserLoggedIn, navigate, project.slug, queryClient]
+        [isUpvoted, isUserLoggedIn, navigate, project.slug]
     )
 
     return { isUpvoted, upvoteCount, handleCardClick, handleUpvoteClick }
