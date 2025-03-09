@@ -4,6 +4,7 @@ import useUserContext from '@/hooks/useUserContext'
 import FloatingAstronautAnimation from '@/loaders/FloatingAstronautAnimation/FloatingAstronautAnimation'
 import InfiniteLoadingAnimation from '@/loaders/InfiniteLoadingAnimation/InfiniteLoadingAnimation'
 import userProfileService from '@/services/userProfileservice'
+import { motion } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import ContactSectionComponent from './ContactSectionComponent/ContactSectionComponent'
@@ -44,7 +45,7 @@ function PortfolioPage() {
             const isViewingOwnProfile =
                 isUserLoggedIn && userProfile?.username === username
 
-            // If logged-in user is viewing their own incomplete profile - redirect to login
+            // Redirect if the logged-in user views their own incomplete profile
             if (isViewingOwnProfile && !hasCompletedProfile) {
                 navigate('/login')
             }
@@ -67,9 +68,13 @@ function PortfolioPage() {
 
     if (loading) {
         return (
-            <div className={styles.loading_animation}>
+            <motion.div
+                className={styles.loading_animation}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, ease: 'easeOut' }}>
                 <InfiniteLoadingAnimation />
-            </div>
+            </motion.div>
         )
     }
 
@@ -78,82 +83,124 @@ function PortfolioPage() {
     const isViewingOwnProfile =
         isUserLoggedIn && userProfile?.username === username
 
-    // Showing error message if profile is incomplete and it's not the user's own profile
-    if (!hasCompletedProfile) {
-        // If user is viewing someone else's incomplete profile (or anonymous user viewing incomplete profile)
-        if (!isViewingOwnProfile) {
-            return (
-                <div className={styles.error_message}>
-                    <FloatingAstronautAnimation />
-                    <p className={styles.error_message_text}>
-                        {username}'s portfolio is shaping up, check back soon
-                        for updates!
-                    </p>
-                    <ButtonComponent
-                        className={styles.home_button}
-                        onClick={() => navigate('/')}>
-                        Go Home
-                    </ButtonComponent>
-                </div>
-            )
-        }
-        // Also, Note: If viewing own incomplete profile, the redirect in useEffect will handle it
+    // Show an error message if the profile is incomplete and it's not the user's own profile
+    if (!hasCompletedProfile && !isViewingOwnProfile) {
+        return (
+            <motion.div
+                className={styles.error_message}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, ease: 'easeOut' }}>
+                <FloatingAstronautAnimation />
+                <p className={styles.error_message_text}>
+                    {username}'s portfolio is shaping up, check back soon for
+                    updates!
+                </p>
+                <ButtonComponent
+                    className={styles.home_button}
+                    onClick={() => navigate('/')}>
+                    Go Home
+                </ButtonComponent>
+            </motion.div>
+        )
+    }
+
+    const fadeInVariant = {
+        hidden: { opacity: 0, y: 20 },
+        visible: {
+            opacity: 1,
+            y: 0,
+            transition: { duration: 0.6, ease: 'easeOut' },
+        },
     }
 
     return (
-        <>
-            <div className={styles.parent_container}>
+        <motion.div
+            className={styles.parent_container}
+            initial={false}
+            animate='visible'
+            variants={fadeInVariant}>
+            <motion.div
+                variants={fadeInVariant}
+                initial='hidden'
+                whileInView='visible'
+                viewport={{ once: true, amount: 0.2 }}>
                 <PortfolioNavbarComponent
                     name={userProfileData?.name}
                     portfolioLink={userProfileData?.portfolioLink}
                 />
+            </motion.div>
 
-                <div className={styles.main_container}>
-                    <ProfileSectionComponent
-                        id='home'
-                        name={userProfileData?.name}
-                        title={userProfileData?.professionalTitle}
-                    />
+            <motion.div
+                className={styles.main_container}
+                variants={fadeInVariant}
+                initial='hidden'
+                whileInView='visible'
+                viewport={{ once: true, amount: 0.2 }}>
+                <ProfileSectionComponent
+                    id='home'
+                    name={userProfileData?.name}
+                    title={userProfileData?.professionalTitle}
+                />
+                <ContactSectionComponent onCopyEmail={copyEmailToClipboard} />
+            </motion.div>
 
-                    <ContactSectionComponent
-                        onCopyEmail={copyEmailToClipboard}
-                    />
-                </div>
-
-                {userProfileData.accounts && (
+            {userProfileData.accounts && (
+                <motion.div
+                    variants={fadeInVariant}
+                    initial='hidden'
+                    whileInView='visible'
+                    viewport={{ once: true, amount: 0.2 }}>
                     <SocialLinksComponent
                         socialPlatforms={userProfileData?.accounts}
                     />
-                )}
+                </motion.div>
+            )}
 
-                {userProfileData.bio && (
+            {userProfileData.bio && (
+                <motion.div
+                    variants={fadeInVariant}
+                    initial='hidden'
+                    whileInView='visible'
+                    viewport={{ once: true, amount: 0.2 }}>
                     <UserBioComponent portfolioBio={userProfileData?.bio} />
-                )}
+                </motion.div>
+            )}
 
-                <div className={styles.resume_stats_container}>
-                    <ResumeComponent resumeLink={userProfileData.resumeLink} />
-                    <div className={styles.stats_skills_container}>
-                        <StatisticGridComponent
-                            professionalExperience={
-                                userProfileData?.professionalExperience
-                            }
-                            totalUpvoteCount={userProfileData?.totalUpvoteCount}
-                            totalProjects={userProfileData?.totalProjects}
-                            skills={userProfileData?.skills}
-                        />
-                    </div>
+            <motion.div
+                className={styles.resume_stats_container}
+                variants={fadeInVariant}
+                initial='hidden'
+                whileInView='visible'
+                viewport={{ once: true, amount: 0.2 }}>
+                <ResumeComponent resumeLink={userProfileData.resumeLink} />
+                <div className={styles.stats_skills_container}>
+                    <StatisticGridComponent
+                        professionalExperience={
+                            userProfileData?.professionalExperience
+                        }
+                        totalUpvoteCount={userProfileData?.totalUpvoteCount}
+                        totalProjects={userProfileData?.totalProjects}
+                        skills={userProfileData?.skills}
+                    />
                 </div>
-            </div>
+            </motion.div>
 
-            <PortfolioProjectCardComponent
-                id='works'
-                projects={userProfileData?.projects}
-            />
-            <ContactSectionComponent
-                id='contact'
-                onCopyEmail={copyEmailToClipboard}
-            />
-        </>
+            <motion.div
+                variants={fadeInVariant}
+                initial='hidden'
+                whileInView='visible'
+                viewport={{ once: true, amount: 0.2 }}>
+                <PortfolioProjectCardComponent
+                    id='works'
+                    projects={userProfileData?.projects}
+                />
+                <ContactSectionComponent
+                    id='contact'
+                    onCopyEmail={copyEmailToClipboard}
+                />
+            </motion.div>
+        </motion.div>
     )
 }
 
