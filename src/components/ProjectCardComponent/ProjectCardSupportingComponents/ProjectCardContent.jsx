@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
-import ProjectCardButtons from './ProjectCardButtons'
 import styles from '../ProjectCardComponent.module.css'
+import ProjectCardButtons from './ProjectCardButtons'
 
 function ProjectCardContent({
     project,
@@ -11,7 +11,20 @@ function ProjectCardContent({
 }) {
     return (
         <div className={styles.project_card_content}>
-            <div className={styles.project_card_title}>{project.title}</div>
+            <div className={styles.project_card_header}>
+                <div className={styles.project_card_title}>{project.title}</div>
+
+                <p>by</p>
+                <div>
+                    <img
+                        className={styles.project_card_user_profile_picture}
+                        src={project?.authorDetails?.profilePicture}
+                        alt='User profile image'
+                        aria-label='user profile image'
+                    />
+                </div>
+            </div>
+
             <div className={styles.project_card_tags}>
                 {project.tags.map((tag, tagIndex) => (
                     <span key={tagIndex} className={styles.project_card_tag}>

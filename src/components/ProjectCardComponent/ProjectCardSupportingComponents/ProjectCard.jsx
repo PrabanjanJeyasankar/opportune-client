@@ -18,6 +18,7 @@ function ProjectCard({ project }) {
         e.stopPropagation()
         setIsSharePopoverOpen(true)
     }
+    console.log(project)
 
     return (
         <div

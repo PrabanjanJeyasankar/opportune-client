@@ -16,6 +16,7 @@ function ProjectCardComponent({ filteredProjects, isLoading, searchTerm }) {
             </div>
         )
     }
+    
 
     return (
         <div className={styles.initial_project_whole_container}>
