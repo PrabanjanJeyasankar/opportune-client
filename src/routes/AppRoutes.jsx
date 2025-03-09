@@ -1,4 +1,5 @@
 import useUserContext from '@/hooks/useUserContext'
+import AboutusPage from '@/pages/AboutusPage/AboutusPage'
 import PortfolioPage from '@/pages/PortfolioPage/PortfolioPage'
 import React, { Suspense, lazy } from 'react'
 import { Route, Routes } from 'react-router-dom'
@@ -60,6 +61,10 @@ const AppRoutes = () => {
                     <Route exact path='/' element={LazyComponent(HomePage)} />
                     <Route path='/login' element={LazyComponent(LoginPage)} />
                     <Route path='/signup' element={LazyComponent(SignupPage)} />
+                    <Route
+                        path='/aboutus'
+                        element={LazyComponent(AboutusPage)}
+                    />
 
                     <Route
                         path='/feedback'
