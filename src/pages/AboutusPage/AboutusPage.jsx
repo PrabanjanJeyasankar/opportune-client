@@ -4,12 +4,13 @@ import aboutusService from '@/services/aboutusService'
 import { motion } from 'framer-motion'
 import { useEffect, useState } from 'react'
 import styles from './AboutusPage.module.css'
+import FooterComponent from '@/components/FooterComponent/FooterComponent'
 
 function AboutusPage() {
     const [galleryImages, setGalleryImages] = useState([])
     const [loading, setLoading] = useState(true)
 
-    useSmoothScroll(10) //adjust the speed of the scroll (highest number, slower the scroll)
+    // useSmoothScroll(10) 
 
     useEffect(() => {
         aboutusService
@@ -94,6 +95,8 @@ function AboutusPage() {
                     <AboutusGalleryComponent images={galleryImages} />
                 </motion.section>
             )}
+
+            <FooterComponent/>
         </motion.div>
     )
 }

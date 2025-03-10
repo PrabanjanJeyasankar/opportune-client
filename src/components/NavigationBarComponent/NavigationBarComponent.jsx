@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 import navBarStyles from './NavigationBarComponent.module.css'
+import ImageComponent from '@/elements/ImageComponent/ImageComponent'
 
 const NavigationBarComponent = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -70,7 +71,7 @@ const NavigationBarComponent = () => {
                 to='/'
                 className={navBarStyles.logo}
                 onClick={handleClearSearch}>
-                <img
+                <ImageComponent
                     src={AppLogo}
                     alt='App Logo'
                     className={navBarStyles.logo_image}
