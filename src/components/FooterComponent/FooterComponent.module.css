@@ -37,11 +37,11 @@
 
 .footer_heading {
     color: white;
-    font-size: 3rem;
+    font-size: clamp(1.4rem, 6vw, 3rem);
     letter-spacing: -0.05rem;
     line-height: 1.2;
     font-weight: 500;
-    margin-bottom: 10px;
+    margin: 0rem 0.5rem;
     max-width: 800px;
 }
 
@@ -78,7 +78,7 @@
 }
 
 .footer_subtext {
-    font-size: 1.1rem;
+    font-size: clamp(0.9rem, 3vw, 1.1rem);
     color: var(--white-opacity-high);
 }
 
@@ -135,16 +135,29 @@
 .logo {
     display: flex;
     align-items: center;
-    gap: 0.3rem;
+    gap: 0.1rem;
     text-decoration: none;
 }
 
 .logo_image {
-    width: 40px;
-    height: 40px;
+    width: 30px;
+    height: 30px;
     border-radius: 8px;
     object-fit: cover;
-    transition: width 0.3s ease, height 0.3s ease;
+    animation: rotateAnimation 20s linear infinite;
+}
+
+.logo_image:hover {
+    animation-play-state: paused;
+}
+
+@keyframes rotateAnimation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .app_name {
@@ -163,6 +176,7 @@
 
 .footer_content {
     display: flex;
+    flex-direction: row;
     justify-content: space-between;
     align-items: center;
     width: 90%;
@@ -299,4 +313,16 @@
     font-size: 0.9rem;
     color: #aaa;
     margin: 4rem auto;
+}
+
+@media (max-width: 768px) {
+    .footer_content {
+        flex-direction: column;
+        align-items: center;
+        gap: 5rem;
+    }
+
+    .footer_left {
+        align-items: center;
+    }
 }

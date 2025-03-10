@@ -28,7 +28,20 @@
     height: 40px;
     border-radius: 8px;
     object-fit: cover;
-    transition: width 0.3s ease, height 0.3s ease;
+    animation: rotateAnimation 20s linear infinite;
+}
+
+.logo_image:hover {
+    animation-play-state: paused;
+}
+
+@keyframes rotateAnimation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 .app_name {
