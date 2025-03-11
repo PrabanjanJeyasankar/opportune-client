@@ -38,6 +38,10 @@
     -webkit-backdrop-filter: blur(10px);
 }
 
+.loaded .tag:first-child:only-child {
+    max-width: fit-content;
+}
+
 .tags_filter > :nth-child(3n + 1) {
     transform: translateX(2rem);
 }
@@ -155,3 +159,5 @@
         width: 40vw;
     }
 }
+
+

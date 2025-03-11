@@ -2,7 +2,6 @@ import useHomeFeedResetContext from '@/hooks/useHomeFeedResetContext'
 import useUserContext from '@/hooks/useUserContext'
 import InfiniteLoadingAnimation from '@/loaders/InfiniteLoadingAnimation/InfiniteLoadingAnimation'
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
-import PropTypes from 'prop-types'
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import fetchHomeFeedProjectsService from '../../services/fetchHomeFeedProjects'
 import ProjectCardComponent from '../ProjectCardComponent/ProjectCardComponent'
@@ -15,6 +14,7 @@ const HomeFeedProjectsComponent = () => {
     const queryClient = useQueryClient()
     const observerRef = useRef(null)
     const loadingRef = useRef(null)
+    const [isOnline, setIsOnline] = useState(navigator.onLine)
 
     useEffect(() => {
         const handler = setTimeout(() => {
@@ -25,6 +25,42 @@ const HomeFeedProjectsComponent = () => {
         }
     }, [searchTerm])
 
+    useEffect(() => {
+        const handleOnline = () => {
+            setIsOnline(true)
+            queryClient.invalidateQueries({
+                queryKey: ['homeFeedProjects'],
+                refetchType: 'all',
+            })
+        }
+
+        const handleOffline = () => {
+            setIsOnline(false)
+        }
+
+        const handleVisibilityChange = () => {
+            if (document.visibilityState === 'visible') {
+                queryClient.invalidateQueries({
+                    queryKey: ['homeFeedProjects'],
+                    refetchType: 'all',
+                })
+            }
+        }
+
+        window.addEventListener('online', handleOnline)
+        window.addEventListener('offline', handleOffline)
+        window.addEventListener('visibilitychange', handleVisibilityChange)
+
+        return () => {
+            window.removeEventListener('online', handleOnline)
+            window.removeEventListener('offline', handleOffline)
+            window.removeEventListener(
+                'visibilitychange',
+                handleVisibilityChange
+            )
+        }
+    }, [queryClient])
+
     const {
         data,
         fetchNextPage,
@@ -32,6 +68,7 @@ const HomeFeedProjectsComponent = () => {
         isFetchingNextPage,
         isLoading: queryLoading,
         error: queryError,
+        refetch,
     } = useInfiniteQuery({
         queryKey: [
             'homeFeedProjects',
@@ -58,6 +95,9 @@ const HomeFeedProjectsComponent = () => {
         staleTime: 60 * 1000,
         cacheTime: 60 * 1000,
         retry: 2,
+        refetchOnWindowFocus: true,
+        refetchOnReconnect: true,
+        enabled: isOnline,
     })
 
     useEffect(() => {
@@ -120,12 +160,26 @@ const HomeFeedProjectsComponent = () => {
         })
     }, [debouncedSearchTerm, selectedTag, allProjects])
 
-    if (queryError) {
-        return <div>Failed to fetch projects. Please try again.</div>
+    const handleRetry = () => {
+        refetch({ cancelRefetch: true })
     }
 
     return (
         <div className={styles.home_feed_projects_container}>
+            {!isOnline && (
+                <div className={styles.offline_message}>
+                    <p>
+                        You are currently offline. Some content may not be up to
+                        date.
+                    </p>
+                    <ButtonComponent
+                        onClick={handleRetry}
+                        className={styles.retry_button}>
+                        Try Again
+                    </ButtonComponent>
+                </div>
+            )}
+
             <ProjectCardComponent
                 filteredProjects={filteredProjects}
                 isLoading={queryLoading}
@@ -147,11 +201,6 @@ const HomeFeedProjectsComponent = () => {
             ) : null}
         </div>
     )
-}
-
-HomeFeedProjectsComponent.propTypes = {
-    searchTerm: PropTypes.string,
-    selectedTag: PropTypes.string,
 }
 
 export default HomeFeedProjectsComponent

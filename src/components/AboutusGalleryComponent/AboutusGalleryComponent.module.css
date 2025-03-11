@@ -41,7 +41,7 @@
     transform: rotateX(45deg) rotateY(20deg) rotate(-25deg)
         translate3d(0px, 8em, 8em);
     flex-flow: row;
-    min-height: 600px;
+    /* min-height: 600px; */
 }
 
 .gallery_column {

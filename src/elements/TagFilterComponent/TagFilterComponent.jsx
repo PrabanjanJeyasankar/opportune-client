@@ -1,57 +1,37 @@
-import { Skeleton } from '@/components/ui/skeleton'
-import { useQuery } from '@tanstack/react-query'
+import useDragScrollForTags from '@/hooks/useDragScrollForTags'
+import useScrollHandlerForTags from '@/hooks/useScrollHandlerForTags'
+import useTagsQuery from '@/hooks/useTagsQuery'
 import PropTypes from 'prop-types'
-import { useRef, useState } from 'react'
-import fetchProjectTags from '../../services/fetchProjectTags'
-import ChevronRight from '../../svg/ChervronRight/ChevronRight'
-import ChevronLeft from '../../svg/ChevronLeft/ChevronLeft'
-import ButtonComponent from '../ButtonComponent/ButtonComponent'
+import { useEffect, useRef } from 'react'
+import NavigationArrow from './NavigationArrow'
 import styles from './TagFilterComponent.module.css'
+import TagsListComponent from './TagListComponent'
 
 function TagFilterComponent({ selectedTag, setSelectedTag }) {
     const tagsContainerRef = useRef(null)
-    const scrollAmount = 200
-    const [isDragging, setIsDragging] = useState(false)
-    const [startX, setStartX] = useState(0)
-    const [scrollLeft, setScrollLeft] = useState(0)
+    const scrollAmount = 250
 
-    const { data: tagsData = [], isLoading } = useQuery({
-        queryKey: ['projectTags'],
-        queryFn: fetchProjectTags,
-        staleTime: 3 * 60 * 1000,
-    })
+    const { tagsData, isLoading, isError, status, refetch } = useTagsQuery()
 
-    const tags = [{ tag: 'All' }, ...tagsData]
+    const { smoothScroll } = useScrollHandlerForTags()
 
-    const easeInOutQuad = (t, b, c, d) => {
-        t /= d / 2
-        if (t < 1) return (c / 2) * t * t + b
-        t--
-        return (-c / 2) * (t * (t - 2) - 1) + b
-    }
+    const { handleMouseDown, handleMouseUp, handleMouseMove } =
+        useDragScrollForTags(tagsContainerRef)
 
-    const smoothScroll = (element, target, duration) => {
-        const start = element.scrollLeft
-        const change = target - start
-        const startTime = performance.now()
-
-        const animateScroll = (currentTime) => {
-            const elapsedTime = currentTime - startTime
-            if (elapsedTime < duration) {
-                element.scrollLeft = easeInOutQuad(
-                    elapsedTime,
-                    start,
-                    change,
-                    duration
-                )
-                requestAnimationFrame(animateScroll)
-            } else {
-                element.scrollLeft = target
-            }
+    useEffect(() => {
+        if (
+            tagsData.length > 0 &&
+            selectedTag !== 'All' &&
+            !tagsData.some((tag) => tag.tag === selectedTag)
+        ) {
+            setSelectedTag('All')
         }
+    }, [tagsData, selectedTag, setSelectedTag])
 
-        requestAnimationFrame(animateScroll)
-    }
+    const shouldShowSkeletons =
+        isLoading || isError || status === 'error' || tagsData.length === 0
+
+    const tags = shouldShowSkeletons ? [] : [{ tag: 'All' }, ...tagsData]
 
     const scroll = (direction) => {
         if (tagsContainerRef.current) {
@@ -59,25 +39,6 @@ function TagFilterComponent({ selectedTag, setSelectedTag }) {
             const targetScroll = container.scrollLeft + direction * scrollAmount
             smoothScroll(container, targetScroll, 300)
         }
-    }
-
-    const handleMouseDown = (e) => {
-        if (!tagsContainerRef.current) return
-        setIsDragging(true)
-        setStartX(e.pageX - tagsContainerRef.current.offsetLeft)
-        setScrollLeft(tagsContainerRef.current.scrollLeft)
-    }
-
-    const handleMouseUp = () => {
-        setIsDragging(false)
-    }
-
-    const handleMouseMove = (e) => {
-        if (!isDragging || !tagsContainerRef.current) return
-        e.preventDefault()
-        const x = e.pageX - tagsContainerRef.current.offsetLeft
-        const walk = (x - startX) * 0.5
-        tagsContainerRef.current.scrollLeft = scrollLeft - walk
     }
 
     const isAtStart = tagsContainerRef.current
@@ -92,53 +53,47 @@ function TagFilterComponent({ selectedTag, setSelectedTag }) {
           ) < 1
         : false
 
+    const calculateSkeletonCount = () => {
+        if (!tagsContainerRef.current) return 40
+
+        const containerWidth = tagsContainerRef.current.clientWidth
+        const skeletonsPerRow = Math.ceil(containerWidth / 100) * 3
+        return skeletonsPerRow
+    }
+
     return (
         <div className={styles.tags_container}>
-            <ButtonComponent
-                className={`${styles.arrow} ${styles['arrow-left']} ${
-                    !isAtStart ? styles['arrow-show'] : ''
-                }`}
+            <NavigationArrow
+                direction='left'
+                isHidden={isAtStart}
                 onClick={() => scroll(-1)}
-                aria-label='Scroll left'>
-                <ChevronLeft />
-            </ButtonComponent>
-            <div
-                className={`${styles.tags_filter} ${
-                    !isLoading ? styles.loaded : ''
-                }`}
+                styles={styles}
+            />
+
+            <TagsListComponent
                 ref={tagsContainerRef}
-                onMouseDown={handleMouseDown}
-                onMouseUp={handleMouseUp}
-                onMouseLeave={handleMouseUp}
-                onMouseMove={handleMouseMove}>
-                {isLoading
-                    ? Array.from({ length: 40 }).map((_, index) => (
-                          <Skeleton
-                              key={index}
-                              className={`${styles.skeleton_tag}`}
-                          />
-                      ))
-                    : tags.map((tagObj, index) => (
-                          <ButtonComponent
-                              key={index}
-                              onClick={() => setSelectedTag(tagObj.tag)}
-                              className={`${styles.tag} ${
-                                  selectedTag === tagObj.tag
-                                      ? styles.tag_selected
-                                      : ''
-                              }`}>
-                              {tagObj.tag}
-                          </ButtonComponent>
-                      ))}
-            </div>
-            <ButtonComponent
-                className={`${styles.arrow} ${styles['arrow-right']} ${
-                    !isAtEnd ? styles['arrow-show'] : ''
-                }`}
+                styles={styles}
+                shouldShowSkeletons={shouldShowSkeletons}
+                tags={tags}
+                selectedTag={selectedTag}
+                setSelectedTag={setSelectedTag}
+                calculateSkeletonCount={calculateSkeletonCount}
+                isError={isError}
+                refetch={refetch}
+                dragHandlers={{
+                    onMouseDown: handleMouseDown,
+                    onMouseUp: handleMouseUp,
+                    onMouseLeave: handleMouseUp,
+                    onMouseMove: handleMouseMove,
+                }}
+            />
+
+            <NavigationArrow
+                direction='right'
+                isHidden={isAtEnd}
                 onClick={() => scroll(1)}
-                aria-label='Scroll right'>
-                <ChevronRight />
-            </ButtonComponent>
+                styles={styles}
+            />
         </div>
     )
 }
