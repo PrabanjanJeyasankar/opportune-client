@@ -6,14 +6,18 @@ import { useNavigate } from 'react-router-dom'
 import styles from '../ProjectCardComponent.module.css'
 import ProjectCardContent from './ProjectCardContent'
 import ProjectCardImage from './ProjectCardImage'
+import useProjectContext from '@/hooks/useProjectContext'
 
 function ProjectCard({ project }) {
     const [isSharePopoverOpen, setIsSharePopoverOpen] = useState(false)
     const navigate = useNavigate()
 
+    const { setCurrentViewingProject } = useProjectContext()
+
     const { isUpvoted, upvoteCount, handleUpvoteClick } = useUpvote(project)
 
     function handleCardClick() {
+        setCurrentViewingProject(project)
         navigate(`/${project.authorDetails.username}/${project.slug}`, {
             state: { project },
         })

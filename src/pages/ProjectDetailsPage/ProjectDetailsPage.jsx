@@ -12,29 +12,7 @@ import useUserContext from '@/hooks/useUserContext'
 import projectService from '@/services/projectService'
 import EditPenSvg from '@/svg/EditPenSvg/EditPenSvg'
 import EyeShowSVG from '@/svg/EyeShowSVG/EyeShowSVG'
-
-const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: {
-            staggerChildren: 0.1,
-            delayChildren: 0.1,
-        },
-    },
-}
-
-const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-        opacity: 1,
-        y: 0,
-        transition: {
-            duration: 0.6,
-            ease: 'easeOut',
-        },
-    },
-}
+import { containerVariants, itemVariants } from '@/config/animation'
 
 function ProjectDetailsPage() {
     const location = useLocation()
@@ -75,8 +53,8 @@ function ProjectDetailsPage() {
 
     return (
         <motion.div
-            initial='hidden'
-            animate='visible'
+            initial="hidden"
+            animate="visible"
             variants={containerVariants}>
             <MetaTagsComponent
                 title={`${currentProject.title} by ${currentProject.authorDetails.name} `}
@@ -97,7 +75,7 @@ function ProjectDetailsPage() {
                                 src={
                                     currentProject?.authorDetails.profilePicture
                                 }
-                                alt='Profile'
+                                alt="Profile"
                                 className={styles.avatar}
                             />
                             <div className={styles.info}>
