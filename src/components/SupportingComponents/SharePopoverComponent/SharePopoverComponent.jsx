@@ -1,19 +1,34 @@
-import ButtonComponent from '@/elements/ButtonComponent/ButtonComponent'
-import CloseXSvg from '@/svg/CloseXSvg/CloseXSvg'
-import CopyIconSvg from '@/svg/CopyIconSvg/CopyIconSvg'
-import LaptopSvg from '@/svg/LaptopSvg/LaptopSvg'
-import MobilePhoneSvg from '@/svg/MobilePhoneSvg/MobilePhoneSvg'
-import ShareIconSvg from '@/svg/ShareIconSvg/ShareIconSvg'
-import FacebookSvg from '@/svg/SocialIconsSvg/FacebookSvg/FacebookSvg'
-import LinkedinSvg from '@/svg/SocialIconsSvg/LinkedinSvg/LinkedinSvg'
-import RedditSvg from '@/svg/SocialIconsSvg/RedditSvg/RedditSvg'
-import TelegramSvg from '@/svg/SocialIconsSvg/TelegramSvg/TelegramSvg'
-import WhatsappSvg from '@/svg/SocialIconsSvg/WhatsappSvg/WhatsappSvg'
-import XSvg from '@/svg/SocialIconsSvg/XSvg/XSvg'
-import TickSvg from '@/svg/TickSvg/TickSvg'
-import { useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Helmet } from 'react-helmet-async'
 import styles from './SharePopoverComponent.module.css'
+
+// Lazy load all components and SVGs
+const ButtonComponent = lazy(() =>
+    import('@/elements/ButtonComponent/ButtonComponent')
+)
+const CloseXSvg = lazy(() => import('@/svg/CloseXSvg/CloseXSvg'))
+const CopyIconSvg = lazy(() => import('@/svg/CopyIconSvg/CopyIconSvg'))
+const LaptopSvg = lazy(() => import('@/svg/LaptopSvg/LaptopSvg'))
+const MobilePhoneSvg = lazy(() => import('@/svg/MobilePhoneSvg/MobilePhoneSvg'))
+const ShareIconSvg = lazy(() => import('@/svg/ShareIconSvg/ShareIconSvg'))
+const FacebookSvg = lazy(() =>
+    import('@/svg/SocialIconsSvg/FacebookSvg/FacebookSvg')
+)
+const LinkedinSvg = lazy(() =>
+    import('@/svg/SocialIconsSvg/LinkedinSvg/LinkedinSvg')
+)
+const RedditSvg = lazy(() => import('@/svg/SocialIconsSvg/RedditSvg/RedditSvg'))
+const TelegramSvg = lazy(() =>
+    import('@/svg/SocialIconsSvg/TelegramSvg/TelegramSvg')
+)
+const WhatsappSvg = lazy(() =>
+    import('@/svg/SocialIconsSvg/WhatsappSvg/WhatsappSvg')
+)
+const XSvg = lazy(() => import('@/svg/SocialIconsSvg/XSvg/XSvg'))
+const TickSvg = lazy(() => import('@/svg/TickSvg/TickSvg'))
+
+// Fallback component for Suspense
+const LoadingFallback = () => <div className={styles.loading_icon}>...</div>
 
 function SharePopoverComponent({ isOpen, onClose, project }) {
     const [shareUrl, setShareUrl] = useState('')
@@ -201,7 +216,9 @@ function SharePopoverComponent({ isOpen, onClose, project }) {
                     onClick={handleContentClick}>
                     <div className={styles.popover_header}>
                         <h3 className={styles.popover_header_title}>
-                            <ShareIconSvg strokeWidth='2' />
+                            <Suspense fallback={<LoadingFallback />}>
+                                <ShareIconSvg strokeWidth='2' />
+                            </Suspense>
                             <span>Quick share</span>
                         </h3>
                         <p className={styles.popover_header_subtitle}>
@@ -210,19 +227,33 @@ function SharePopoverComponent({ isOpen, onClose, project }) {
                         <button
                             className={styles.close_button}
                             onClick={handleCloseClick}>
-                            <CloseXSvg width='20' height='20' />
+                            <Suspense fallback={<LoadingFallback />}>
+                                <CloseXSvg width='20' height='20' />
+                            </Suspense>
                         </button>
                     </div>
 
                     {navigator.share && (
                         <div className={styles.native_share}>
-                            <ButtonComponent
-                                className={styles.native_share_button}
-                                onClick={() => shareToSocialMedia('native')}
-                                aria-label='Share using device options'>
-                                <span>Share on your device</span>
-                                {isMobile ? <MobilePhoneSvg /> : <LaptopSvg />}
-                            </ButtonComponent>
+                            <Suspense fallback={<LoadingFallback />}>
+                                <ButtonComponent
+                                    className={styles.native_share_button}
+                                    onClick={() => shareToSocialMedia('native')}
+                                    aria-label='Share using device options'>
+                                    <span>Share on your device</span>
+                                    {isMobile ? (
+                                        <Suspense
+                                            fallback={<LoadingFallback />}>
+                                            <MobilePhoneSvg />
+                                        </Suspense>
+                                    ) : (
+                                        <Suspense
+                                            fallback={<LoadingFallback />}>
+                                            <LaptopSvg />
+                                        </Suspense>
+                                    )}
+                                </ButtonComponent>
+                            </Suspense>
                         </div>
                     )}
                     <div className={styles.divider_container}>
@@ -231,42 +262,66 @@ function SharePopoverComponent({ isOpen, onClose, project }) {
                         <div className={styles.divider_stripe_right} />
                     </div>
                     <div className={styles.social_icons}>
-                        <ButtonComponent
-                            className={styles.social_button}
-                            onClick={() => shareToSocialMedia('X')}
-                            aria-label='Share to X'>
-                            <XSvg />
-                        </ButtonComponent>
-                        <ButtonComponent
-                            className={styles.social_button}
-                            onClick={() => shareToSocialMedia('facebook')}
-                            aria-label='Share to Facebook'>
-                            <FacebookSvg />
-                        </ButtonComponent>
-                        <ButtonComponent
-                            className={styles.social_button}
-                            onClick={() => shareToSocialMedia('whatsapp')}
-                            aria-label='Share to WhatsApp'>
-                            <WhatsappSvg />
-                        </ButtonComponent>
-                        <ButtonComponent
-                            className={styles.social_button}
-                            onClick={() => shareToSocialMedia('linkedin')}
-                            aria-label='Share to LinkedIn'>
-                            <LinkedinSvg />
-                        </ButtonComponent>
-                        <ButtonComponent
-                            className={styles.social_button}
-                            onClick={() => shareToSocialMedia('reddit')}
-                            aria-label='Share to Reddit'>
-                            <RedditSvg />
-                        </ButtonComponent>
-                        <ButtonComponent
-                            className={styles.social_button}
-                            onClick={() => shareToSocialMedia('telegram')}
-                            aria-label='Share to Telegram'>
-                            <TelegramSvg />
-                        </ButtonComponent>
+                        <Suspense fallback={<LoadingFallback />}>
+                            <ButtonComponent
+                                className={styles.social_button}
+                                onClick={() => shareToSocialMedia('X')}
+                                aria-label='Share to X'>
+                                <Suspense fallback={<LoadingFallback />}>
+                                    <XSvg />
+                                </Suspense>
+                            </ButtonComponent>
+                        </Suspense>
+                        <Suspense fallback={<LoadingFallback />}>
+                            <ButtonComponent
+                                className={styles.social_button}
+                                onClick={() => shareToSocialMedia('facebook')}
+                                aria-label='Share to Facebook'>
+                                <Suspense fallback={<LoadingFallback />}>
+                                    <FacebookSvg />
+                                </Suspense>
+                            </ButtonComponent>
+                        </Suspense>
+                        <Suspense fallback={<LoadingFallback />}>
+                            <ButtonComponent
+                                className={styles.social_button}
+                                onClick={() => shareToSocialMedia('whatsapp')}
+                                aria-label='Share to WhatsApp'>
+                                <Suspense fallback={<LoadingFallback />}>
+                                    <WhatsappSvg />
+                                </Suspense>
+                            </ButtonComponent>
+                        </Suspense>
+                        <Suspense fallback={<LoadingFallback />}>
+                            <ButtonComponent
+                                className={styles.social_button}
+                                onClick={() => shareToSocialMedia('linkedin')}
+                                aria-label='Share to LinkedIn'>
+                                <Suspense fallback={<LoadingFallback />}>
+                                    <LinkedinSvg />
+                                </Suspense>
+                            </ButtonComponent>
+                        </Suspense>
+                        <Suspense fallback={<LoadingFallback />}>
+                            <ButtonComponent
+                                className={styles.social_button}
+                                onClick={() => shareToSocialMedia('reddit')}
+                                aria-label='Share to Reddit'>
+                                <Suspense fallback={<LoadingFallback />}>
+                                    <RedditSvg />
+                                </Suspense>
+                            </ButtonComponent>
+                        </Suspense>
+                        <Suspense fallback={<LoadingFallback />}>
+                            <ButtonComponent
+                                className={styles.social_button}
+                                onClick={() => shareToSocialMedia('telegram')}
+                                aria-label='Share to Telegram'>
+                                <Suspense fallback={<LoadingFallback />}>
+                                    <TelegramSvg />
+                                </Suspense>
+                            </ButtonComponent>
+                        </Suspense>
                     </div>
 
                     <div className={styles.link_container}>
@@ -279,12 +334,22 @@ function SharePopoverComponent({ isOpen, onClose, project }) {
                             aria-label='Share link'
                             onClick={handleInputClick}
                         />
-                        <ButtonComponent
-                            className={styles.copy_button}
-                            onClick={handleCopyLink}>
-                            {isCopying ? <TickSvg /> : <CopyIconSvg />}
-                            <span>Copy</span>
-                        </ButtonComponent>
+                        <Suspense fallback={<LoadingFallback />}>
+                            <ButtonComponent
+                                className={styles.copy_button}
+                                onClick={handleCopyLink}>
+                                {isCopying ? (
+                                    <Suspense fallback={<LoadingFallback />}>
+                                        <TickSvg />
+                                    </Suspense>
+                                ) : (
+                                    <Suspense fallback={<LoadingFallback />}>
+                                        <CopyIconSvg />
+                                    </Suspense>
+                                )}
+                                <span>Copy</span>
+                            </ButtonComponent>
+                        </Suspense>
                     </div>
                 </div>
             </div>

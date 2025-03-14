@@ -13,7 +13,7 @@ import authService from '../../services/authService'
 import otpVerificationStyles from './VerifyOTPPage.module.css'
 
 function VerifyOTPPage() {
-    const { setIsUserLoggedIn, setUserProfile } = useUserContext()
+    const { setAuthenticatedUserDetailsInContext } = useUserContext()
     const [otpString, setOtpString] = useState(Array(6).fill(''))
     const [errors, setErrors] = useState({})
     const [isLoading, setIsLoading] = useState(false)
@@ -50,11 +50,7 @@ function VerifyOTPPage() {
                     toast({
                         description: 'Verification sucess. Signup completed.',
                     })
-                    setIsUserLoggedIn(true)
-                    localStorage.setItem(
-                        'userData',
-                        JSON.stringify(response.data.data)
-                    )
+                    setAuthenticatedUserDetailsInContext(response.data.data)
                     navigate('/')
                 }
             } catch (error) {

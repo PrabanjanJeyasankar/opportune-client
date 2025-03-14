@@ -14,7 +14,7 @@ import { validateLoginInputs } from '../../utils/authenticationFieldsValidation'
 import loginStyles from './LoginPage.module.css'
 
 function LoginPage() {
-    const { setIsUserLoggedIn } = useUserContext()
+    const { setAuthenticatedUserDetailsInContext } = useUserContext()
     const [formData, setFormData] = useState({
         email: '',
         password: '',
@@ -44,11 +44,7 @@ function LoginPage() {
                     toast({
                         description: 'Logged in successfully.',
                     })
-                    setIsUserLoggedIn(true)
-                    localStorage.setItem(
-                        'userData',
-                        JSON.stringify(response.data.data)
-                    )
+                    setAuthenticatedUserDetailsInContext(response.data.data)
                     navigate('/')
                 }
             } catch (error) {

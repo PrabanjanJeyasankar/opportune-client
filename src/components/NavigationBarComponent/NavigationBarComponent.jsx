@@ -1,4 +1,5 @@
 import ButtonComponent from '@/elements/ButtonComponent/ButtonComponent'
+import ImageComponent from '@/elements/ImageComponent/ImageComponent'
 import useHomeFeedResetContext from '@/hooks/useHomeFeedResetContext'
 import useUserContext from '@/hooks/useUserContext'
 import authService from '@/services/authService'
@@ -10,7 +11,6 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 import navBarStyles from './NavigationBarComponent.module.css'
-import ImageComponent from '@/elements/ImageComponent/ImageComponent'
 
 const NavigationBarComponent = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -18,7 +18,7 @@ const NavigationBarComponent = () => {
     const navbarRef = useRef(null)
     const dropdownRef = useRef(null)
     const { setSearchTerm } = useHomeFeedResetContext()
-    const { isUserLoggedIn, setIsUserLoggedIn, setUserProfile, userProfile } =
+    const { removeAuthenticatedUserDetailsInContext, isUserLoggedIn } =
         useUserContext()
 
     const toggleMenu = () => setIsMenuOpen((prev) => !prev)
@@ -30,13 +30,7 @@ const NavigationBarComponent = () => {
         authService
             .logout()
             .then(() => {
-                localStorage.removeItem('userData')
-                localStorage.removeItem('isUserLoggedIn')
-                localStorage.removeItem('REACT_QUERY_OFFLINE_CACHE')
-
-                setIsUserLoggedIn(false)
-                setUserProfile({})
-
+                removeAuthenticatedUserDetailsInContext()
                 window.location.href = '/'
             })
             .catch((error) => {
