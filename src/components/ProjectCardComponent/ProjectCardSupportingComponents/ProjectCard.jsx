@@ -1,20 +1,17 @@
 import SharePopoverComponent from '@/components/SupportingComponents/SharePopoverComponent/SharePopoverComponent'
-import useUpvote from '@/hooks/useUpvote'
+import useProjectContext from '@/hooks/useProjectContext'
 import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import styles from '../ProjectCardComponent.module.css'
 import ProjectCardContent from './ProjectCardContent'
 import ProjectCardImage from './ProjectCardImage'
-import useProjectContext from '@/hooks/useProjectContext'
 
 function ProjectCard({ project }) {
     const [isSharePopoverOpen, setIsSharePopoverOpen] = useState(false)
     const navigate = useNavigate()
 
     const { setCurrentViewingProject } = useProjectContext()
-
-    const { isUpvoted, upvoteCount, handleUpvoteClick } = useUpvote(project)
 
     function handleCardClick() {
         setCurrentViewingProject(project)
@@ -35,9 +32,6 @@ function ProjectCard({ project }) {
             <ProjectCardImage project={project} />
             <ProjectCardContent
                 project={project}
-                isUpvoted={isUpvoted}
-                upvoteCount={upvoteCount}
-                handleUpvoteClick={handleUpvoteClick}
                 handleShareClick={handleShareClick}
             />
             {isSharePopoverOpen && (

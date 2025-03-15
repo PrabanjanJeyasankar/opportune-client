@@ -23,7 +23,7 @@ function ProjectMetaComponent({ project }) {
             <div className={styles.thumbnail}>
                 <ImageComponent
                     src={project?.thumbnailUrl}
-                    alt="Project Thumbnail"
+                    alt='Project Thumbnail'
                 />
             </div>
             <div className={styles.project_meta_header}>
@@ -32,8 +32,8 @@ function ProjectMetaComponent({ project }) {
                     <p className={styles.project_documentation_link}>
                         <a
                             href={project?.documentation}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                            target='_blank'
+                            rel='noopener noreferrer'
                             className={styles.documentation_link}>
                             <span>docs</span>
                             <ArrowUpRightSvg
@@ -45,12 +45,7 @@ function ProjectMetaComponent({ project }) {
                     </p>
                 </div>
                 <div className={styles.project_actions}>
-                    <UpvoteComponent
-                        projectSlug={project?.slug}
-                        initialUpvoteCount={project?.upvoteCount}
-                        initialIsUpvoted={project?.isUpvotedByUser}
-                        className={styles.upvote}
-                    />
+                    <UpvoteComponent project={project} />
                     <div className={styles.project_views}>
                         <EyeShowSVG />
                         <span className={styles.views_count}>
@@ -86,16 +81,16 @@ function ProjectMetaComponent({ project }) {
             <div className={styles.external_links}>
                 <a
                     href={project?.hostedLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    target='_blank'
+                    rel='noopener noreferrer'
                     className={styles.hosted_link_button}>
                     <ChainLinkSvg width={18} height={18} />
                     <span>Hosted Link</span>
                 </a>
                 <a
                     href={project?.githubLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    target='_blank'
+                    rel='noopener noreferrer'
                     className={styles.github_link_button}>
                     <GithubSvg />
                     <span>Github Link</span>

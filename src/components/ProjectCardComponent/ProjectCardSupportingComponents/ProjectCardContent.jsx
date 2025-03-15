@@ -2,13 +2,7 @@ import PropTypes from 'prop-types'
 import styles from '../ProjectCardComponent.module.css'
 import ProjectCardButtons from './ProjectCardButtons'
 
-function ProjectCardContent({
-    project,
-    isUpvoted,
-    upvoteCount,
-    handleUpvoteClick,
-    handleShareClick,
-}) {
+function ProjectCardContent({ project, handleShareClick }) {
     return (
         <div className={styles.project_card_content}>
             <div className={styles.project_card_header}>
@@ -35,12 +29,7 @@ function ProjectCardContent({
             <div className={styles.project_card_description}>
                 {project.description}
             </div>
-            <ProjectCardButtons
-                isUpvoted={isUpvoted}
-                upvoteCount={upvoteCount}
-                handleUpvoteClick={handleUpvoteClick}
-                handleShareClick={handleShareClick}
-            />
+            <ProjectCardButtons project={project} handleShareClick={handleShareClick} />
         </div>
     )
 }

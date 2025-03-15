@@ -1,36 +1,12 @@
-import NumberFlow from '@number-flow/react'
+import UpvoteComponent from '@/components/UpvoteComponent/UpvoteComponent'
 import PropTypes from 'prop-types'
 import ShareIconSvg from '../../../svg/ShareIconSvg/ShareIconSvg'
-import UpvoteIconSvg from '../../../svg/UpvoteIconSvg/UpvoteIconSvg'
 import styles from '../ProjectCardComponent.module.css'
 
-function ProjectCardButtons({
-    isUpvoted,
-    upvoteCount,
-    handleUpvoteClick,
-    handleShareClick,
-}) {
+function ProjectCardButtons({ project, handleShareClick }) {
     return (
         <div className={styles.project_card_buttons}>
-            <div
-                className={`${styles.upvotes} ${
-                    isUpvoted ? styles.upvoted : ''
-                }`}
-                onClick={handleUpvoteClick}>
-                <UpvoteIconSvg
-                    className={styles.upvote_icon}
-                    style={{
-                        stroke: isUpvoted ? '#7DFF40' : 'white',
-                        fill: isUpvoted ? '#7DFF40' : 'none',
-                    }}
-                />
-                <span>
-                    <NumberFlow
-                        value={upvoteCount}
-                        format={{ notation: 'compact' }}
-                    />
-                </span>
-            </div>
+            <UpvoteComponent project={project} />
             <div
                 onClick={handleShareClick}
                 className={styles.share_icon_container}>

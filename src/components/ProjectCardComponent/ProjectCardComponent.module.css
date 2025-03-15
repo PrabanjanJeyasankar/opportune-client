@@ -191,15 +191,6 @@
     align-items: center;
 }
 
-.upvotes {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 0.6rem;
-}
-
-.upvote_icon,
 .share_icon {
     cursor: pointer;
     transition: transform 0.2s ease, fill 0.2s ease;
@@ -209,10 +200,6 @@
 
 .share_icon_container {
     padding: 0.2rem 0.6rem;
-}
-
-.upvote_icon:hover {
-    transform: scale(1.2);
 }
 
 .no_tag_result_text {
