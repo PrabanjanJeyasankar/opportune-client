@@ -1,0 +1,148 @@
+.container {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100%;
+    padding: 10rem 0;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    background-color: transparent;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 450px;
+}
+
+.app_logo {
+    height: 100px;
+    width: 100px;
+    border-radius: 0.2rem;
+    margin-bottom: 1rem;
+}
+
+.app_name {
+    display: none;
+    font-size: 2rem;
+    font-weight: 600;
+    letter-spacing: -0.05rem;
+    margin-bottom: 0.5rem;
+}
+
+.title {
+    font-size: 2.8rem;
+    line-height: 3.3rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.07rem;
+}
+
+.subtitle {
+    color: var(--gray-800);
+    font-size: 0.9rem;
+    margin-bottom: 2.5rem;
+    margin-left: 0.3rem;
+}
+
+.login_link {
+    color: var(--green-500);
+    margin-left: 0.3rem;
+}
+
+.spinning_loader {
+    position: absolute;
+    left: 27%;
+    top: 10%;
+}
+
+.back_button {
+    display: flex;
+    margin: 40px 0px;
+}
+
+.back_button:hover {
+    opacity: 0.5;
+    transition: opacity 0.1s ease-in; 
+}
+
+@media (min-width: 220px) and (max-width: 426px) {
+    .container {
+        justify-content: flex-start;
+        padding: 5rem 1rem;
+        min-height: 100vh;
+    }
+
+    .form {
+        padding: 2rem 0.5rem;
+    }
+
+    .app_logo {
+        display: block;
+    }
+
+    .app_name {
+        display: block;
+        font-size: 2rem;
+        font-weight: 600;
+        letter-spacing: -0.05rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .subtitle {
+        margin-bottom: 2.5rem;
+    }
+}
+
+@media (min-width: 426px) and (max-width: 860px) {
+    .container {
+        justify-content: flex-start;
+        padding: 5rem 1rem;
+        width: 100%;
+    }
+
+    .title {
+        font-size: 2.6rem;
+    }
+
+    .app_logo {
+        display: block;
+    }
+
+    .app_name {
+        display: block;
+        font-size: 2rem;
+        font-weight: 600;
+        letter-spacing: -0.05rem;
+        margin-bottom: 0.5rem;
+    }
+}
+
+@media (min-width: 860px) and (max-width: 1024px) {
+    .title {
+        font-size: 2.6rem;
+    }
+
+    
+    .title {
+        font-size: 2.6rem;
+    }
+
+    .subtitle {
+        margin-bottom: 2.5rem;
+    }
+
+}
+@media (min-width: 1024px) and (max-width: 1440px) {
+    .container {
+        padding: 10rem 1rem;
+    }
+}

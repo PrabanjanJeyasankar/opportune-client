@@ -1,0 +1,340 @@
+.hero_section {
+    display: flex;
+    flex-direction: column;
+    padding: 8rem 0.5rem;
+    text-align: center;
+    position: relative;
+    overflow-x: visible;
+}
+
+.hero_title {
+    font-size: clamp(2rem, 6vw, 4rem);
+    font-weight: 600;
+    color: white;
+    line-height: 1.2;
+    margin: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+}
+
+.hero_subtitle {
+    font-size: clamp(0.9rem, 3vw, 1.1rem);
+    color: var(--secondary-gray);
+    margin: 2rem auto;
+    width: clamp(280px, 60%, 650px);
+    font-weight: normal;
+    position: relative;
+}
+
+.search_and_filters {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.search_container {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    min-width: 280px;
+    width: 100%;
+    max-width: 800px;
+    /* margin: 0; */
+    position: relative;
+}
+
+.search_input {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.055);
+    border-radius: 0.7rem;
+    color: white;
+    padding: 0.8rem 1.3rem;
+    font-size: 1rem;
+    width: 100%;
+    max-width: 500px;
+    margin-top: 1.3rem;
+    background: rgba(255, 255, 255, 0.07);
+    backdrop-filter: blur(1px);
+    -webkit-backdrop-filter: blur(1px);
+    position: relative;
+}
+
+.search_icon {
+    position: absolute;
+    right: 21%;
+    top: 62%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    stroke: var(--secondary-gray);
+}
+
+.search_input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.search_input::placeholder {
+    color: var(--secondary-gray);
+}
+
+.sort_button {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: background-color 0.2s ease;
+}
+
+.sort_button:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.sort_icon {
+    width: 16px;
+    height: 16px;
+}
+
+.tag_filters {
+    position: relative;
+}
+
+.floating_rock {
+    position: absolute;
+    pointer-events: none;
+}
+
+.rock1 {
+    width: 3%;
+    bottom: 160%;
+    left: 40%;
+}
+
+.rock2 {
+    width: 12%;
+    bottom: 0%;
+    right: 20%;
+}
+
+.rock3 {
+    width: 3%;
+    top: -90%;
+    right: -10%;
+    z-index: 1000;
+}
+
+.rock4 {
+    width: 20%;
+    bottom: -60%;
+    left: 13%;
+    z-index: -1;
+}
+
+.rock5 {
+    width: 6%;
+    top: -50%;
+    right: 0%;
+}
+
+.rock6 {
+    width: 12%;
+    bottom: 50%;
+    left: -20%;
+}
+
+.rock7 {
+    width: 30%;
+    top: 15%;
+    left: 80%;
+    z-index: -1;
+}
+
+.rock8 {
+    width: 40%;
+    top: 50%;
+    left: -55%;
+    z-index: -1;
+    transform: rotate(90deg) !important;
+}
+
+@media (min-width: 320px) {
+    .search_icon {
+        right: 5%;
+    }
+    .hero_section {
+        padding: 8rem 0.5rem;
+    }
+}
+
+@media (min-width: 375px) {
+    .search_icon {
+        right: 5%;
+    }
+
+    .hero_section {
+        padding: 8rem 0.5rem;
+    }
+}
+
+@media (min-width: 425px) {
+    .search_icon {
+        right: 5%;
+    }
+
+    .hero_section {
+        padding: 8rem 0.5rem;
+    }
+}
+
+@media (min-width: 610px) and (max-width: 767px) {
+    .search_icon {
+        right: 16%;
+    }
+}
+
+@media (min-width: 768px) {
+    .search_icon {
+        right: 21%;
+    }
+}
+
+/* ----Responisvness for Rock images------- */
+
+@media (max-width: 320px) {
+    .rock1 {
+        width: 10%;
+        top: -120px;
+        left: 95px;
+    }
+
+    .rock2 {
+        width: 20%;
+        bottom: 0%;
+        right: 10%;
+    }
+
+    .rock3 {
+        width: 3%;
+        top: -90%;
+        right: -10%;
+        z-index: 1000;
+    }
+
+    .rock4 {
+        width: 25%;
+        bottom: -10%;
+        left: -2%;
+        z-index: -1;
+    }
+    .rock7 {
+        width: 10%;
+        top: 5%;
+        left: 70%;
+    }
+    .rock7 {
+        width: 100%;
+        top: 40% !important;
+        left: 70%;
+    }
+    .rock8 {
+        width: 50%;
+        top: 53%;
+        left: -30%;
+    }
+}
+@media (max-width: 375px) {
+    .rock1 {
+        width: 10%;
+        top: -120px;
+        left: 95px;
+    }
+    .rock7 {
+        width: 100%;
+        top: 40% !important;
+        left: 70%;
+    }
+    .rock8 {
+        width: 50%;
+        top: 53%;
+        left: -30%;
+    }
+}
+@media (max-width: 425px) {
+    .rock1 {
+        width: 5%;
+        top: -80px;
+        left: 120px;
+    }
+    .rock2 {
+        width: 20%;
+        bottom: 0%;
+        right: 10%;
+    }
+    .rock4 {
+        width: 30%;
+        bottom: -90%;
+        left: 1%;
+        z-index: -1;
+    }
+    .rock5 {
+        width: 12%;
+        top: 40%;
+        right: -5%;
+    }
+
+    .rock7 {
+        width: 100%;
+        top: 40% !important;
+        left: 70%;
+    }
+    .rock8 {
+        width: 50%;
+        top: 120% !important;
+        left: -45% !important;
+        z-index: -1;
+    }
+}
+
+@media (max-width: 1025px) {
+    .hero_section {
+        overflow-x: hidden;
+    }
+    .rock7 {
+        width: 50%;
+        top: 50%;
+        left: 80%;
+        z-index: -1;
+    }
+    /* .rock8 {
+        width: 50%;
+        top: 90%;
+        left: -60%;
+    } */
+}
+
+@media (max-width: 1280px) {
+    .rock7 {
+        top: 10%;
+    }
+    .rock8 {
+        width: 50%;
+        top: 80%;
+        left: -56%;
+        z-index: -1;
+    }
+}
+
+@media (max-width: 2560px) {
+    .rock7 {
+        top: 14%;
+        left: 80%;
+    }
+}

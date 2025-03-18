@@ -1,0 +1,3 @@
+# Oppurtune
+
+ We believe that GPAs are just numbers—they don't define true talent or potential. Our platform shifts the focus to what really matters: the projects and work that showcase skills, creativity, and innovation. Whether you're a student breaking free from traditional barriers or a professional eager to highlight your expertise, Opportune connects you directly with hiring managers, startup CEOs, and team leaders who value results over grades. It’s time to leave outdated metrics behind and let your projects speak for themselves.

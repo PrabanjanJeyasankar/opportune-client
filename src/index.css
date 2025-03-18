@@ -1,0 +1,242 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+}
+
+:root {
+    font-synthesis: none;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-family: 'Inter';
+    background-color: black;
+    color: white;
+    box-sizing: border-box;
+    margin: 0 auto;
+    max-width: 1024px;
+    /* overflow-x: hidden; */
+    min-width: 320px;
+
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --glass-blur: blur(1px);
+    --glass-webkit-blur: blur(1.5px);
+    --glass-border: 1px solid rgba(255, 255, 255, 0);
+
+    --background-dark: rgba(0, 0, 0, 0.616);
+    --background-light: rgba(255, 255, 255, 0.055);
+    --background-medium: rgba(255, 255, 255, 0.07);
+    --background-low: rgba(255, 255, 255, 0.07);
+    --white-opacity-low: rgba(255, 255, 255, 0.1);
+    --white-opacity-medium: rgba(255, 255, 255, 0.5);
+    --white-opacity-high: rgba(255, 255, 255, 0.5);
+    --white-opacity-none: rgba(255, 255, 255, 0);
+    --shadow-light: rgba(0, 0, 0, 0.1);
+    --shadow-medium: rgba(0, 0, 0, 0.37);
+    --shadow-dark: rgba(0, 0, 0, 0.945);
+    --gray-secondary: #ffffff80;
+    --text-primary: #fff;
+    --text-secondary: #d1d1d1;
+    --button-hover: #007bff;
+    --form-background-color: rgb(37 37 43);
+    --form-border-color: #35353d;
+
+    --primary-gray: #ffffff50;
+    --secondary-gray: #ffffff80;
+    --black-900: #111111;
+    --dark-gray: #1a1a1a;
+    --gray-200: #2d2d2d;
+    --gray-300: #333;
+
+    --gray-400: #444;
+    --gray-500: #555;
+    --gray-600: #666;
+    --gray-800: #757575;
+    --gray-850: #808080;
+
+    --gray-900: #a1a1a1;
+
+    --gray-ccc: #ccc;
+    --green-500: #7dff40;
+    --red-primary: #FF3939;
+    --orange-primary: rgba(255, 94, 26, 1);
+
+    --toast-background: #2c3e50;
+    --toast-text-color: #ecf0f1;
+
+    /* input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus,
+    select:-webkit-autofill,
+    select:-webkit-autofill:hover,
+    select:-webkit-autofill:focus {
+        border: none;
+        -webkit-text-fill-color: white;
+        -webkit-box-shadow: 0 0 0px 1000px #000 inset;
+        transition: background-color 5000s ease-in-out 0s;
+    }
+    input::spelling-error,
+    select::spelling-error,
+    textarea::spelling-error {
+        color: white !important;
+    } */
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0 auto;
+    background-color: black;
+    /* overflow-x: hidden; */
+    /* overflow-y: scroll; */
+}
+
+@media (max-width: 1024px) {
+    html,
+    body {
+        overflow-x: hidden;
+    }
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 100;
+    font-style: normal;
+    src: url('./assets/fonts/Inter-Thin.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 200;
+    font-style: normal;
+    src: url('./assets/fonts/Inter-ExtraLight.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 300;
+    font-style: normal;
+    src: url('./assets/fonts/Inter-Light.woff2') format('woff2');
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 400;
+    font-style: normal;
+    src: url('./assets/fonts/Inter-Regular.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 500;
+    font-style: normal;
+    src: url('./assets/fonts/Inter-Medium.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 600;
+    font-style: normal;
+    src: url('./assets/fonts/Inter-SemiBold.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 700;
+    font-style: normal;
+    src: url('./assets/fonts/Inter-Bold.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 800;
+    font-style: normal;
+    src: url('./assets/fonts/Inter-ExtraBold.woff2') format('woff2');
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Inter';
+    font-weight: 900;
+    font-style: normal;
+    src: url('./assets/fonts/Inter-Black.woff2') format('woff2');
+    font-display: swap;
+}
+
+@layer base {
+    :root {
+        --background: 0 0% 100%;
+        --foreground: 222.2 84% 4.9%;
+        --card: 0 0% 100%;
+        --card-foreground: 222.2 84% 4.9%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 222.2 84% 4.9%;
+        --primary: 222.2 47.4% 11.2%;
+        --primary-foreground: 210 40% 98%;
+        --secondary: 210 40% 96.1%;
+        --secondary-foreground: 222.2 47.4% 11.2%;
+        --muted: 210 40% 96.1%;
+        --muted-foreground: 215.4 16.3% 46.9%;
+        --accent: 210 40% 96.1%;
+        --accent-foreground: 222.2 47.4% 11.2%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 210 40% 98%;
+        --border: 214.3 31.8% 91.4%;
+        --input: 214.3 31.8% 91.4%;
+        --ring: 222.2 84% 4.9%;
+        --chart-1: 12 76% 61%;
+        --chart-2: 173 58% 39%;
+        --chart-3: 197 37% 24%;
+        --chart-4: 43 74% 66%;
+        --chart-5: 27 87% 67%;
+        --radius: 0.5rem;
+    }
+    .dark {
+        --background: 222.2 84% 4.9%;
+        --foreground: 210 40% 98%;
+        --card: 222.2 84% 4.9%;
+        --card-foreground: 210 40% 98%;
+        --popover: 222.2 84% 4.9%;
+        --popover-foreground: 210 40% 98%;
+        --primary: 210 40% 98%;
+        --primary-foreground: 222.2 47.4% 11.2%;
+        --secondary: 217.2 32.6% 17.5%;
+        --secondary-foreground: 210 40% 98%;
+        --muted: 217.2 32.6% 17.5%;
+        --muted-foreground: 215 20.2% 65.1%;
+        --accent: 217.2 32.6% 17.5%;
+        --accent-foreground: 210 40% 98%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 210 40% 98%;
+        --border: 217.2 32.6% 17.5%;
+        --input: 217.2 32.6% 17.5%;
+        --ring: 212.7 26.8% 83.9%;
+        --chart-1: 220 70% 50%;
+        --chart-2: 160 60% 45%;
+        --chart-3: 30 80% 55%;
+        --chart-4: 280 65% 60%;
+        --chart-5: 340 75% 55%;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    body {
+        @apply bg-background text-foreground;
+    }
+}

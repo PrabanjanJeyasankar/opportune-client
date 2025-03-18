@@ -1,0 +1,359 @@
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.5rem;
+    position: sticky;
+    top: 10px;
+    z-index: 1000;
+    max-width: 1204px;
+    min-width: 320px;
+    width: 100%;
+    margin: 0 auto;
+    border-radius: 0.6rem;
+    background: var(--shadow-medium);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(15px);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    text-decoration: none;
+}
+
+.logo_image {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    object-fit: cover;
+    animation: rotateAnimation 20s linear infinite;
+}
+
+.logo_image:hover {
+    animation-play-state: paused;
+}
+
+@keyframes rotateAnimation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.app_name {
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: #fff;
+}
+
+.navigation_bar {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    color: #fff;
+}
+
+.link {
+    text-decoration: none;
+    opacity: 0.8;
+    color: #adadad;
+    font-weight: 500;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.3rem;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.activeLink,
+.link.active,
+.link:active,
+.link:focus {
+    color: #fff !important;
+    opacity: 1;
+}
+
+.authentication_links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2.5rem;
+}
+
+.signup_button {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    color: #000;
+    background-color: #fff;
+    padding: 0.3rem 1rem;
+    border-radius: 0.6rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    position: relative;
+    z-index: 20;
+    background: transparent;
+    transition: all 250ms ease-in-out;
+}
+
+.line {
+    position: absolute;
+    width: 20px;
+    height: 2px;
+    background-color: #fff;
+    transition: all 250ms ease-out;
+}
+
+.line:nth-child(1) {
+    transform: translateY(-4px);
+}
+
+.line:nth-child(2) {
+    transform: translateY(4px);
+}
+
+.hamburger.active .line:nth-child(1) {
+    transform: translateY(0) rotate(45deg);
+}
+
+.hamburger.active .line:nth-child(2) {
+    transform: translateY(0) rotate(-45deg);
+}
+
+.profile_dropdown_container {
+    position: relative;
+    cursor: pointer;
+}
+
+.profile_btn_container {
+    display: flex;
+    align-items: center;
+    padding: 0.3rem 0;
+    transition: color 0.2s ease;
+    color: #adadad;
+}
+
+.text_active {
+    color: #fff !important;
+}
+
+.rotate_arrow {
+    transform: rotate(-180deg);
+    transition: transform 0.3s ease-in-out;
+}
+
+.default_arrow {
+    transform: rotate(0);
+    transition: transform 0.3s ease-in-out;
+}
+
+.icon_active {
+    transform: rotate(-180deg);
+    color: #fff !important;
+}
+
+@keyframes dropdownSlide {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.dropdown_menu {
+    position: absolute;
+    top: 140%;
+    right: -60%;
+    width: 170px;
+    background-color: var(--dark-gray);
+    backdrop-filter: blur(0px);
+    border-radius: 8px;
+    z-index: 1000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0.2rem;
+    transform: translateY(-10px);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.dropdown_menu.show {
+    animation: dropdownSlide 0.3s ease-out forwards;
+}
+
+.dropdown_profile_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 1.5rem 0;
+    background: var(--background-low);
+}
+
+.dropdown_profile_image {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.dropdown_item {
+    font-size: 1.1rem;
+    border-radius: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: 0.6rem 1rem;
+    margin: 0.1rem;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+    gap: 0.5rem;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.dropdown_item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+@media (min-width: 320px) {
+    .hamburger {
+        z-index: 100;
+    }
+}
+
+@media (max-width: 820px) {
+    .header {
+        padding: 0.5rem 0.6rem;
+        border-radius: 14px;
+    }
+
+    .navigation_bar {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        position: absolute;
+        background: rgba(0, 0, 0, 0.945);
+        top: 0;
+        right: 100%;
+        z-index: 100;
+        padding: 4rem 2rem 2rem 2rem;
+        gap: 12px;
+        justify-content: center;
+        width: 100%;
+        opacity: 0;
+        transition: right 0.4s ease, opacity 0.4s ease;
+    }
+
+    .authentication_links {
+        /* margin-top: 1.5rem; */
+        align-items: flex-end;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .navigation_bar.show {
+        left: 0;
+        opacity: 1;
+    }
+
+    .hamburger {
+        display: flex;
+        margin-right: 0.5rem;
+        z-index: 100;
+    }
+
+    .signup_button {
+        font-size: 1.4rem;
+        font-weight: 600;
+        padding: 0.4rem 1rem;
+    }
+
+    .link {
+        font-size: 1.4rem;
+        font-weight: 400;
+        color: #fff;
+        padding: 0.6rem;
+    }
+
+    .profile_dropdown_container {
+        /* margin-top: 1rem; */
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+    }
+
+    .profile_text {
+        font-size: 1.4rem;
+    }
+
+    .dropdown_menu {
+        position: static;
+        width: 100%;
+        /* margin-top: 10px; */
+        right: 0;
+        background-color: black;
+    }
+
+    .dropdown_item {
+        color: var(--gray-900);
+        font-size: 1.2rem;
+        padding: 0.8rem;
+        align-items: center;
+        justify-content: flex-end;
+        font-size: 1.4rem;
+    }
+}
+
+@media (max-width: 426px) {
+    .navigation_bar {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        background: rgba(0, 0, 0, 0.945);
+        right: -100%;
+        padding: 4rem 2rem 2rem 2rem;
+        align-items: flex-end;
+        gap: 12px;
+        justify-content: center;
+        width: 100%;
+        opacity: 0;
+        transition: right 0.4s ease, opacity 0.4s ease;
+    }
+
+    .navigation_bar.show {
+        left: 0;
+        opacity: 1;
+    }
+
+    .signup_button {
+        padding: 0.3rem 1.3rem;
+        font-size: 1.4rem;
+        font-weight: 500;
+    }
+}

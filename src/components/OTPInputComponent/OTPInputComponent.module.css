@@ -1,0 +1,47 @@
+.otpInputContainer {
+    background-color: black;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1;
+}
+
+.inputFieldContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.otpInput {
+    color: white;
+    width: 3.5rem;
+    height: 3.5rem;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    background-color: black;
+    border: 1px solid var(--primary-gray);
+    border-radius: 0.5rem;
+    outline: none;
+    transition: border-color 0.2s;
+    caret-color: white;
+}
+
+.otpInput:focus {
+    background-color: black;
+    border-color: var(--green-500);
+    /* box-shadow: 0 0 0 0px var(--green-500);  */
+}
+
+.error {
+    color: red;
+    font-size: 0.875rem;
+    margin-top: 10px;
+}
+
+@media (min-width: 220px) and (max-width: 426px) {
+    .otpInput {
+        color: black;
+        width: 3rem;
+        height: 3rem;
+    }
+}

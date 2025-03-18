@@ -1,0 +1,173 @@
+.loading_animation {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100vh;
+}
+
+.project_details_container {
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 0rem;
+    margin: 0 6rem;
+    padding-bottom: 12rem;
+    color: white;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 3rem auto;
+    padding: 1rem;
+}
+
+.profile_section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+}
+
+.avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+}
+
+.user_name {
+    font-weight: 500;
+    font-size: 1rem;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.professional_title {
+    font-size: 0.9rem;
+    opacity: 0.6;
+}
+
+.user_profile_actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action_button {
+    padding: 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: white;
+}
+
+.view_profile_button,
+.edit_project_button {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: black;
+    background-color: white;
+    padding: 0.3rem 1rem;
+    border-radius: 0.6rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.separator {
+    margin: 4rem 0 6rem 0;
+    width: 100%;
+    height: 0.5px;
+    background: linear-gradient(
+        90deg,
+        rgba(0, 0, 0, 1) 0%,
+        var(--white-opacity-medium) 40%,
+        var(--white-opacity-medium) 60%,
+        rgba(0, 0, 0, 1) 100%
+    );
+}
+
+@media (max-width: 425px) {
+    .view_profile_button {
+        display: none;
+    }
+    .edit_button_text {
+        display: none;
+    }
+    .edit_project_button {
+        color: white;
+        padding: 0.5rem;
+        border: 1px solid var(--gray-200);
+        background-color: var(--dark-gray);
+    }
+}
+
+@media (min-width: 320px) {
+    .project_details_container {
+        margin: 0 1rem;
+        padding-bottom: 12rem;
+    }
+    .header {
+        margin: 3rem 0 2rem 0;
+        padding: 0;
+    }
+    .user_name {
+        max-width: 150px;
+    }
+    .view_profile_button {
+        font-size: 0.9rem;
+    }
+}
+
+@media (min-width: 375px) {
+    .project_details_container {
+        margin: 0 1rem;
+        padding-bottom: 12rem;
+    }
+    .header {
+        margin: 3rem 0 2rem 0;
+        padding: 0;
+    }
+}
+
+@media (min-width: 425px) {
+    .project_details_container {
+        margin: 0 1rem;
+        padding-bottom: 12rem;
+    }
+    .header {
+        margin: 3rem 0 2rem 0;
+        padding: 0;
+    }
+    .user_name {
+        max-width: 160px;
+    }
+
+    .project_meta_header {
+        margin: 1.5rem 0 0 0;
+    }
+}
+
+@media (min-width: 650px) {
+    .project_details_container {
+        margin: 0 2rem;
+    }
+    .user_name {
+        max-width: 320px;
+    }
+}

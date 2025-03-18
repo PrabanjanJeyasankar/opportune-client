@@ -1,0 +1,238 @@
+.feedback_container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 480px;
+    padding: 1rem;
+}
+
+.feedback_modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 24px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 480px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+    animation: modalFadeIn 0.8s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.modal_header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    text-align: center;
+}
+
+.modal_title {
+    font-size: clamp(1.25rem, 5vw, 1.75rem);
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+}
+
+.modal_description {
+    color: var(--gray-600);
+    font-size: clamp(0.875rem, 4vw, 0.95rem);
+    width: 100%;
+    max-width: 380px;
+    line-height: 1.5;
+    margin-bottom: 3.2rem;
+    text-align: center;
+}
+
+.mood_container {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    position: relative;
+    flex-wrap: wrap;
+    margin-bottom: 2.5rem;
+}
+
+.mood_button {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.2s ease;
+
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 20%;
+}
+
+.mood_button::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 90%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-8px);
+    background-color: var(--gray-300);
+    color: #fff;
+    padding: 0.3rem 0.6rem;
+    border-radius: 8px;
+    font-size: clamp(0.5rem, 2vw, 0.6rem);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.mood_button:hover::after {
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0.3s;
+}
+
+.mood_button:hover .mood_emoji {
+    transform: scale(1.1);
+}
+
+.mood_button_selected .mood_emoji {
+    filter: none;
+}
+
+.mood_emoji {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+    filter: grayscale(100%) brightness(0.6);
+}
+
+.mood_emoji img {
+    height: 48px;
+    width: 48px;
+    object-fit: contain;
+}
+
+.selected_mood_label {
+    text-align: center;
+    font-weight: 500;
+    background-color: #222;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    display: inline-block;
+    margin: 0 auto 1.5rem;
+    font-size: clamp(0.75rem, 3vw, 0.875rem);
+}
+
+.comment_input {
+    width: 100%;
+    min-height: clamp(100px, 20vh, 120px);
+    padding: 1rem;
+    border: 1px solid var(--form-border-color);
+    color: white;
+    border-radius: 0.6rem;
+    resize: vertical;
+    font-family: inherit;
+    font-size: clamp(0.875rem, 4vw, 0.95rem);
+    margin-bottom: 1.5rem;
+    transition: border-color 0.2s;
+    background-color: var(--form-background-color);
+}
+
+.comment_input:focus {
+    outline: none;
+}
+
+.submit_button {
+    width: 100%;
+    padding: clamp(0.5rem, 2vw, 0.6rem);
+    border: none;
+    border-radius: 0.6rem;
+    background-color: white;
+    font-weight: 400;
+    font-size: clamp(0.875rem, 4vw, 1rem);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.submit_button:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.submit_button:disabled {
+    background-color: #b0b0b0;
+    cursor: not-allowed;
+}
+
+.submitting {
+    opacity: 0.7;
+}
+
+.status_message {
+    color: var(--red-primary);
+    font-size: clamp(0.8rem, 3vw, 0.9rem);
+    text-align: center;
+    margin: 2rem;
+}
+
+.status_success {
+    color: var(--green-500);
+}
+
+.status_error {
+    color: red;
+}
+
+@media screen and (max-width: 480px) {
+    .feedback_modal {
+        padding: 1.5rem;
+        border-radius: 16px;
+    }
+
+    .mood_container {
+        gap: 0.75rem;
+    }
+
+    .modal_description {
+        margin-bottom: 2rem;
+    }
+}
+
+@media screen and (max-width: 375px) {
+    .feedback_modal {
+        padding: 1rem;
+    }
+    .mood_emoji img {
+        height: 28px;
+        width: 28px;
+    }
+
+    .mood_container {
+        gap: 0.5rem;
+    }
+}
+
+@media (hover: none) {
+    .mood_button::after {
+        display: none;
+    }
+
+    .mood_button:active .mood_emoji {
+        transform: scale(0.95);
+    }
+}

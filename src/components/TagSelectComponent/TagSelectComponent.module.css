@@ -1,0 +1,117 @@
+.error_message {
+    color: var(--red-primary);
+    font-size: 0.875rem;
+}
+
+.tags_section {
+    display: flex;
+    flex-direction: column;
+    top: 1rem;
+    position: relative;
+}
+
+.tags_label {
+    font-size: 1rem;
+    color: white;
+    bottom: 1rem;
+    position: relative;
+}
+
+
+
+.tags_container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+}
+
+.tag_button {
+    padding: 0.5rem 1rem;
+    border-radius: 90px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: 2px solid rgba(255, 255, 255, 0.176);
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+}
+
+.selected {
+    background-color: #25252b;
+    color: white;
+}
+
+.user_instruction {
+    font-size: smaller;
+}
+
+.search_section {
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+.search_input {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    color: white;
+    background-color: #25252b;
+    border: 1px solid rgba(255, 255, 255, 0.176);
+    border-radius: 4px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.search_input:focus {
+    border-color: var(--gray-300);
+    background-color: #25252b;
+
+}
+
+.suggestions {
+    position: absolute;
+    background-color: #25252b;
+    border: 1px solid rgba(255, 255, 255, 0.176);
+    border-radius: 4px;
+    width: 100%;
+    z-index: 1000;
+    color: white;
+    margin-top: 10px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.suggestion_item {
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.suggestion_item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.loading_message {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 0.5rem;
+}
+
+.close_btn{
+    background-color: black;
+    padding: 5px;
+    border-radius: 20px;
+}
+
+.cancel_icon {
+    margin-left: 0.5rem;
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 0.2rem;
+    border-radius: 50%;
+    background-color: transparent;
+  }
+  
+  .cancel_icon:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+  }

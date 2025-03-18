@@ -1,0 +1,18 @@
+.upvotes {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+}
+
+.upvote_icon {
+    cursor: pointer;
+    transition: transform 0.2s ease, fill 0.2s ease;
+    fill: none;
+    stroke: var(--gray-secondary);
+}
+
+.upvote_icon:hover {
+    transform: scale(1.2);
+}

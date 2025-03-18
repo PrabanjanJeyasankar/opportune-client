@@ -1,0 +1,104 @@
+.more_projects_header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.more_projects_title {
+    font-size: 1rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.more_project_username {
+    position: relative;
+    cursor: pointer;
+}
+
+.more_project_username::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background-color: white;
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.more_project_username:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+.more_projects_title span {
+    color: var(--secondary-gray) !important;
+    font-weight: 400 !important;
+}
+
+.image_gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.image_wrapper {
+    border-radius: 8px;
+    flex: 1 0 20rem;
+    overflow: hidden;
+    padding: 1rem;
+}
+
+.image {
+    display: block;
+    /* height: 250px; */
+    height: 250px;
+    width: 350px;
+    object-fit: cover;
+    border-radius: 0.6rem;
+    border: none;
+    outline: none;
+}
+
+.view_profile_link {
+    font-size: 1rem;
+    gap: 0.1rem;
+    position: relative;
+    cursor: pointer;
+    color: var(--secondary-gray);
+}
+
+.view_profile_link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 1px;
+    background-color: var(--secondary-gray);
+    transition: width 0.3s ease, left 0.3s ease;
+}
+
+.view_profile_link:hover::after {
+    width: 100%;
+    left: 0;
+}
+
+.no_projects_message {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 120px;
+    width: 100%;
+    font-size: 1.1rem;
+}
+
+@media (max-width: 426px) {
+    .view_profile_link {
+        display: none;
+    }
+}

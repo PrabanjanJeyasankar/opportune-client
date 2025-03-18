@@ -1,0 +1,35 @@
+
+.skeleton_project_card_container {
+    background: none !important;
+}
+
+.skeleton_project_card_image {
+    width: 100% !important;
+    height: 200px !important;
+    border-radius: 0.6rem !important;
+    background: rgba(200, 200, 200, 0.2) !important;
+}
+
+.skeleton_project_card_title {
+    width: 100% !important;
+    height: 30px !important;
+    border-radius: 0.4rem !important;
+    margin-top: 10px !important;
+    background: rgba(200, 200, 200, 0.2) !important;
+}
+
+.skeleton_project_card_tags {
+    width: 80% !important;
+    height: 30px !important;
+    border-radius: 0.4rem !important;
+    margin-top: 0.6rem !important;
+    background: rgba(200, 200, 200, 0.2) !important;
+}
+
+.skeleton_project_card_description {
+    width: 60% !important;
+    height: 30px !important;
+    border-radius: 0.4rem !important;
+    margin: 10px 0 !important;
+    background: rgba(200, 200, 200, 0.2) !important;
+}
