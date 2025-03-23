@@ -18,8 +18,11 @@ const NavigationBarComponent = () => {
     const navbarRef = useRef(null)
     const dropdownRef = useRef(null)
     const { setSearchTerm } = useHomeFeedResetContext()
-    const { removeAuthenticatedUserDetailsInContext, isUserLoggedIn } =
-        useUserContext()
+    const {
+        removeAuthenticatedUserDetailsInContext,
+        userProfile,
+        isUserLoggedIn,
+    } = useUserContext()
 
     const toggleMenu = () => setIsMenuOpen((prev) => !prev)
     const handleCloseMenu = () => setIsMenuOpen(false)
