@@ -41,9 +41,13 @@ const TagSelectComponent = ({
         } catch (error) {
             if (!navigator.onLine || !error.response) {
                 toast({
-                    description: "No internet connection. Please check your network.",
+                    description:
+                        "No internet connection. Please check your network.",
                 })
-            } else if (error.response.status === 500 || error.response.status === 503) {
+            } else if (
+                error.response.status === 500 ||
+                error.response.status === 503
+            ) {
                 toast({ description: "Server error. Please try again later." })
             } else {
                 toast({
@@ -52,8 +56,6 @@ const TagSelectComponent = ({
             }
             console.error(`Error in ${serviceFunction.service}:`, error)
             setSuggestedTags([])
-        } finally {
-            setLoading(false)
         }
     }
 
@@ -76,8 +78,8 @@ const TagSelectComponent = ({
         <div className={styles.tags_section}>
             <div className={styles.search_section}>
                 <InputComponent
-                    type="text"
-                    placeholder="Search for tags..."
+                    type='text'
+                    placeholder='Search for tags...'
                     value={searchTerm}
                     onChange={(event) => setSearchTerm(event.target.value)}
                     className={styles.search_input}
@@ -104,14 +106,14 @@ const TagSelectComponent = ({
                         {tag}
                         <span onClick={() => handleRemoveTag(tag)}>
                             <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                viewBox="0 0 24 24"
-                                width="16"
-                                height="16"
+                                xmlns='http://www.w3.org/2000/svg'
+                                viewBox='0 0 24 24'
+                                width='16'
+                                height='16'
                                 className={styles.cancel_icon}
-                                fill="currentColor"
+                                fill='currentColor'
                             >
-                                <path d="M18.36 5.64a1 1 0 00-1.41 0L12 10.59 7.05 5.64a1 1 0 00-1.41 1.41L10.59 12l-4.95 4.95a1 1 0 101.41 1.41L12 13.41l4.95 4.95a1 1 0 001.41-1.41L13.41 12l4.95-4.95a1 1 0 000-1.41z" />
+                                <path d='M18.36 5.64a1 1 0 00-1.41 0L12 10.59 7.05 5.64a1 1 0 00-1.41 1.41L10.59 12l-4.95 4.95a1 1 0 101.41 1.41L12 13.41l4.95 4.95a1 1 0 001.41-1.41L13.41 12l4.95-4.95a1 1 0 000-1.41z' />
                             </svg>
                         </span>
                     </div>
