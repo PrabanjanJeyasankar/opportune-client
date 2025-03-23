@@ -8,6 +8,20 @@
     max-width: 1200px;
 }
 
+.tags_label {
+    color: white;
+}
+
+.label_singleLine_instruction {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.input_instruction {
+    font-size: small;
+}
+
 .form_wrapper {
     width: 100%;
     max-width: 40rem;
@@ -30,18 +44,19 @@
     font-size: 1.8rem;
     color: white;
     font-weight: 600;
-    
+
 }
+
 .form_subtitle,
 .account_links_subheading {
     color: var(--gray-900);
 }
 
 .account_links_subheading {
-  margin:0.3rem 0 1.5rem 0;
-  font-size: 0.9rem;
-  width: 80%;
-  line-height: 1.2rem;
+    margin: 0.3rem 0 1.5rem 0;
+    font-size: 0.9rem;
+    width: 80%;
+    line-height: 1.2rem;
 }
 
 .title_container {

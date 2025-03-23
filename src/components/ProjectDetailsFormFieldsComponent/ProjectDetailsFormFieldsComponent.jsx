@@ -1,9 +1,10 @@
-import React from "react";
-import InputComponent from "../../elements/InputComponent/InputComponent";
-import ButtonComponent from "../../elements/ButtonComponent/ButtonComponent";
-import TagSelectComponent from "../TagSelectComponent/TagSelectComponent";
-import ThumbnailUploadComponent from "../ThumbnailUploadComponent/ThumbnailUploadComponent";
-import styles from "../ProjectDetailsFormFieldsComponent/ProjectDetailsFormFieldsComponent.module.css";
+import React from "react"
+import InputComponent from "../../elements/InputComponent/InputComponent"
+import ButtonComponent from "../../elements/ButtonComponent/ButtonComponent"
+import TagSelectComponent from "../TagSelectComponent/TagSelectComponent"
+import ThumbnailUploadComponent from "../ThumbnailUploadComponent/ThumbnailUploadComponent"
+import styles from "../ProjectDetailsFormFieldsComponent/ProjectDetailsFormFieldsComponent.module.css"
+import projectService from "@/services/projectService"
 
 const ProjectDetailsFormFieldsComponent = ({
     formData,
@@ -104,12 +105,26 @@ const ProjectDetailsFormFieldsComponent = ({
                             placeholderText="Upload thumbnail (max 2MB)"
                         />
                     </div>
+                    <div></div>
                     <div className={styles.input_container}>
+                        <label className={styles.tags_label}>
+                            <div
+                                className={styles.label_singleLine_instruction}
+                            >
+                                Tags *{" "}
+                                <p className={styles.input_instruction}>
+                                    (maximum 3 tags)
+                                </p>
+                            </div>
+                        </label>
                         <TagSelectComponent
-                            tags={["Tag1", "Tag2", "Tag3", "Tag4"]}
                             handleTagClick={handleTagClick}
                             selectedTags={formData.tags}
                             error={errors.tags}
+                            serviceFunction={{
+                                service: projectService,
+                                function: projectService.tagSelectionGetMethod,
+                            }}
                         />
                     </div>
                     <div className={styles.input_container}>
@@ -133,7 +148,7 @@ const ProjectDetailsFormFieldsComponent = ({
                         <div className={styles.label}>HostedLink</div>
                         <InputComponent
                             className={styles.input_field}
-                            placeholder="Enter live demo URL"
+                            placeholder="Enter hosted URL"
                             name="hostedLink"
                             value={formData.hostedLink}
                             label="Hosted Link"
@@ -163,7 +178,7 @@ const ProjectDetailsFormFieldsComponent = ({
                 </form>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default ProjectDetailsFormFieldsComponent;
+export default ProjectDetailsFormFieldsComponent
