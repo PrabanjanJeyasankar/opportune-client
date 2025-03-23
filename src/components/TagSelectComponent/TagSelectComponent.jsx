@@ -52,9 +52,7 @@ const TagSelectComponent = ({
             }
             console.error(`Error in ${serviceFunction.service}:`, error)
             setSuggestedTags([])
-        } finally {
-            setLoading(false)
-        }
+        } 
     }
 
     const handleAddTag = (tag) => {
