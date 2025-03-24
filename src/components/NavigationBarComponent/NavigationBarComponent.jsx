@@ -20,7 +20,7 @@ const NavigationBarComponent = () => {
     const { setSearchTerm } = useHomeFeedResetContext()
     const {
         removeAuthenticatedUserDetailsInContext,
-        userProfile,
+        userData,
         isUserLoggedIn,
     } = useUserContext()
 
@@ -172,7 +172,7 @@ const NavigationBarComponent = () => {
                                     <div
                                         className={`${navBarStyles.dropdown_menu} ${navBarStyles.show}`}>
                                         <NavLink
-                                            to={`/portfolio/${userProfile?.username}`}
+                                            to={`/portfolio/${userData?.username}`}
                                             className={
                                                 navBarStyles.dropdown_item
                                             }

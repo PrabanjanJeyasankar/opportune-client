@@ -47,7 +47,7 @@
     align-items: center;
     gap: 0.5rem;
     transition: all 0.3s ease;
-    margin-top: auto;
+    margin-top: 2rem;
     border: none;
     cursor: pointer;
 }

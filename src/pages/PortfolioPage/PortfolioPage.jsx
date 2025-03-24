@@ -5,7 +5,7 @@ import FloatingAstronautAnimation from '@/loaders/FloatingAstronautAnimation/Flo
 import InfiniteLoadingAnimation from '@/loaders/InfiniteLoadingAnimation/InfiniteLoadingAnimation'
 import userProfileService from '@/services/userProfileservice'
 import { motion } from 'framer-motion'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import ContactSectionComponent from './ContactSectionComponent/ContactSectionComponent'
 import PortfolioNavbarComponent from './PortfolioNavbarComponent/PortfolioNavbarComponent'
@@ -57,6 +57,12 @@ function PortfolioPage() {
         navigate,
         loading,
     ])
+
+    const sectionRefs = {
+        home: useRef(null),
+        works: useRef(null),
+        contact: useRef(null),
+    }
 
     const copyEmailToClipboard = () => {
         if (userProfileData?.email) {
@@ -131,6 +137,7 @@ function PortfolioPage() {
                 <PortfolioNavbarComponent
                     name={userProfileData?.name}
                     portfolioLink={userProfileData?.portfolioLink}
+                    sectionRefs={sectionRefs}
                 />
             </motion.div>
 
@@ -144,12 +151,14 @@ function PortfolioPage() {
                     id='home'
                     name={userProfileData?.name}
                     title={userProfileData?.professionalTitle}
+                    profilePicture={userProfileData?.profilePicture}
                 />
                 <ContactSectionComponent onCopyEmail={copyEmailToClipboard} />
             </motion.div>
 
             {userProfileData.accounts && (
                 <motion.div
+                    ref={sectionRefs.works}
                     variants={fadeInVariant}
                     initial='hidden'
                     whileInView='visible'
@@ -191,17 +200,12 @@ function PortfolioPage() {
 
             <motion.div
                 variants={fadeInVariant}
-                initial='hidden'
                 whileInView='visible'
                 viewport={{ once: true, amount: 0.2 }}>
                 <PortfolioProjectCardComponent
-                    id='works'
                     userProfileData={userProfileData}
                 />
-                <ContactSectionComponent
-                    id='contact'
-                    onCopyEmail={copyEmailToClipboard}
-                />
+                <ContactSectionComponent onCopyEmail={copyEmailToClipboard} />
             </motion.div>
         </motion.div>
     )

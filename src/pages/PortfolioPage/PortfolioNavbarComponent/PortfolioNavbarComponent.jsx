@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from './PortfolioNavbarComponent.module.css'
 
-function PortfolioNavbarComponent({ name, portfolioLink }) {
+function PortfolioNavbarComponent({ name, portfolioLink, sectionRefs }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     const toggleMenu = () => {
@@ -15,12 +15,24 @@ function PortfolioNavbarComponent({ name, portfolioLink }) {
         }
     }
 
+    const scrollToSection = (section) => {
+        if (sectionRefs[section]?.current) {
+            sectionRefs[section].current.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+            })
+            setIsMenuOpen(false)
+        }
+    }
+
     return (
         <nav className={styles.navbar}>
             <div className={styles.logo}>
-                <a href='/' className={styles.logo_link}>
+                <button
+                    className={styles.logo_link}
+                    onClick={() => scrollToSection('home')}>
                     {name}
-                </a>
+                </button>
             </div>
 
             <button
@@ -39,22 +51,25 @@ function PortfolioNavbarComponent({ name, portfolioLink }) {
                 className={`${styles.menu_items} ${
                     isMenuOpen ? styles.show : ''
                 }`}>
-                <a href='#home' className={`${styles.menu_item} ${styles.active}`}>
+                <button
+                    className={`${styles.menu_item}`}
+                    onClick={() => scrollToSection('home')}>
                     home.
-                </a>
-                <a href='#works' className={styles.menu_item}>
-                    works.
-                </a>
-                <a href='#contact' className={styles.menu_item}>
-                    contact.
-                </a>
-                <a
-                    href={portfolioLink}
+                </button>
+                <button
                     className={styles.menu_item}
-                    target='_blank'
-                    rel='noopener noreferrer'>
-                    ext portfolio.
-                </a>
+                    onClick={() => scrollToSection('works')}>
+                    works.
+                </button>
+                {portfolioLink && (
+                    <a
+                        href={portfolioLink}
+                        className={styles.menu_item}
+                        target='_blank'
+                        rel='noopener noreferrer'>
+                        ext portfolio.
+                    </a>
+                )}
             </div>
         </nav>
     )
