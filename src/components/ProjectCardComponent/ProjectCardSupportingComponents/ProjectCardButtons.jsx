@@ -17,9 +17,6 @@ function ProjectCardButtons({ project, handleShareClick }) {
 }
 
 ProjectCardButtons.propTypes = {
-    isUpvoted: PropTypes.bool.isRequired,
-    upvoteCount: PropTypes.number.isRequired,
-    handleUpvoteClick: PropTypes.func.isRequired,
     handleShareClick: PropTypes.func.isRequired,
 }
 
