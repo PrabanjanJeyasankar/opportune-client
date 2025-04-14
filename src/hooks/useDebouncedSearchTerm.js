@@ -1,15 +1,16 @@
 import { useState, useEffect } from 'react'
-import useHomeFeedResetContext from '@/hooks/useHomeFeedResetContext'
+import { useSelector } from 'react-redux'
+import { selectProjectsSearchTerm } from '@/app/features/projects/projectsSelectors'
 
 const useDebouncedSearchTerm = (delay = 300) => {
-    const { searchTerm } = useHomeFeedResetContext()
+    const searchTerm = useSelector(selectProjectsSearchTerm)
     const [debouncedSearchTerm, setDebouncedSearchTerm] = useState(searchTerm)
 
     useEffect(() => {
-        const handler = setTimeout(
-            () => setDebouncedSearchTerm(searchTerm),
-            delay
-        )
+        const handler = setTimeout(() => {
+            setDebouncedSearchTerm(searchTerm)
+        }, delay)
+
         return () => clearTimeout(handler)
     }, [searchTerm, delay])
 

@@ -1,6 +1,5 @@
 import ButtonComponent from '@/elements/ButtonComponent/ButtonComponent'
 import ImageComponent from '@/elements/ImageComponent/ImageComponent'
-import useHomeFeedResetContext from '@/hooks/useHomeFeedResetContext'
 import useUserContext from '@/hooks/useUserContext'
 import authService from '@/services/authService'
 import CheveronArrowDownSvg from '@/svg/ChevronArrowDownSvg/CheveronArrowDownSvg'
@@ -17,7 +16,6 @@ const NavigationBarComponent = () => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const navbarRef = useRef(null)
     const dropdownRef = useRef(null)
-    const { setSearchTerm } = useHomeFeedResetContext()
     const { removeAuthenticatedUserDetailsInContext, isUserLoggedIn } =
         useUserContext()
 
