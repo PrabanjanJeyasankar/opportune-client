@@ -1,17 +1,27 @@
+import { useEffect, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import useDragScrollForTags from '@/hooks/useDragScrollForTags'
 import useScrollHandlerForTags from '@/hooks/useScrollHandlerForTags'
-import useTagsQuery from '@/hooks/useTagsQuery'
-import PropTypes from 'prop-types'
-import { useEffect, useRef } from 'react'
 import NavigationArrow from './NavigationArrow'
 import styles from './TagFilterComponent.module.css'
 import TagsListComponent from './TagListComponent'
+import {
+    selectSelectedTag,
+    selectTags,
+    selectTagsError,
+    selectTagsLoading,
+} from '@/app/features/tags/tagsSelectors'
+import { fetchTags, handleTagSelection } from '@/app/features/tags/tagsThunks'
 
-function TagFilterComponent({ selectedTag, setSelectedTag }) {
+function TagFilterComponent() {
     const tagsContainerRef = useRef(null)
     const scrollAmount = 250
 
-    const { tagsData, isLoading, isError, status, refetch } = useTagsQuery()
+    const dispatch = useDispatch()
+    const tagsData = useSelector(selectTags)
+    const isLoading = useSelector(selectTagsLoading)
+    const isError = useSelector(selectTagsError)
+    const selectedTag = useSelector(selectSelectedTag)
 
     const { smoothScroll } = useScrollHandlerForTags()
 
@@ -19,19 +29,16 @@ function TagFilterComponent({ selectedTag, setSelectedTag }) {
         useDragScrollForTags(tagsContainerRef)
 
     useEffect(() => {
-        if (
-            tagsData.length > 0 &&
-            selectedTag !== 'All' &&
-            !tagsData.some((tag) => tag.tag === selectedTag)
-        ) {
-            setSelectedTag('All')
-        }
-    }, [tagsData, selectedTag, setSelectedTag])
+        dispatch(fetchTags())
+    }, [dispatch])
 
-    const shouldShowSkeletons =
-        isLoading || isError || status === 'error' || tagsData.length === 0
+    const handleTagClick = (tag) => {
+        dispatch(handleTagSelection(tag))
+    }
 
-    const tags = shouldShowSkeletons ? [] : [{ tag: 'All' }, ...tagsData]
+    const shouldShowSkeletons = isLoading || isError || tagsData.length === 0
+
+    const tags = shouldShowSkeletons ? [] : tagsData
 
     const scroll = (direction) => {
         if (tagsContainerRef.current) {
@@ -64,7 +71,7 @@ function TagFilterComponent({ selectedTag, setSelectedTag }) {
     return (
         <div className={styles.tags_container}>
             <NavigationArrow
-                direction='left'
+                direction="left"
                 isHidden={isAtStart}
                 onClick={() => scroll(-1)}
                 styles={styles}
@@ -76,10 +83,9 @@ function TagFilterComponent({ selectedTag, setSelectedTag }) {
                 shouldShowSkeletons={shouldShowSkeletons}
                 tags={tags}
                 selectedTag={selectedTag}
-                setSelectedTag={setSelectedTag}
+                setSelectedTag={handleTagClick}
                 calculateSkeletonCount={calculateSkeletonCount}
                 isError={isError}
-                refetch={refetch}
                 dragHandlers={{
                     onMouseDown: handleMouseDown,
                     onMouseUp: handleMouseUp,
@@ -89,18 +95,13 @@ function TagFilterComponent({ selectedTag, setSelectedTag }) {
             />
 
             <NavigationArrow
-                direction='right'
+                direction="right"
                 isHidden={isAtEnd}
                 onClick={() => scroll(1)}
                 styles={styles}
             />
         </div>
     )
-}
-
-TagFilterComponent.propTypes = {
-    selectedTag: PropTypes.string.isRequired,
-    setSelectedTag: PropTypes.func.isRequired,
 }
 
 export default TagFilterComponent
