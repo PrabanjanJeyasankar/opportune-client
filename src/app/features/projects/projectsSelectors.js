@@ -67,3 +67,13 @@ export const selectProjectsPage = (state) => state.projects.page
  * const pageLimit = useSelector(selectProjectsLimit)
  */
 export const selectProjectsLimit = (state) => state.projects.limit
+
+/**
+ * @function selectProjectsSearchTerm
+ * @description Selects the current search term from the projects slice
+ * @param {Object} state - The root Redux store state
+ * @returns {string} The current search term string
+ * @example
+ * const searchTerm = useSelector(selectProjectsSearchTerm)
+ */
+export const selectProjectsSearchTerm = (state) => state.projects.searchTerm

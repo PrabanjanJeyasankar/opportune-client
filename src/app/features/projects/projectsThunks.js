@@ -16,8 +16,9 @@ import * as projectsAPI from './projectsAPI'
  * @throws {Error} If API request fails
  */
 export const fetchInitialProjects = () => async (dispatch, getState) => {
+    
     const {
-        projects: { page, limit, loading },
+        projects: { page, limit, loading, searchTerm },
         tags: { selectedTag },
     } = getState()
 
@@ -29,7 +30,8 @@ export const fetchInitialProjects = () => async (dispatch, getState) => {
         const response = await projectsAPI.fetchProjectsAPI(
             page,
             limit,
-            selectedTag
+            selectedTag,
+            searchTerm
         )
         dispatch(fetchInitialProjectsSuccess(response.data.data))
     } catch (error) {
@@ -46,7 +48,7 @@ export const fetchInitialProjects = () => async (dispatch, getState) => {
  */
 export const fetchMoreProjects = () => async (dispatch, getState) => {
     const {
-        projects: { page, limit, fetchingMore, hasMore },
+        projects: { page, limit, fetchingMore, hasMore, searchTerm },
         tags: { selectedTag },
     } = getState()
 
@@ -59,7 +61,8 @@ export const fetchMoreProjects = () => async (dispatch, getState) => {
         const response = await projectsAPI.fetchProjectsAPI(
             page,
             limit,
-            selectedTag
+            selectedTag,
+            searchTerm
         )
 
         /**
