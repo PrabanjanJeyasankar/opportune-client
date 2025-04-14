@@ -1,6 +1,6 @@
-import { Skeleton } from '@/components/ui/skeleton'
 import PropTypes from 'prop-types'
 import { forwardRef } from 'react'
+import { Skeleton } from '@/components/ui/skeleton'
 import ButtonComponent from '../ButtonComponent/ButtonComponent'
 
 const TagsListComponent = forwardRef(function TagsList(
@@ -12,13 +12,12 @@ const TagsListComponent = forwardRef(function TagsList(
         setSelectedTag,
         calculateSkeletonCount,
         isError,
-        refetch,
         dragHandlers,
     },
     ref
 ) {
     const handleRetry = () => {
-        refetch({ cancelRefetch: true })
+        dispatch(fetchTags())
     }
 
     return (
@@ -30,7 +29,8 @@ const TagsListComponent = forwardRef(function TagsList(
             onMouseDown={dragHandlers.onMouseDown}
             onMouseUp={dragHandlers.onMouseUp}
             onMouseLeave={dragHandlers.onMouseLeave}
-            onMouseMove={dragHandlers.onMouseMove}>
+            onMouseMove={dragHandlers.onMouseMove}
+        >
             {shouldShowSkeletons ? (
                 <>
                     {Array.from({ length: calculateSkeletonCount() }).map(
@@ -44,7 +44,8 @@ const TagsListComponent = forwardRef(function TagsList(
                     {isError && (
                         <ButtonComponent
                             onClick={handleRetry}
-                            className={styles.retry_button}>
+                            className={styles.retry_button}
+                        >
                             Retry
                         </ButtonComponent>
                     )}
@@ -58,7 +59,8 @@ const TagsListComponent = forwardRef(function TagsList(
                             selectedTag === tagObj.tag
                                 ? styles.tag_selected
                                 : ''
-                        }`}>
+                        }`}
+                    >
                         {tagObj.tag}
                     </ButtonComponent>
                 ))
@@ -74,8 +76,7 @@ TagsListComponent.propTypes = {
     selectedTag: PropTypes.string.isRequired,
     setSelectedTag: PropTypes.func.isRequired,
     calculateSkeletonCount: PropTypes.func.isRequired,
-    isError: PropTypes.bool.isRequired,
-    refetch: PropTypes.func.isRequired,
+    isError: PropTypes.bool,
     dragHandlers: PropTypes.shape({
         onMouseDown: PropTypes.func.isRequired,
         onMouseUp: PropTypes.func.isRequired,
