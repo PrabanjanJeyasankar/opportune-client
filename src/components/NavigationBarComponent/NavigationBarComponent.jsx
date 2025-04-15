@@ -10,8 +10,11 @@ import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 import navBarStyles from './NavigationBarComponent.module.css'
+import { useDispatch } from 'react-redux'
+import { setSearchTerm } from '@/app/features/projects/projectsSlice'
 
 const NavigationBarComponent = () => {
+    const dispatch=useDispatch()
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const navbarRef = useRef(null)
@@ -21,7 +24,7 @@ const NavigationBarComponent = () => {
 
     const toggleMenu = () => setIsMenuOpen((prev) => !prev)
     const handleCloseMenu = () => setIsMenuOpen(false)
-    const handleClearSearch = () => setSearchTerm('')
+    const handleClearSearch = () => dispatch(setSearchTerm(''))
     const toggleDropdown = () => setIsDropdownOpen((prev) => !prev)
 
     const logout = () => {
