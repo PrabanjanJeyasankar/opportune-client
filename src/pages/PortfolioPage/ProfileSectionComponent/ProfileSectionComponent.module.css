@@ -58,7 +58,6 @@
     }
 
     .profile_header {
-        /* flex-direction: row; */
         gap: 2rem;
         align-items: center;
     }
