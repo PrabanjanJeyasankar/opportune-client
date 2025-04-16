@@ -20,7 +20,7 @@ const ProjectDetailsInputFormComponent = () => {
     })
 
     const [errors, setErrors] = useState({})
-    const [beError, setBeError] = useState("") // Backend error state
+    const [beError, setBeError] = useState("")
     const [loading, setLoading] = useState(false)
     const { userProfile } = useUserContext()
     const navigate = useNavigate()
@@ -40,12 +40,26 @@ const ProjectDetailsInputFormComponent = () => {
                     ...prevData,
                     thumbnail: file,
                 }))
+
+                if (errors.thumbnail) {
+                    setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        thumbnail: "",
+                    }))
+                }
             }
         } else {
             setFormData((prevData) => ({
                 ...prevData,
                 [name]: value,
             }))
+
+            if (errors[name]) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    [name]: "",
+                }))
+            }
         }
     }
 
@@ -59,6 +73,14 @@ const ProjectDetailsInputFormComponent = () => {
                 newTags.push(tag)
             }
 
+            setErrors((prevErrors) => ({
+                ...prevErrors,
+                tags:
+                    newTags.length > 0
+                        ? ""
+                        : "At least one tag must be selected.",
+            }))
+
             return { ...prevData, tags: newTags }
         })
     }
@@ -67,7 +89,7 @@ const ProjectDetailsInputFormComponent = () => {
         event.preventDefault()
         const validationErrors = ProjectDetailsValidationFrom(formData)
         setErrors(validationErrors)
-        setBeError("") // Reset backend error on new submission
+        setBeError("")
 
         if (Object.keys(validationErrors).length === 0) {
             setLoading(true)
@@ -136,9 +158,7 @@ const ProjectDetailsInputFormComponent = () => {
                         ...prevErrors,
                         title: error.response.data.message,
                     }))
-                } else if (error.response &&
-                    error.response.status === 400 
-                ) {
+                } else if (error.response && error.response.status === 400) {
                     setBeError(
                         error.response.data.message ||
                             "An unexpected error occurred."

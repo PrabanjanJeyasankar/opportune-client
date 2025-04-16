@@ -8,6 +8,12 @@
     max-width: 1200px;
 }
 
+.char_count {
+    text-align: right;
+    color: white;
+    font-size: 14px;
+}
+
 .tags_label {
     color: white;
 }

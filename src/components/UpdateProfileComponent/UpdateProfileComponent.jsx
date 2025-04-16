@@ -83,6 +83,7 @@ const UpdateProfileComponent = () => {
 
     const handleInputChange = (event) => {
         const { name, type, files, value } = event.target
+
         if (type === "file") {
             if (files && files[0]) {
                 if (files[0].size > 2 * 1024 * 1024) {
@@ -92,6 +93,11 @@ const UpdateProfileComponent = () => {
                         ...previousData,
                         profilePicture: files[0],
                     }))
+
+                    setErrors((prevErrors) => ({
+                        ...prevErrors,
+                        profilePicture: null,
+                    }))
                 }
             }
         } else {
@@ -99,6 +105,13 @@ const UpdateProfileComponent = () => {
                 ...previousData,
                 [name]: value,
             }))
+
+            if (errors[name]) {
+                setErrors((prevErrors) => ({
+                    ...prevErrors,
+                    [name]: null,
+                }))
+            }
         }
     }
 
@@ -288,19 +301,19 @@ const UpdateProfileComponent = () => {
                         ( * are required field)
                     </h3>
                 </div>
-                <form onSubmit={handleSubmit} encType="multipart/form-data">
+                <form onSubmit={handleSubmit} encType='multipart/form-data'>
                     <div className={styles.input_container}>
                         <label
-                            htmlFor="professionalTitle"
+                            htmlFor='professionalTitle'
                             className={styles.label}
                         >
                             Professional title *
                         </label>
                         <InputComponent
-                            id="professionalTitle"
+                            id='professionalTitle'
                             className={styles.input_field}
-                            placeholder="Ex. Front-End Developer"
-                            name="professionalTitle"
+                            placeholder='Ex. Front-End Developer'
+                            name='professionalTitle'
                             value={formData.professionalTitle}
                             onChange={handleInputChange}
                         />
@@ -311,7 +324,7 @@ const UpdateProfileComponent = () => {
                         )}
                     </div>
                     <div className={styles.input_container}>
-                        <label htmlFor="bio" className={styles.label}>
+                        <label htmlFor='bio' className={styles.label}>
                             <div
                                 className={styles.label_singleLine_instruction}
                             >
@@ -323,21 +336,24 @@ const UpdateProfileComponent = () => {
                         </label>
 
                         <textarea
-                            id="bio"
+                            id='bio'
                             className={`${styles.input_field} ${styles.textarea}`}
                             placeholder="Ex. Once upon a time, there lived a coder who didn't use GPT. Hours were lost, frustration grew, and then… blah blah."
-                            name="bio"
+                            name='bio'
                             value={formData.bio}
                             onChange={handleInputChange}
                             rows={8}
-                            maxLength={300}
+                            maxLength={200}
                         />
+                        <div className={styles.char_count}>
+                            {formData.bio.length} / 200 characters
+                        </div>
                         {errors.bio && (
                             <p className={styles.error_message}>{errors.bio}</p>
                         )}
                     </div>
                     <div className={styles.input_container}>
-                        <label htmlFor="tags" className={styles.label}>
+                        <label htmlFor='tags' className={styles.label}>
                             <div
                                 className={styles.label_singleLine_instruction}
                             >
@@ -363,14 +379,14 @@ const UpdateProfileComponent = () => {
                         )}
                     </div>
                     <div className={styles.input_container}>
-                        <label htmlFor="portfolioLink" className={styles.label}>
+                        <label htmlFor='portfolioLink' className={styles.label}>
                             Portfolio Link
                         </label>
                         <InputComponent
-                            id="portfolioLink"
+                            id='portfolioLink'
                             className={styles.input_field}
-                            placeholder="Enter your portfolio link"
-                            name="portfolioLink"
+                            placeholder='Enter your portfolio link'
+                            name='portfolioLink'
                             value={formData.portfolioLink}
                             onChange={handleInputChange}
                         />
@@ -381,14 +397,14 @@ const UpdateProfileComponent = () => {
                         )}
                     </div>
                     <div className={styles.input_container}>
-                        <label htmlFor="resumeLink" className={styles.label}>
+                        <label htmlFor='resumeLink' className={styles.label}>
                             Resume Link *
                         </label>
                         <InputComponent
-                            id="resumeLink"
+                            id='resumeLink'
                             className={styles.input_field}
-                            placeholder="Enter your resume link"
-                            name="resumeLink"
+                            placeholder='Enter your resume link'
+                            name='resumeLink'
                             value={formData.resumeLink}
                             onChange={handleInputChange}
                         />
@@ -400,7 +416,7 @@ const UpdateProfileComponent = () => {
                     </div>
                     <div className={styles.input_container}>
                         <label
-                            htmlFor="profilePicture"
+                            htmlFor='profilePicture'
                             className={styles.label}
                         >
                             Profile Picture
@@ -410,18 +426,18 @@ const UpdateProfileComponent = () => {
                             existingImageUrl={existingProfilePictureUrl}
                             handleInputChange={handleInputChange}
                             error={errors.profilePicture}
-                            placeholderText="Upload profile picture"
+                            placeholderText='Upload profile picture'
                         />
                     </div>
                     <div className={styles.input_container}>
-                        <label htmlFor="passedOutYear" className={styles.label}>
+                        <label htmlFor='passedOutYear' className={styles.label}>
                             Passed Out Year *
                         </label>
                         <InputComponent
-                            id="passedOutYear"
+                            id='passedOutYear'
                             className={styles.input_field}
-                            placeholder="Ex. 2026"
-                            name="passedOutYear"
+                            placeholder='Ex. 2026'
+                            name='passedOutYear'
                             value={formData.passedOutYear}
                             onChange={handleInputChange}
                         />
@@ -433,16 +449,16 @@ const UpdateProfileComponent = () => {
                     </div>
                     <div className={styles.input_container}>
                         <label
-                            htmlFor="professionalExperience"
+                            htmlFor='professionalExperience'
                             className={styles.label}
                         >
                             Professional Experience in years*
                         </label>
                         <InputComponent
-                            id="professionalExperience"
+                            id='professionalExperience'
                             className={styles.input_field}
-                            placeholder="If you are a fresher mention 0"
-                            name="professionalExperience"
+                            placeholder='If you are a fresher mention 0'
+                            name='professionalExperience'
                             value={formData.professionalExperience}
                             onChange={handleInputChange}
                         />
@@ -468,7 +484,7 @@ const UpdateProfileComponent = () => {
                             return (
                                 <div
                                     key={index}
-                                    className={`styles.account_field`}
+                                    className={styles.account_field}
                                 >
                                     <label
                                         htmlFor={`account_${index}`}
@@ -510,7 +526,7 @@ const UpdateProfileComponent = () => {
                         )}
                     </div>
                     <ButtonComponent
-                        type="submit"
+                        type='submit'
                         className={styles.submit_button}
                         disabled={loading}
                     >
