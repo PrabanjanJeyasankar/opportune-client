@@ -14,6 +14,7 @@ import {
     fetchInitialProjects,
     fetchMoreProjects,
 } from '@/app/features/projects/projectsThunks'
+import useDebouncedSearchTerm from '@/hooks/useDebouncedSearchTerm'
 
 const HomeFeedProjectsComponent = () => {
     const dispatch = useDispatch()
@@ -23,12 +24,14 @@ const HomeFeedProjectsComponent = () => {
     const hasMoreProject = useSelector(selectProjectsHasMore)
     const isFetchingMore = useSelector(selectProjectsFetchingMore)
 
+    const debouncedSearchTerm = useDebouncedSearchTerm()
+
     const observerRef = useRef(null)
     const loadingRef = useRef(null)
 
     useEffect(() => {
         dispatch(fetchInitialProjects())
-    }, [dispatch])
+    }, [debouncedSearchTerm, dispatch])
 
     const observerCallback = useCallback(
         (entries) => {

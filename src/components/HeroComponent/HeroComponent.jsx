@@ -16,21 +16,14 @@ import HomeFeedProjectsComponent from '../HomeFeedProjectsComponent/HomeFeedProj
 import { useDispatch, useSelector } from 'react-redux'
 import { selectProjectsSearchTerm } from '@/app/features/projects/projectsSelectors'
 import { setSearchTerm } from '@/app/features/projects/projectsSlice'
-import { fetchInitialProjects } from "@/app/features/projects/projectsThunks";
-import useDebouncedSearchTerm from "@/hooks/useDebouncedSearchTerm";
 
 const HeroComponent = () => {
-  const searchTerm=useSelector(selectProjectsSearchTerm)
-  const debouncedSearchTerm=useDebouncedSearchTerm();
-  const dispatch=useDispatch()
+    const searchTerm = useSelector(selectProjectsSearchTerm)
+    const dispatch = useDispatch()
 
-  const handleSearchChange = (e) => {
-    dispatch(setSearchTerm(e.target.value.toLowerCase()));
-  };
-
-  useEffect(() => {
-    dispatch(fetchInitialProjects());
-  }, [debouncedSearchTerm, dispatch]); 
+    const handleSearchChange = (e) => {
+        dispatch(setSearchTerm(e.target.value.toLowerCase()))
+    }
 
     useEffect(() => {
         const rockSelector = `.${styles.floating_rock}`
@@ -46,16 +39,16 @@ const HeroComponent = () => {
     return (
         <>
             <section className={styles.hero_section}>
-                <div className="title_section_one">
+                <div className='title_section_one'>
                     <h1 className={styles.hero_title}>
                         <ImageComponent
                             src={Rock1}
-                            alt="Rock 1"
+                            alt='Rock 1'
                             className={`${styles.floating_rock} ${styles.rock1}`}
                         />
                         <ImageComponent
                             src={Rock2}
-                            alt="Rock 2"
+                            alt='Rock 2'
                             className={`${styles.floating_rock} ${styles.rock2}`}
                         />
                         Your Projects
@@ -63,7 +56,7 @@ const HeroComponent = () => {
                     <h1 className={styles.hero_title}>
                         <ImageComponent
                             src={Rock4}
-                            alt="Rock 4"
+                            alt='Rock 4'
                             className={`${styles.floating_rock} ${styles.rock4}`}
                         />
                         Their Opportunities
@@ -74,7 +67,7 @@ const HeroComponent = () => {
                     Upload your best projects here, Get noticed by your next HR.
                     <ImageComponent
                         src={Rock5}
-                        alt="Rock 5"
+                        alt='Rock 5'
                         className={`${styles.floating_rock} ${styles.rock5}`}
                     />
                 </p>
@@ -87,31 +80,30 @@ const HeroComponent = () => {
                             className={`${styles.floating_rock} ${styles.rock6}`}
                         /> */}
                         <InputComponent
-                            type="text"
+                            type='text'
                             className={styles.search_input}
-                            placeholder="Search projects..."
+                            placeholder='Search projects...'
                             value={searchTerm}
                             onChange={handleSearchChange}
                         />
                         <svg
                             className={styles.search_icon}
-                            width="24"
-                            height="24"
-                            viewBox="0 0 26 26"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
+                            width='24'
+                            height='24'
+                            viewBox='0 0 26 26'
+                            fill='none'
+                            xmlns='http://www.w3.org/2000/svg'>
                             <path
-                                d="M12.4883 21.4883C17.735 21.4883 21.9883 17.235 21.9883 11.9883C21.9883 6.74158 17.735 2.48828 12.4883 2.48828C7.24158 2.48828 2.98828 6.74158 2.98828 11.9883C2.98828 17.235 7.24158 21.4883 12.4883 21.4883Z"
-                                strokeWidth="1.8"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
+                                d='M12.4883 21.4883C17.735 21.4883 21.9883 17.235 21.9883 11.9883C21.9883 6.74158 17.735 2.48828 12.4883 2.48828C7.24158 2.48828 2.98828 6.74158 2.98828 11.9883C2.98828 17.235 7.24158 21.4883 12.4883 21.4883Z'
+                                strokeWidth='1.8'
+                                strokeLinecap='round'
+                                strokeLinejoin='round'
                             />
                             <path
-                                d="M25.0117 24.5117L20.9883 20.4883"
-                                strokeWidth="1.8"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
+                                d='M25.0117 24.5117L20.9883 20.4883'
+                                strokeWidth='1.8'
+                                strokeLinecap='round'
+                                strokeLinejoin='round'
                             />
                         </svg>
                     </div>
@@ -124,7 +116,7 @@ const HeroComponent = () => {
                         /> */}
                         <ImageComponent
                             src={Rock8}
-                            alt="Rock 8"
+                            alt='Rock 8'
                             className={`${styles.floating_rock} ${styles.rock8}`}
                         />
                     </div>
@@ -132,7 +124,7 @@ const HeroComponent = () => {
                 <div className={styles.project_display}>
                     <ImageComponent
                         src={Rock7}
-                        alt="Rock 7"
+                        alt='Rock 7'
                         className={`${styles.floating_rock} ${styles.rock7}`}
                     />
                     <HomeFeedProjectsComponent />
