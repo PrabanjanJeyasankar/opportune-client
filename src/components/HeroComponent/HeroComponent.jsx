@@ -108,10 +108,10 @@ const HeroComponent = () => {
             </svg>
           </div>
           <div className={styles.tag_filters}>
-            <TagFilterComponent
+            {/* <TagFilterComponent
               selectedTag={selectedTag}
               setSelectedTag={setSelectedTag}
-            />
+            /> */}
 
             {/* <ImageComponent
                             src={Rock3}

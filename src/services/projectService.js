@@ -37,6 +37,7 @@ const projectService = {
     },
 
     editProjectBySlug: async (slug, formData) => {
+        console.log('hii' + slug)
         const response = await axiosInstance.patch(`/project/${slug}`, formData)
         return response
     },

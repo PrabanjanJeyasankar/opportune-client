@@ -1,10 +1,10 @@
-import useHomeFeedResetContext from '@/hooks/useHomeFeedResetContext'
-import useUserContext from '@/hooks/useUserContext'
-import { useQueryClient } from '@tanstack/react-query'
 import React, { createContext, useEffect, useMemo, useState } from 'react'
-import useDebouncedSearchTerm from '../hooks/useDebouncedSearchTerm'
 import useHomeFeedProjects from '../hooks/useHomeFeedProjects'
+import useDebouncedSearchTerm from '../hooks/useDebouncedSearchTerm'
 import useOnlineStatus from '../hooks/useOnlineStatus'
+import useUserContext from '@/hooks/useUserContext'
+import useHomeFeedResetContext from '@/hooks/useHomeFeedResetContext'
+import { useQueryClient } from '@tanstack/react-query'
 
 const ProjectContext = createContext()
 

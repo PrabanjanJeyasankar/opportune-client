@@ -10,6 +10,13 @@
     position: relative;
 }
 
+.tags_label {
+    font-size: 1rem;
+    color: white;
+    bottom: 1rem;
+    position: relative;
+}
+
 
 
 .tags_container {
@@ -19,7 +26,7 @@
 }
 
 .tag_button {
-    padding: 0.5rem 1rem ;
+    padding: 0.5rem 1rem;
     border-radius: 90px;
     font-size: 0.875rem;
     font-weight: 500;
@@ -27,12 +34,15 @@
     background-color: transparent;
     color: white;
     cursor: pointer;
-    margin-left: 0.5rem;
 }
 
 .selected {
     background-color: #25252b;
     color: white;
+}
+
+.user_instruction {
+    font-size: smaller;
 }
 
 .search_section {
@@ -87,7 +97,7 @@
     margin-top: 0.5rem;
 }
 
-.close_btn {
+.close_btn{
     background-color: black;
     padding: 5px;
     border-radius: 20px;
@@ -100,8 +110,8 @@
     margin-bottom: 0.2rem;
     border-radius: 50%;
     background-color: transparent;
-}
-
-.cancel_icon:hover {
+  }
+  
+  .cancel_icon:hover {
     background-color: rgba(255, 255, 255, 0.2);
-}
+  }

@@ -34,16 +34,16 @@ function ProjectCardContent({ project, handleShareClick }) {
     )
 }
 
-ProjectCardContent.propTypes = {
-    project: PropTypes.shape({
-        title: PropTypes.string,
-        tags: PropTypes.array,
-        description: PropTypes.string,
-    }).isRequired,
-    isUpvoted: PropTypes.bool.isRequired,
-    upvoteCount: PropTypes.number.isRequired,
-    handleUpvoteClick: PropTypes.func.isRequired,
-    handleShareClick: PropTypes.func.isRequired,
-}
+// ProjectCardContent.propTypes = {
+//     project: PropTypes.shape({
+//         title: PropTypes.string,
+//         tags: PropTypes.array,
+//         description: PropTypes.string,
+//     }).isRequired,
+//     isUpvoted: PropTypes.bool.isRequired,
+//     upvoteCount: PropTypes.number.isRequired,
+//     handleUpvoteClick: PropTypes.func.isRequired,
+//     handleShareClick: PropTypes.func.isRequired,
+// }
 
 export default ProjectCardContent
