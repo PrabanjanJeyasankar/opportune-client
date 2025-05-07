@@ -17,13 +17,6 @@ const userProfileService = {
         )
         return response
     },
-
-    getUserSkills: async (term) => {
-        const response = await axiosInstance.get('/user/skills', {
-            params: { keyword: term },
-        })
-        return response
-    }
 }
 
 export default userProfileService

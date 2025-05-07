@@ -1,31 +1,43 @@
-import { useRef, useCallback, useEffect } from 'react'
+import { useRef, useCallback, useEffect, useState } from 'react'
 import ProjectCardComponent from '../ProjectCardComponent/ProjectCardComponent'
 import InfiniteLoadingAnimation from '@/loaders/InfiniteLoadingAnimation/InfiniteLoadingAnimation'
 import styles from './HomeFeedProjectsComponent.module.css'
-import useProjectContext from '@/hooks/useProjectContext'
+import { useDispatch, useSelector } from 'react-redux'
+import {
+    selectProjects,
+    selectProjectsError,
+    selectProjectsFetchingMore,
+    selectProjectsHasMore,
+    selectProjectsLoading,
+} from '@/app/features/projects/projectsSelectors'
+import {
+    fetchInitialProjects,
+    fetchMoreProjects,
+} from '@/app/features/projects/projectsThunks'
 
 const HomeFeedProjectsComponent = () => {
-    const {
-        filteredProjects,
-        fetchNextPage,
-        hasNextPage,
-        isFetchingNextPage,
-        isLoading,
-        isOnline,
-        refetch,
-    } = useProjectContext()
+    const dispatch = useDispatch()
+    const projects = useSelector(selectProjects)
+    const loading = useSelector(selectProjectsLoading)
+    const error = useSelector(selectProjectsError)
+    const hasMoreProject = useSelector(selectProjectsHasMore)
+    const isFetchingMore = useSelector(selectProjectsFetchingMore)
 
     const observerRef = useRef(null)
     const loadingRef = useRef(null)
 
+    useEffect(() => {
+        dispatch(fetchInitialProjects())
+    }, [dispatch])
+
     const observerCallback = useCallback(
         (entries) => {
             const [entry] = entries
-            if (entry.isIntersecting && hasNextPage && !isFetchingNextPage) {
-                fetchNextPage()
+            if (entry.isIntersecting && hasMoreProject && !isFetchingMore) {
+                dispatch(fetchMoreProjects())
             }
         },
-        [fetchNextPage, hasNextPage, isFetchingNextPage]
+        [hasMoreProject, isFetchingMore]
     )
 
     useEffect(() => {
@@ -43,30 +55,15 @@ const HomeFeedProjectsComponent = () => {
         }
     }, [loadingRef, observerCallback])
 
+    const projectsDataLength = projects?.length
+
     return (
         <div className={styles.home_feed_projects_container}>
-            {!isOnline && (
-                <div className={styles.offline_message}>
-                    <p>
-                        You are currently offline. Some content may not be up to
-                        date.
-                    </p>
-                    <button
-                        onClick={() => refetch()}
-                        className={styles.retry_button}>
-                        Try Again
-                    </button>
-                </div>
-            )}
+            <ProjectCardComponent projects={projects} isLoading={loading} />
 
-            <ProjectCardComponent
-                filteredProjects={filteredProjects}
-                isLoading={isLoading}
-            />
-
-            {filteredProjects.length > 0 ? (
-                hasNextPage && !isLoading ? (
-                    <div ref={loadingRef} className={styles.loading_container}>
+            <div ref={loadingRef}>
+                {projectsDataLength > 0 && hasMoreProject ? (
+                    <div className={styles.loading_container}>
                         <InfiniteLoadingAnimation />
                     </div>
                 ) : (
@@ -75,8 +72,8 @@ const HomeFeedProjectsComponent = () => {
                         <p className={styles.end_of_results}>End of results</p>
                         <div className={styles.divider_stripe_right} />
                     </div>
-                )
-            ) : null}
+                )}
+            </div>
         </div>
     )
 }

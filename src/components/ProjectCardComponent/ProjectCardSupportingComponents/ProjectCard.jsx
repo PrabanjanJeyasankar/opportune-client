@@ -1,5 +1,5 @@
 import SharePopoverComponent from '@/components/SupportingComponents/SharePopoverComponent/SharePopoverComponent'
-import useProjectContext from '@/hooks/useProjectContext'
+// import useProjectContext from '@/hooks/useProjectContext'
 import PropTypes from 'prop-types'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -11,10 +11,10 @@ function ProjectCard({ project }) {
     const [isSharePopoverOpen, setIsSharePopoverOpen] = useState(false)
     const navigate = useNavigate()
 
-    const { setCurrentViewingProject } = useProjectContext()
+    // const { setCurrentViewingProject } = useProjectContext()
 
     function handleCardClick() {
-        setCurrentViewingProject(project)
+        // setCurrentViewingProject(project)
         navigate(`/${project.authorDetails.username}/${project.slug}`, {
             state: { project },
         })

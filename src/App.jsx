@@ -7,7 +7,6 @@ import HomeFeedResetContextProvider from './context/HomeFeedResetContext'
 import { UserProvider } from './context/userContext'
 import InitialLoadingAnimation from './loaders/InitialLoadingAnimation/InitialLoadingAnimation'
 import AppRoutes from './routes/AppRoutes'
-import { ProjectProvider } from './context/ProjectContext'
 
 function App() {
     const [loading, setLoading] = useState(() => {
@@ -34,9 +33,7 @@ function App() {
             <Router>
                 <ScrollToTopComponent />
                 <UserProvider>
-                    <ProjectProvider>
-                        <AppRoutes />
-                    </ProjectProvider>
+                    <AppRoutes />
                 </UserProvider>
                 <StarryMotionComponent />
             </Router>

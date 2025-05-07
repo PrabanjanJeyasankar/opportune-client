@@ -30,19 +30,18 @@
     font-size: 1.8rem;
     color: white;
     font-weight: 600;
-
+    
 }
-
 .form_subtitle,
 .account_links_subheading {
     color: var(--gray-900);
 }
 
 .account_links_subheading {
-    margin: 0.3rem 0 1.5rem 0;
-    font-size: 0.9rem;
-    width: 80%;
-    line-height: 1.2rem;
+  margin:0.3rem 0 1.5rem 0;
+  font-size: 0.9rem;
+  width: 80%;
+  line-height: 1.2rem;
 }
 
 .title_container {
@@ -56,9 +55,8 @@
 
 .input_container,
 .account_field {
-    margin-top: 2.7rem;
+    margin-bottom: 1.8rem;
 }
-
 
 .input_field,
 .textarea_field {
@@ -68,8 +66,8 @@
     border-radius: 0.375rem;
     border: 1px solid #35353d;
     padding: 0.25rem 0.75rem;
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
+    margin-top: 0.6rem;
+    margin-bottom: 0.2rem;
     font-size: 0.875rem;
     background-color: #25252b;
     color: white;
@@ -80,12 +78,6 @@
     min-height: 3.75rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-}
-
-.char_count {
-    text-align: right;
-    color: white;
-    font-size: 14px;
 }
 
 .input_field:focus,

@@ -1,13 +1,13 @@
 import styles from './ProfileSectionComponent.module.css'
 
-function ProfileSectionComponent({ name, title, profilePicture }) {
+function ProfileSectionComponent({ name, title }) {
     return (
         <div className={styles.profile_section}>
             <div className={styles.profile_header}>
                 <div className={styles.profile_image_container}>
                     <img
                         loading='lazy'
-                        src={profilePicture}
+                        src='https://cdn.prod.website-files.com/63fbd08ddcf51344a63f9add/63fbd08ddcf5133a563f9af5_Avatar.png'
                         alt='Profile'
                         className={styles.profile_image}
                     />

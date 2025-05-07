@@ -31,7 +31,7 @@
 }
 
 .profile_image {
-    height: 25vmin;
+    height: auto;
     width: 25vmin;
     border-radius: 50%;
     object-fit: cover;
@@ -58,12 +58,12 @@
     }
 
     .profile_header {
+        flex-direction: row;
         gap: 2rem;
         align-items: center;
     }
 
     .profile_text {
-        text-align: center;
         font-size: 3rem;
         margin-top: 0;
         line-height: 1.25;
@@ -75,13 +75,7 @@
 @media (max-width: 768px) {
     .profile_header {
         flex-direction: column;
-        align-items: center;
         gap: 0rem;
-    }
-
-    .profile_image {
-        height: 30vmin;
-        width: 30vmin;
     }
 
     .profile_text {
@@ -93,12 +87,7 @@
 @media (max-width: 480px) {
     .profile_header {
         padding: 1.5rem;
-        align-items: center;
-    }
-
-    .profile_image {
-        height: 45vmin;
-        width: 45vmin;
+        align-items: flex-start;
     }
 
     .profile_text {

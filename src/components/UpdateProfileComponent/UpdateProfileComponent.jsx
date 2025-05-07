@@ -1,36 +1,34 @@
-import ButtonComponent from "@/elements/ButtonComponent/ButtonComponent"
-import InputComponent from "@/elements/InputComponent/InputComponent"
-import TagSelectComponent from "@/components/TagSelectComponent/TagSelectComponent"
-import { toast } from "@/hooks/use-toast"
-import userProfileService from "@/services/userProfileservice"
-import updateProfileValidation from "@/utils/updateProfileValidation"
-import { useEffect, useState } from "react"
-import { useNavigate } from "react-router-dom"
-import ThumbnailUploadComponent from "../ThumbnailUploadComponent/ThumbnailUploadComponent"
-import styles from "../UpdateProfileComponent/UpdateProfileComponent.module.css"
+import ButtonComponent from '@/elements/ButtonComponent/ButtonComponent'
+import InputComponent from '@/elements/InputComponent/InputComponent'
+import { toast } from '@/hooks/use-toast'
+import userProfileService from '@/services/userProfileservice'
+import updateProfileValidation from '@/utils/updateProfileValidation'
+import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import ThumbnailUploadComponent from '../ThumbnailUploadComponent/ThumbnailUploadComponent'
+import styles from '../UpdateProfileComponent/UpdateProfileComponent.module.css'
 
 const UpdateProfileComponent = () => {
     const [formData, setFormData] = useState({
-        professionalTitle: "",
-        bio: "",
-        portfolioLink: "",
-        resumeLink: "",
-        passedOutYear: "",
-        professionalExperience: "",
+        professionalTitle: '',
+        bio: '',
+        portfolioLink: '',
+        resumeLink: '',
+        passedOutYear: '',
+        professionalExperience: '',
         profilePicture: null,
-        tags: [],
         accounts: [
-            { domain: "linkedin", url: "" },
-            { domain: "leetcode", url: "" },
-            { domain: "behance", url: "" },
-            { domain: "dribble", url: "" },
-            { domain: "hackerrank", url: "" },
-            { domain: "instagram", url: "" },
-            { domain: "X", url: "" },
-            { domain: "reddit", url: "" },
-            { domain: "hackerearth", url: "" },
-            { domain: "codechef", url: "" },
-            { domain: "geeksforgeeks", url: "" },
+            { domain: 'linkedin', url: '' },
+            { domain: 'leetcode', url: '' },
+            { domain: 'behance', url: '' },
+            { domain: 'dribble', url: '' },
+            { domain: 'hackerrank', url: '' },
+            { domain: 'instagram', url: '' },
+            { domain: 'X', url: '' },
+            { domain: 'reddit', url: '' },
+            { domain: 'hackerearth', url: '' },
+            { domain: 'codechef', url: '' },
+            { domain: 'geeksforgeeks', url: '' },
         ],
     })
     const [existingProfilePictureUrl, setExistingProfilePictureUrl] =
@@ -52,27 +50,26 @@ const UpdateProfileComponent = () => {
 
                     const formattedData = {
                         ...formData,
-                        professionalTitle: userData.professionalTitle || "",
-                        bio: userData.bio || "",
-                        portfolioLink: userData.portfolioLink || "",
-                        resumeLink: userData.resumeLink || "",
-                        passedOutYear: userData.passedOutYear || "",
+                        professionalTitle: userData.professionalTitle || '',
+                        bio: userData.bio || '',
+                        portfolioLink: userData.portfolioLink || '',
+                        resumeLink: userData.resumeLink || '',
+                        passedOutYear: userData.passedOutYear || '',
                         professionalExperience: isNaN(
                             userData.professionalExperience
                         )
-                            ? ""
+                            ? ''
                             : userData.professionalExperience,
-                        tags: userData.skills || [],
                         accounts: formData.accounts.map((acc) => ({
                             domain: acc.domain,
                             url:
                                 userData.accounts?.find(
                                     (a) => a.domain === acc.domain
-                                )?.url || "",
+                                )?.url || '',
                         })),
                     }
                     setFormData(formattedData)
-                    toast({ description: "Restored your previous work" })
+                    toast({ description: 'Restored your previous work' })
                     setOriginalData(JSON.parse(JSON.stringify(formattedData)))
                 }
             })
@@ -83,61 +80,30 @@ const UpdateProfileComponent = () => {
 
     const handleInputChange = (event) => {
         const { name, type, files, value } = event.target
-
-        if (type === "file") {
+        if (type === 'file') {
             if (files && files[0]) {
                 if (files[0].size > 2 * 1024 * 1024) {
-                    toast({ description: "File size should not exceed 2MB." })
+                    toast({ description: 'File size should not exceed 2MB.' })
                 } else {
-                    setFormData((previousData) => ({
-                        ...previousData,
+                    setFormData((prevData) => ({
+                        ...prevData,
                         profilePicture: files[0],
-                    }))
-
-                    setErrors((prevErrors) => ({
-                        ...prevErrors,
-                        profilePicture: null,
                     }))
                 }
             }
         } else {
-            setFormData((previousData) => ({
-                ...previousData,
+            setFormData((prevData) => ({
+                ...prevData,
                 [name]: value,
             }))
-
-            if (errors[name]) {
-                setErrors((prevErrors) => ({
-                    ...prevErrors,
-                    [name]: null,
-                }))
-            }
         }
     }
 
-    const handleTagClick = (tag) => {
-        setFormData((previousData) => {
-            if (previousData.tags.includes(tag)) {
-                return {
-                    ...previousData,
-                    tags: previousData.tags.filter(
-                        (curretTag) => curretTag !== tag
-                    ),
-                }
-            } else {
-                return {
-                    ...previousData,
-                    tags: [...previousData.tags, tag],
-                }
-            }
-        })
-    }
-
     const handleAccountChange = (index, value) => {
-        setFormData((previous) => {
-            const updatedAccounts = [...previous.accounts]
+        setFormData((prev) => {
+            const updatedAccounts = [...prev.accounts]
             updatedAccounts[index].url = value
-            return { ...previous, accounts: updatedAccounts }
+            return { ...prev, accounts: updatedAccounts }
         })
     }
 
@@ -152,17 +118,16 @@ const UpdateProfileComponent = () => {
             formData.passedOutYear !== originalData.passedOutYear ||
             formData.professionalExperience !==
                 originalData.professionalExperience ||
-            formData.profilePicture !== null ||
-            JSON.stringify(formData.tags) !== JSON.stringify(originalData.tags)
+            formData.profilePicture !== null
         ) {
             return false
         }
 
         const formDataNonEmptyAccounts = formData.accounts.filter(
-            (account) => account.url.trim() !== ""
+            (account) => account.url.trim() !== ''
         )
         const originalDataNonEmptyAccounts = originalData.accounts.filter(
-            (account) => account.url.trim() !== ""
+            (account) => account.url.trim() !== ''
         )
 
         if (
@@ -174,7 +139,7 @@ const UpdateProfileComponent = () => {
 
         for (const formAccount of formDataNonEmptyAccounts) {
             const originalAccount = originalDataNonEmptyAccounts.find(
-                (account) => account.domain === formAccount.domain
+                (acc) => acc.domain === formAccount.domain
             )
 
             if (!originalAccount || originalAccount.url !== formAccount.url) {
@@ -185,20 +150,20 @@ const UpdateProfileComponent = () => {
         return true
     }
 
-    const handleSubmit = async (event) => {
-        event.preventDefault()
+    const handleSubmit = async (e) => {
+        e.preventDefault()
 
         if (originalData && isFormUnchanged()) {
             toast({
                 description:
-                    "No changes detected. Please edit the form before submitting.",
+                    'No changes detected. Please edit the form before submitting.',
             })
             return
         }
         const cleanedFormData = {
             ...formData,
             accounts: formData.accounts.filter(
-                (account) => account.url.trim() !== ""
+                (account) => account.url.trim() !== ''
             ),
         }
 
@@ -212,31 +177,27 @@ const UpdateProfileComponent = () => {
         setErrors({})
 
         const formDataObj = new FormData()
-        formDataObj.append("professionalTitle", formData.professionalTitle)
-        formDataObj.append("bio", formData.bio)
-        formDataObj.append("portfolioLink", formData.portfolioLink)
-        formDataObj.append("resumeLink", formData.resumeLink)
-        formDataObj.append("passedOutYear", formData.passedOutYear)
+        formDataObj.append('professionalTitle', formData.professionalTitle)
+        formDataObj.append('bio', formData.bio)
+        formDataObj.append('portfolioLink', formData.portfolioLink)
+        formDataObj.append('resumeLink', formData.resumeLink)
+        formDataObj.append('passedOutYear', formData.passedOutYear)
         formDataObj.append(
-            "professionalExperience",
+            'professionalExperience',
             formData.professionalExperience
         )
 
-        formData.tags.forEach((tag) => {
-            formDataObj.append(`skills[]`, tag)
-        })
-
         if (formData.profilePicture) {
-            formDataObj.append("profilePicture", formData.profilePicture)
+            formDataObj.append('profilePicture', formData.profilePicture)
         } else if (existingProfilePictureUrl) {
             formDataObj.append(
-                "existingProfilePicture",
+                'existingProfilePicture',
                 existingProfilePictureUrl
             )
         }
 
         const nonEmptyAccounts = formData.accounts.filter(
-            (account) => account.url.trim() !== ""
+            (account) => account.url.trim() !== ''
         )
 
         nonEmptyAccounts.forEach((account, index) => {
@@ -247,7 +208,7 @@ const UpdateProfileComponent = () => {
         try {
             const response = await userProfileService.updateProfile(formDataObj)
             if (response.status === 200) {
-                toast({ description: "Profile updated successfully." })
+                toast({ description: 'Profile updated successfully.' })
 
                 const username = response.data.data.username
                 navigate(`/portfolio/${username}`)
@@ -257,8 +218,8 @@ const UpdateProfileComponent = () => {
                     )
                 }
 
-                setFormData((previous) => ({
-                    ...previous,
+                setFormData((prev) => ({
+                    ...prev,
                     profilePicture: null,
                 }))
             } else {
@@ -268,23 +229,23 @@ const UpdateProfileComponent = () => {
             if (!navigator.onLine) {
                 toast({
                     description:
-                        "No internet connection. Please check your network.",
+                        'No internet connection. Please check your network.',
                 })
             }
             if (!error.response) {
                 toast({
                     description:
-                        "No internet connection. Please check your network.",
+                        'No internet connection. Please check your network.',
                 })
             } else if (error.response.status === 500) {
-                toast({ description: "Server error. Please try again later." })
+                toast({ description: 'Server error. Please try again later.' })
             } else if (error.response.status === 401) {
-                toast({ description: "Unauthorized access" })
+                toast({ description: 'Unauthorized access' })
             } else if (error.response.status === 503) {
-                toast({ description: "Server error. Please try again later." })
+                toast({ description: 'Server error. Please try again later.' })
             } else {
                 toast({
-                    description: "Something went wrong. Please try again.",
+                    description: 'Something went wrong. Please try again.',
                 })
             }
         } finally {
@@ -305,8 +266,7 @@ const UpdateProfileComponent = () => {
                     <div className={styles.input_container}>
                         <label
                             htmlFor='professionalTitle'
-                            className={styles.label}
-                        >
+                            className={styles.label}>
                             Professional title *
                         </label>
                         <InputComponent
@@ -326,9 +286,8 @@ const UpdateProfileComponent = () => {
                     <div className={styles.input_container}>
                         <label htmlFor='bio' className={styles.label}>
                             <div
-                                className={styles.label_singleLine_instruction}
-                            >
-                                Bio *{" "}
+                                className={styles.label_singleLine_instruction}>
+                                Bio *{' '}
                                 <p className={styles.input_instruction}>
                                     (max 200 characters)
                                 </p>
@@ -343,39 +302,10 @@ const UpdateProfileComponent = () => {
                             value={formData.bio}
                             onChange={handleInputChange}
                             rows={8}
-                            maxLength={200}
+                            maxLength={300}
                         />
-                        <div className={styles.char_count}>
-                            {formData.bio.length} / 200 characters
-                        </div>
                         {errors.bio && (
                             <p className={styles.error_message}>{errors.bio}</p>
-                        )}
-                    </div>
-                    <div className={styles.input_container}>
-                        <label htmlFor='tags' className={styles.label}>
-                            <div
-                                className={styles.label_singleLine_instruction}
-                            >
-                                Skills *{" "}
-                                <p className={styles.input_instruction}>
-                                    (maximum 3 tags)
-                                </p>
-                            </div>
-                        </label>
-                        <TagSelectComponent
-                            handleTagClick={handleTagClick}
-                            selectedTags={formData.tags}
-                            error={errors.tags}
-                            serviceFunction={{
-                                service: userProfileService,
-                                function: userProfileService.getUserSkills,
-                            }}
-                        />
-                        {errors.tags && (
-                            <p className={styles.error_message}>
-                                {errors.tags}
-                            </p>
                         )}
                     </div>
                     <div className={styles.input_container}>
@@ -417,8 +347,7 @@ const UpdateProfileComponent = () => {
                     <div className={styles.input_container}>
                         <label
                             htmlFor='profilePicture'
-                            className={styles.label}
-                        >
+                            className={styles.label}>
                             Profile Picture
                         </label>
                         <ThumbnailUploadComponent
@@ -450,8 +379,7 @@ const UpdateProfileComponent = () => {
                     <div className={styles.input_container}>
                         <label
                             htmlFor='professionalExperience'
-                            className={styles.label}
-                        >
+                            className={styles.label}>
                             Professional Experience in years*
                         </label>
                         <InputComponent
@@ -484,19 +412,17 @@ const UpdateProfileComponent = () => {
                             return (
                                 <div
                                     key={index}
-                                    className={styles.account_field}
-                                >
+                                    className={`styles.account_field`}>
                                     <label
                                         htmlFor={`account_${index}`}
-                                        className={styles.label}
-                                    >
+                                        className={styles.label}>
                                         {account.domain
                                             .charAt(0)
                                             .toUpperCase() +
                                             account.domain.slice(1)}
-                                        {(account.domain === "linkedin" ||
-                                            account.domain === "leetcode") &&
-                                            " *"}
+                                        {(account.domain === 'linkedin' ||
+                                            account.domain === 'leetcode') &&
+                                            ' *'}
                                     </label>
                                     <InputComponent
                                         id={`account_${index}`}
@@ -528,9 +454,8 @@ const UpdateProfileComponent = () => {
                     <ButtonComponent
                         type='submit'
                         className={styles.submit_button}
-                        disabled={loading}
-                    >
-                        {loading ? "Submitting..." : "Submit Profile"}
+                        disabled={loading}>
+                        {loading ? 'Submitting...' : 'Submit Profile'}
                     </ButtonComponent>
                 </form>
             </div>

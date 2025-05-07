@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styles from './PortfolioNavbarComponent.module.css'
 
-function PortfolioNavbarComponent({ name, portfolioLink, sectionRefs }) {
+function PortfolioNavbarComponent({ name, portfolioLink }) {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
 
     const toggleMenu = () => {
@@ -15,24 +15,12 @@ function PortfolioNavbarComponent({ name, portfolioLink, sectionRefs }) {
         }
     }
 
-    const scrollToSection = (section) => {
-        if (sectionRefs[section]?.current) {
-            sectionRefs[section].current.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start',
-            })
-            setIsMenuOpen(false)
-        }
-    }
-
     return (
         <nav className={styles.navbar}>
             <div className={styles.logo}>
-                <button
-                    className={styles.logo_link}
-                    onClick={() => scrollToSection('home')}>
+                <a href='/' className={styles.logo_link}>
                     {name}
-                </button>
+                </a>
             </div>
 
             <button
@@ -51,25 +39,22 @@ function PortfolioNavbarComponent({ name, portfolioLink, sectionRefs }) {
                 className={`${styles.menu_items} ${
                     isMenuOpen ? styles.show : ''
                 }`}>
-                <button
-                    className={`${styles.menu_item}`}
-                    onClick={() => scrollToSection('home')}>
+                <a href='#home' className={`${styles.menu_item} ${styles.active}`}>
                     home.
-                </button>
-                <button
-                    className={styles.menu_item}
-                    onClick={() => scrollToSection('works')}>
+                </a>
+                <a href='#works' className={styles.menu_item}>
                     works.
-                </button>
-                {portfolioLink && (
-                    <a
-                        href={portfolioLink}
-                        className={styles.menu_item}
-                        target='_blank'
-                        rel='noopener noreferrer'>
-                        ext portfolio.
-                    </a>
-                )}
+                </a>
+                <a href='#contact' className={styles.menu_item}>
+                    contact.
+                </a>
+                <a
+                    href={portfolioLink}
+                    className={styles.menu_item}
+                    target='_blank'
+                    rel='noopener noreferrer'>
+                    ext portfolio.
+                </a>
             </div>
         </nav>
     )

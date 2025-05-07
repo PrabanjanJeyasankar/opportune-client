@@ -1,4 +1,4 @@
-import { useQueryClient } from '@tanstack/react-query'
+
 import React, { createContext, useEffect, useState } from 'react'
 
 // Create a context to manage and share user-related data across the application
@@ -20,8 +20,6 @@ export const UserProvider = ({ children }) => {
     const [userData, setUserData] = useState(null)
     const [isUserLoggedIn, setIsUserLoggedIn] = useState(false)
 
-    // Access the query client from React Query to manage query cache
-    const queryClient = useQueryClient()
 
     // Effect to load user data and login status from localStorage on component mount
     useEffect(() => {
@@ -53,7 +51,6 @@ export const UserProvider = ({ children }) => {
     const updateUserData = (data) => {
         setUserData(data) // Update user data in state
         localStorage.setItem(USER_DATA_KEY, JSON.stringify(data)) // Store user data in localStorage
-        queryClient.invalidateQueries(['projectTags']) // Invalidate cached queries related to project tags
     }
 
     /**
@@ -70,10 +67,7 @@ export const UserProvider = ({ children }) => {
      * Invalidates the query cache for home feed projects.
      * Useful when user logs out or data needs to be refreshed.
      */
-    const invalidateQueryCache = () => {
-        queryClient.invalidateQueries({ queryKey: ['homeFeedProjects'] })
-    }
-
+   
     /**
      * Sets authenticated user details in context and updates localStorage.
      *
@@ -91,7 +85,6 @@ export const UserProvider = ({ children }) => {
     const removeAuthenticatedUserDetailsInContext = () => {
         updateUserData(null) // Clear user data
         updateLoginStatus(false) // Set login status to false
-        invalidateQueryCache() // Invalidate cached queries
     }
 
     // Provide user data and functions to child components via context

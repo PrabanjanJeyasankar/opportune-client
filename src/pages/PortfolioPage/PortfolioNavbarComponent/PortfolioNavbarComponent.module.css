@@ -11,9 +11,6 @@
     -webkit-backdrop-filter: var(--glass-webkit-blur);
     border: var(--glass-border);
     z-index: 300;
-    position: sticky;
-    top: 0;
-    left: 0;
 }
 
 .logo {

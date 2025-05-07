@@ -18,11 +18,8 @@ const NavigationBarComponent = () => {
     const navbarRef = useRef(null)
     const dropdownRef = useRef(null)
     const { setSearchTerm } = useHomeFeedResetContext()
-    const {
-        removeAuthenticatedUserDetailsInContext,
-        userData,
-        isUserLoggedIn,
-    } = useUserContext()
+    const { removeAuthenticatedUserDetailsInContext, isUserLoggedIn } =
+        useUserContext()
 
     const toggleMenu = () => setIsMenuOpen((prev) => !prev)
     const handleCloseMenu = () => setIsMenuOpen(false)
@@ -172,7 +169,7 @@ const NavigationBarComponent = () => {
                                     <div
                                         className={`${navBarStyles.dropdown_menu} ${navBarStyles.show}`}>
                                         <NavLink
-                                            to={`/portfolio/${userData?.username}`}
+                                            to={`/portfolio/${userProfile?.username}`}
                                             className={
                                                 navBarStyles.dropdown_item
                                             }
