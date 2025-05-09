@@ -18,6 +18,7 @@ import * as projectsAPI from './projectsAPI'
 export const fetchInitialProjects = () => async (dispatch, getState) => {
     const {
         projects: { page, limit, loading },
+        tags: { selectedTag },
     } = getState()
 
     // Prevent duplicate initial loads
@@ -25,7 +26,11 @@ export const fetchInitialProjects = () => async (dispatch, getState) => {
 
     dispatch(fetchInitialProjectsStarts())
     try {
-        const response = await projectsAPI.fetchProjectsAPI(page, limit)
+        const response = await projectsAPI.fetchProjectsAPI(
+            page,
+            limit,
+            selectedTag
+        )
         dispatch(fetchInitialProjectsSuccess(response.data.data))
     } catch (error) {
         dispatch(fetchInitialProjectsFailure(error.message))
@@ -42,6 +47,7 @@ export const fetchInitialProjects = () => async (dispatch, getState) => {
 export const fetchMoreProjects = () => async (dispatch, getState) => {
     const {
         projects: { page, limit, fetchingMore, hasMore },
+        tags: { selectedTag },
     } = getState()
 
     // Prevent duplicate requests or fetching when no more data
@@ -50,7 +56,11 @@ export const fetchMoreProjects = () => async (dispatch, getState) => {
     dispatch(fetchMoreProjectsStart())
 
     try {
-        const response = await projectsAPI.fetchProjectsAPI(page, limit)
+        const response = await projectsAPI.fetchProjectsAPI(
+            page,
+            limit,
+            selectedTag
+        )
         
         /**
          * @typedef {Object} APIResponse
@@ -61,10 +71,12 @@ export const fetchMoreProjects = () => async (dispatch, getState) => {
 
         // Handle empty response edge case
         if (!responseData.data || responseData.data.length === 0) {
-            return dispatch(fetchMoreProjectsSuccess({
-                projects: [],
-                hasNextPage: false
-            }))
+            return dispatch(
+                fetchMoreProjectsSuccess({
+                    projects: [],
+                    hasNextPage: false,
+                })
+            )
         }
 
         dispatch(fetchMoreProjectsSuccess(response.data.data))

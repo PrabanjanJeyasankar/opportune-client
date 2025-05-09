@@ -52,7 +52,6 @@ const projectSlice = createSlice({
             state.loading = false
             state.projects = action.payload.projects
             state.hasMore = action.payload.hasNextPage
-            state.page = 2 // First page is fetched, so setting to 2 for the next fetch
         },
 
         /**
@@ -75,6 +74,7 @@ const projectSlice = createSlice({
         fetchMoreProjectsStart: (state) => {
             state.fetchingMore = true
             state.error = null
+            state.page = state.page + 1
         },
 
         /**
@@ -90,7 +90,6 @@ const projectSlice = createSlice({
             state.fetchingMore = false;
             state.projects = [...state.projects, ...action.payload.projects];
             state.hasMore = action.payload.hasNextPage;
-            state.page = state.page + 1;
         },
 
         /**
@@ -101,8 +100,8 @@ const projectSlice = createSlice({
          * @param {string} action.payload - Error message.
          */
         fetchMoreProjectsFailure: (state, action) => {
-            state.fetchingMore = false;
-            state.error = action.payload;
+            state.fetchingMore = false
+            state.error = action.payload
         }
     },
 })
