@@ -52,7 +52,6 @@ const projectSlice = createSlice({
             state.loading = false
             state.projects = action.payload.projects
             state.hasMore = action.payload.hasNextPage
-            state.page = 2 // First page is fetched, so setting to 2 for the next fetch
         },
 
         /**
