@@ -10,6 +10,7 @@ import { createSlice } from '@reduxjs/toolkit'
  * @property {boolean} hasMore - Flag to check if more projects are available for pagination.
  * @property {number} page - Current page number for pagination.
  * @property {number} limit - Number of projects to fetch per page.
+ * @property {string} searchTerm - Term that is used to filter the projects.
  */
 const initialState = {
     projects: [],
@@ -19,6 +20,7 @@ const initialState = {
     hasMore: true,
     page: 1,
     limit: 12,
+    searchTerm: ''
 }
 
 /**
@@ -87,9 +89,9 @@ const projectSlice = createSlice({
          * @param {boolean} action.payload.hasNextPage - Indicates if there are more projects to fetch.
          */
         fetchMoreProjectsSuccess: (state, action) => {
-            state.fetchingMore = false;
-            state.projects = [...state.projects, ...action.payload.projects];
-            state.hasMore = action.payload.hasNextPage;
+            state.fetchingMore = false
+            state.projects = [...state.projects, ...action.payload.projects]
+            state.hasMore = action.payload.hasNextPage
         },
 
         /**
@@ -102,7 +104,20 @@ const projectSlice = createSlice({
         fetchMoreProjectsFailure: (state, action) => {
             state.fetchingMore = false
             state.error = action.payload
+        },
+        /**
+         * Action to update the search term in the project state.
+         * This is used to filter projects based on user input.
+         * @param {ProjectState} state - Current state of the project slice.
+         * @param {Object} action - Redux action object.
+         * @param {string} action.payload - The new search term.
+         */
+        setSearchTerm: (state, action) => {
+            state.searchTerm = action.payload
+            state.page = 1
+            state.list = []
         }
+        
     },
 })
 
@@ -113,7 +128,8 @@ export const {
     fetchInitialProjectsFailure,
     fetchMoreProjectsStart,
     fetchMoreProjectsSuccess,
-    fetchMoreProjectsFailure
+    fetchMoreProjectsFailure,
+    setSearchTerm
 } = projectSlice.actions
 
 // Exporting reducer for store integration

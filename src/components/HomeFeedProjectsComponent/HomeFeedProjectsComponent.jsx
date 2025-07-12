@@ -1,4 +1,4 @@
-import { useRef, useCallback, useEffect, useState } from 'react'
+import { useRef, useCallback, useEffect } from 'react'
 import ProjectCardComponent from '../ProjectCardComponent/ProjectCardComponent'
 import InfiniteLoadingAnimation from '@/loaders/InfiniteLoadingAnimation/InfiniteLoadingAnimation'
 import styles from './HomeFeedProjectsComponent.module.css'
