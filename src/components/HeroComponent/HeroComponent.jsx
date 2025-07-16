@@ -16,21 +16,14 @@ import HomeFeedProjectsComponent from '../HomeFeedProjectsComponent/HomeFeedProj
 import { useDispatch, useSelector } from 'react-redux'
 import { selectProjectsSearchTerm } from '@/app/features/projects/projectsSelectors'
 import { setSearchTerm } from '@/app/features/projects/projectsSlice'
-import { fetchInitialProjects } from "@/app/features/projects/projectsThunks";
-import useDebouncedSearchTerm from "@/hooks/useDebouncedSearchTerm";
 
 const HeroComponent = () => {
-  const searchTerm=useSelector(selectProjectsSearchTerm)
-  const debouncedSearchTerm=useDebouncedSearchTerm();
-  const dispatch=useDispatch()
+    const searchTerm = useSelector(selectProjectsSearchTerm)
+    const dispatch = useDispatch()
 
   const handleSearchChange = (e) => {
-    dispatch(setSearchTerm(e.target.value.toLowerCase()));
-  };
-
-  useEffect(() => {
-    dispatch(fetchInitialProjects());
-  }, [debouncedSearchTerm, dispatch]); 
+        dispatch(setSearchTerm(e.target.value.toLowerCase()))
+    }
 
     useEffect(() => {
         const rockSelector = `.${styles.floating_rock}`
