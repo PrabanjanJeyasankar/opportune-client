@@ -1,7 +1,8 @@
 import ButtonComponent from '@/elements/ButtonComponent/ButtonComponent'
 import ImageComponent from '@/elements/ImageComponent/ImageComponent'
-import useHomeFeedResetContext from '@/hooks/useHomeFeedResetContext'
 import useUserContext from '@/hooks/useUserContext'
+import { useDispatch } from 'react-redux'
+import { setSearchTerm } from '@/app/features/projects/projectsSlice'
 import authService from '@/services/authService'
 import CheveronArrowDownSvg from '@/svg/ChevronArrowDownSvg/CheveronArrowDownSvg'
 import EditPenSvg from '@/svg/EditPenSvg/EditPenSvg'
@@ -13,17 +14,17 @@ import AppLogo from '../../assets/images/opportune_logo_svg.svg'
 import navBarStyles from './NavigationBarComponent.module.css'
 
 const NavigationBarComponent = () => {
+    const dispatch = useDispatch()
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [isDropdownOpen, setIsDropdownOpen] = useState(false)
     const navbarRef = useRef(null)
     const dropdownRef = useRef(null)
-    const { setSearchTerm } = useHomeFeedResetContext()
     const { removeAuthenticatedUserDetailsInContext, isUserLoggedIn } =
         useUserContext()
 
     const toggleMenu = () => setIsMenuOpen((prev) => !prev)
     const handleCloseMenu = () => setIsMenuOpen(false)
-    const handleClearSearch = () => setSearchTerm('')
+    const handleClearSearch = () => dispatch(setSearchTerm(''))
     const toggleDropdown = () => setIsDropdownOpen((prev) => !prev)
 
     const logout = () => {
