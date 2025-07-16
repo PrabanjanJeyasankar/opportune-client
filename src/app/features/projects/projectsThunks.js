@@ -7,83 +7,59 @@ import {
     fetchInitialProjectsSuccess,
 } from './projectsSlice'
 import * as projectsAPI from './projectsAPI'
+import { createAsyncThunk } from '@reduxjs/toolkit'
 
 /**
  * @async
  * @function fetchInitialProjects
- * @description Fetches the first page of projects and initializes the store
- * @returns {Function} Redux thunk function
- * @throws {Error} If API request fails
+ * @description Thunk action created with createAsyncThunk to fetch the first page of projects.
+ * It initializes the Redux store with the fetched projects based on the current page, limit, tag, and searchTerm.
+ * @returns {Promise<Object>} The payload containing the fetched project data.
+ * @throws {Error} If the API request fails.
  */
-export const fetchInitialProjects = () => async (dispatch, getState) => {
-    
-    const {
-        projects: { page, limit, loading, searchTerm },
-        tags: { selectedTag },
-    } = getState()
+export const fetchInitialProjects = createAsyncThunk(
+    'projects/fetchInitialProjects',
+    async (_, { getState }) => {
+        const {
+            projects: { page, limit, loading, searchTerm },
+            tags: { selectedTag },
+        } = getState()
 
-    // Prevent duplicate initial loads
-    if (loading) return
-
-    dispatch(fetchInitialProjectsStarts())
-    try {
         const response = await projectsAPI.fetchProjectsAPI(
             page,
             limit,
             selectedTag,
             searchTerm
         )
-        dispatch(fetchInitialProjectsSuccess(response.data.data))
-    } catch (error) {
-        dispatch(fetchInitialProjectsFailure(error.message))
+        return response.data.data
     }
-}
+)
 
 /**
  * @async
  * @function fetchMoreProjects
- * @description Fetches subsequent pages of projects and appends to existing list
- * @returns {Function} Redux thunk function
- * @throws {Error} If API request fails
+ * @description Thunk action created with createAsyncThunk to fetch more projects (pagination).
+ * Prevents duplicate fetches and stops fetching if there are no more projects to load.
+ * @returns {Promise<Object|undefined>} The payload containing the additional project data or undefined if not fetched.
+ * @throws {Error} If the API request fails.
  */
-export const fetchMoreProjects = () => async (dispatch, getState) => {
-    const {
-        projects: { page, limit, fetchingMore, hasMore, searchTerm },
-        tags: { selectedTag },
-    } = getState()
+export const fetchMoreProjects = createAsyncThunk(
+    'projects/fetchMoreProjects',
+    async (_, { getState }) => {
+        const {
+            projects: { page, limit, fetchingMore, hasMore, searchTerm },
+            tags: { selectedTag },
+        } = getState()
 
-    // Prevent duplicate requests or fetching when no more data
-    if (fetchingMore || !hasMore) return
+        // Prevent duplicate requests or fetching when no more data
+        if (fetchingMore || !hasMore) return
 
-    dispatch(fetchMoreProjectsStart())
-
-    try {
         const response = await projectsAPI.fetchProjectsAPI(
             page,
             limit,
             selectedTag,
             searchTerm
         )
-
-        /**
-         * @typedef {Object} APIResponse
-         * @property {Array} data - Array of project objects
-         * @property {boolean} hasNextPage - Pagination flag
-         */
-        const responseData = response.data
-
-        // Handle empty response edge case
-        if (!responseData.data || responseData.data.length === 0) {
-            return dispatch(
-                fetchMoreProjectsSuccess({
-                    projects: [],
-                    hasNextPage: false,
-                })
-            )
-        }
-
-        dispatch(fetchMoreProjectsSuccess(response.data.data))
-    } catch (error) {
-        dispatch(fetchMoreProjectsFailure(error.message))
+        return response.data.data
     }
-}
+)

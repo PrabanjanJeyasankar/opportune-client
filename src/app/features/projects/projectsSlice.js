@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
+import { fetchInitialProjects, fetchMoreProjects } from './projectsThunks'
 
 /**
  * Initial state for the project slice.
@@ -20,7 +21,7 @@ const initialState = {
     hasMore: true,
     page: 1,
     limit: 12,
-    searchTerm: ''
+    searchTerm: '',
 }
 
 /**
@@ -31,93 +32,90 @@ const projectSlice = createSlice({
     name: 'projects',
     initialState,
     reducers: {
-
         /**
-         * Action to indicate the start of fetching projects.
-         * Sets the loading state to true.
-         * @param {ProjectState} state - Current state of the project slice.
-         */
-        fetchInitialProjectsStarts: (state) => {
-            state.loading = true
-        },
-
-        /**
-         * Action to handle the success of fetching projects.
-         * Updates the state with fetched projects, page information, and availability of more projects.
-         * @param {ProjectState} state - Current state of the project slice.
-         * @param {Object} action - Redux action object.
-         * @param {Object} action.payload - Data payload containing projects and pagination info.
-         * @param {Array} action.payload.projects - List of fetched projects.
-         * @param {boolean} action.payload.hasNextPage - Indicates if there are more projects to fetch.
-         */
-        fetchInitialProjectsSuccess: (state, action) => {
-            state.loading = false
-            state.projects = action.payload.projects
-            state.hasMore = action.payload.hasNextPage
-        },
-
-        /**
-         * Action to handle errors during project fetch.
-         * Updates the state with the error message.
-         * @param {ProjectState} state - Current state of the project slice.
-         * @param {Object} action - Redux action object.
-         * @param {string} action.payload - Error message.
-         */
-        fetchInitialProjectsFailure: (state, action) => {
-            state.loading = false
-            state.error = action.payload
-        },
-
-        /**
-         * Action to indicate the start of fetching more projects.
-         * Clears previous errors and sets fetchingMore to true.
-         * @param {ProjectState} state - Current state of the project slice.
-         */
-        fetchMoreProjectsStart: (state) => {
-            state.fetchingMore = true
-            state.error = null
-            state.page = state.page + 1
-        },
-
-        /**
-         * Action to handle successful fetching of more projects.
-         * Appends newly fetched projects to the existing list and updates pagination info.
-         * @param {ProjectState} state - Current state of the project slice.
-         * @param {Object} action - Redux action object.
-         * @param {Object} action.payload - Data payload containing projects and pagination info.
-         * @param {Array} action.payload.projects - List of fetched projects.
-         * @param {boolean} action.payload.hasNextPage - Indicates if there are more projects to fetch.
-         */
-        fetchMoreProjectsSuccess: (state, action) => {
-            state.fetchingMore = false
-            state.projects = [...state.projects, ...action.payload.projects]
-            state.hasMore = action.payload.hasNextPage
-        },
-
-        /**
-         * Action to handle errors during the fetch of more projects.
-         * Updates the state with the error message and stops fetching.
-         * @param {ProjectState} state - Current state of the project slice.
-         * @param {Object} action - Redux action object.
-         * @param {string} action.payload - Error message.
-         */
-        fetchMoreProjectsFailure: (state, action) => {
-            state.fetchingMore = false
-            state.error = action.payload
-        },
-        /**
-         * Action to update the search term in the project state.
-         * This is used to filter projects based on user input.
-         * @param {ProjectState} state - Current state of the project slice.
-         * @param {Object} action - Redux action object.
-         * @param {string} action.payload - The new search term.
+         * Updates the search term used for filtering projects.
+         * Also resets the pagination to the first page and clears the current list.
+         * @param {ProjectState} state - Current project slice state.
+         * @param {Object} action - Redux action.
+         * @param {string} action.payload - New search term entered by the user.
          */
         setSearchTerm: (state, action) => {
             state.searchTerm = action.payload
             state.page = 1
             state.list = []
-        }
-        
+        },
+    },
+    extraReducers: (builder) => {
+        builder
+            /**
+             * Handles the pending state of fetchInitialProjects.
+             * Indicates loading state for the first fetch.
+             */
+            .addCase(fetchInitialProjects.pending, (state) => {
+                state.loading = true
+            })
+
+            /**
+             * Handles successful fetching of the initial project list.
+             * Updates the project list and pagination info.
+             * @param {ProjectState} state
+             * @param {Object} action
+             * @param {Object} action.payload
+             * @param {Array<Object>} action.payload.projects - Fetched project list.
+             * @param {boolean} action.payload.hasNextPage - If there are more projects to load.
+             */
+            .addCase(fetchInitialProjects.fulfilled, (state, action) => {
+                state.loading = false
+                state.projects = action.payload.projects
+                state.hasMore = action.payload.hasNextPage
+            })
+
+            /**
+             * Handles failure of the initial fetch.
+             * @param {ProjectState} state
+             * @param {Object} action
+             * @param {string} action.payload - Error message.
+             */
+            .addCase(fetchInitialProjects.rejected, (state, action) => {
+                state.loading = false
+                state.error = action.payload
+            })
+
+            /**
+             * Handles the pending state of fetchMoreProjects (pagination).
+             * Increments the page and sets fetchingMore flag.
+             */
+            .addCase(fetchMoreProjects.pending, (state) => {
+                state.fetchingMore = true
+                state.error = null
+                state.page = state.page + 1
+            })
+
+            /**
+             * Handles successful loading of additional projects.
+             * Appends the new projects to the current list.
+             * @param {ProjectState} state
+             * @param {Object} action
+             * @param {Object} action.payload
+             * @param {Array<Object>} action.payload.projects - Fetched additional projects.
+             * @param {boolean} action.payload.hasNextPage - If more projects are still available.
+             */
+            .addCase(fetchMoreProjects.fulfilled, (state, action) => {
+                state.fetchingMore = false
+                state.projects = [...state.projects, ...action.payload.projects]
+                state.hasMore = action.payload.hasNextPage
+            })
+
+            /**
+             * Handles failure during pagination fetch.
+             * @param {ProjectState} state
+             * @param {Object} action
+             * @param {string} action.payload - Error message.
+             */
+            .addCase(fetchMoreProjects.rejected, (state, action) => {
+                state.fetchingMore = false
+                state.error = action.payload
+            })
     },
 })
 
@@ -129,7 +127,7 @@ export const {
     fetchMoreProjectsStart,
     fetchMoreProjectsSuccess,
     fetchMoreProjectsFailure,
-    setSearchTerm
+    setSearchTerm,
 } = projectSlice.actions
 
 // Exporting reducer for store integration
